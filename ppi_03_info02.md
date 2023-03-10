@@ -51,7 +51,7 @@ https://labdeck.com/gui-designer/
 - **Qt Designer**: Es un complemento gratuito para el diseño de interfaces, sus archivos pueden ser exportados a diversos lenguajes de programación, incluido Python, igual que su contraparte dispone de botones widgets y menús enteramente personalizables y ofrece además la posibilidad de cargar recursos propios del computador para complementar.
 https://doc.qt.io/
 
-**Stellarium**: Según su definición, es “un planetario open source para tu computador”, permite ver un cielo realista tal y como si lo estuviéramos viendo con nuestros ojos, binoculares o un telescopio. Su repositorio en GitHub contiene información que nos es útil para complementar los datos de SkyField, pues contiene archivos que dan cuenta, por ejemplo, de cómo se divide el cielo para formar constelaciones.
+- **Stellarium**: Según su definición, es “un planetario open source para tu computador”, permite ver un cielo realista tal y como si lo estuviéramos viendo con nuestros ojos, binoculares o un telescopio. Su repositorio en GitHub contiene información que nos es útil para complementar los datos de SkyField, pues contiene archivos que dan cuenta, por ejemplo, de cómo se divide el cielo para formar constelaciones.
 
 https://stellarium.org/
 https://github.com/Stellarium/stellarium
