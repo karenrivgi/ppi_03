@@ -10,12 +10,18 @@ https://play.google.com/store/apps/details?id=com.simulationcurriculum.skysafari
     - Permite buscar astros, planetas, constelaciones, satélites, cometas, galaxias y demás, que ya están preestablecidos por la aplicación en el mapa interactivo.
     - Nos da una descripción de cada uno de estos objetos preestablecidos.
     - Nos permite cambiar la ubicación, la fecha, personalizar el mapa, personalizar cómo se visualizan las constelaciones y demás cambios.
-    - También tiene un calendario que nos muestra fechas importantes con sucesos astronómicos. 
+    - También tiene un calendario que nos muestra fechas importantes con sucesos astronómicos.
+    <br /><br />
+    ![image](./aux_images/skySafari.png)
+    <br /><br />
     
 - **Starmap - didiendo**:
 https://starmap.didiendo.com/
 
     Starmap - didiendo, es una página web que permite generar un mapa del cielo y descargarlo. Esta página permite al usuario ingresar su dirección específica; ingresando desde un Maps interactivo o como latitud y longitud, además permite ingresar una fecha y hora específica. También tiene múltiples opciones de personalización para el mapa generado, como mostrar las constelaciones, mostrar los planetas, visualizar más grande los planetas, aumentar el tamaño de las estrellas, poder visualizar la vía láctea en el mapa, agregar etiquetas a estrellas, mapas o constelaciones, cambiar el fondo del mapa y demás.
+    <br /><br />
+    ![image](./aux_images/starmapDidiendo.png)
+    <br />
     
 - **Sky Tonight - Star Gazer Guide**
 https://play.google.com/store/apps/details?id=com.vitotechnology.sky.tonight.map.star.walk&hl=en&gl=US 
@@ -29,6 +35,8 @@ https://play.google.com/store/apps/details?id=com.vitotechnology.sky.tonight.map
     - Trayectoria interactivas relativas al observador: en lugar de la trayectoria clásica que muestra la trayectoria del objeto en la esfera celestial relativa al centro de la tierra, la aplicación presenta una trayectoria del objeto en el cielo, relativa a la ubicación del observador.
     - Calendario astronómico con índice de observación de estrellas y pronóstico del tiempo: chequea el calendario de eventos celestiales que incluye fases lunares, lluvia de meteoritos, eclipses, y otros eventos interesantes; tanto históricamente como próximos a suceder.
     - Uso de mapa interactivo para apuntar el dispositivo móvil al cielo y ver las posiciones reales de objetos espaciales.
+    <br /><br />
+    ![image](./aux_images/skyTonight.png)
 
 ## Software open source
 _software open source que les pueda ser de utilidad para el desarrollo de la aplicación._
