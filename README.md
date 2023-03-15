@@ -13,7 +13,7 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 - Acceder a una sección cultural con publicaciones sobre astronomía.
 
 ### Tecnologías utilizadas:
--Lenguaje de programación Python y librerias de este como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, pandas, entre otros.
+- Lenguaje de programación Python y librerias de este como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, pandas, entre otros.
 - Aplicaciones para la creación de interfaces como Qt Designer o MatDeck GUI Designer.
 
 
