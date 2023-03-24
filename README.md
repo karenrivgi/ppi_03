@@ -44,6 +44,19 @@ Instalar las librerías requeridas:
 pip install -r requirements.txt
 ```
 
+| Librería | Versión |
+| ------ | ------ |
+| datetime | 5.1|
+| geopy | 2.3.0 |
+| tzwhere | 3.0.3 |
+| pytz | 2022.7 |
+| numpy | 1.23.5 |
+| pandas | 1.5.2 |
+| skyfield | 1.45 |
+| matplotlib | 3.6.2 |
+| stdiomask | 0.0.6 |
+| praw | 7.7.0 |
+
 ### Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
 - [@JEROLPOA2](https://github.com/JEROLPOA2): Jerónimo Ledesma Patiño.
