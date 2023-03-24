@@ -1,5 +1,5 @@
 # IMPORTAMOS LAS LIBRERÍAS A USAR
-import math
+
 # librerías para el manejo de la ubicacion y hora
 from datetime import datetime
 from geopy import Nominatim
@@ -93,6 +93,9 @@ def generar_mapa(fecha_hora, lugar):
 
     magnitude = stars['magnitude'][bright_stars] # Obtenemos las estrellas en el catálogo hiparco que cumplen con la condición de magnitud
 
+    
+    # Obtenemos estrellas más brillantes y obtenemos sus nombres
+    import math
     def in_circle(row):
         center_x = 0
         center_y = 0
@@ -111,7 +114,8 @@ def generar_mapa(fecha_hora, lugar):
     brightest_and_labels = names_csv[names_csv["HIP"].isin(list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
 
-    #Los contornos de la constelación provienen de Stellarium. Hacemos una lista
+
+    # Los contornos de la constelación provienen de Stellarium. Hacemos una lista
     # de las estrellas en las que cada borde protagoniza y la estrella en la que cada borde
     # termina.
 
@@ -153,45 +157,16 @@ def generar_mapa(fecha_hora, lugar):
 
     # Ponerle la equiqueta a cada estrella de las más brillantes
     for label, x, y in zip(brightest_and_labels["common name"],brightest_for_labels["x"], brightest_for_labels["y"]):
-        
         ax.annotate(label,
         xy=(x, y),                          # Poner la etiqueta en el punto
         xytext=(0.5,-0.5),                  # un poco desfasada
         textcoords = "offset points", color="white",
         fontsize=6)
 
-    fig, ax = plt.subplots(figsize=(chart_size, chart_size)) # Define el tamaño de la gráfica
-    
-    border = plt.Circle((0, 0), 1, color='black', fill=True) # Fondo para la proyección
-    ax.add_patch(border)
-
-    marker_size = max_star_size * 10 ** (magnitude / -2.5) #Calcula qué tan grande será el circulito (En base al cálculo descrito en la img)
-    #marker_size = (0.5 + limiting_magnitude - magnitude) ** 2.0
-
-    #Diagrama de dispersión usando su ubicación x e y, el tamaño del marcador que representa el brillo.
-    ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars], 
-    s=marker_size, color='white', marker='.', linewidths=0, 
-    zorder=2)
     horizon = Circle((0, 0), radius=1, transform=ax.transData)
     for col in ax.collections:
         col.set_clip_path(horizon)
 
-    fig, ax = plt.subplots(figsize=(chart_size, chart_size)) # Define el tamaño de la gráfica
-    
-    border = plt.Circle((0, 0), 1, color='black', fill=True) # Fondo para la proyección
-    ax.add_patch(border)
-
-    marker_size = max_star_size * 10 ** (magnitude / -2.5) #Calcula qué tan grande será el circulito (En base al cálculo descrito en la img)
-    #marker_size = (0.5 + limiting_magnitude - magnitude) ** 2.0
-
-    #Diagrama de dispersión usando su ubicación x e y, el tamaño del marcador que representa el brillo.
-    ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars], 
-    s=marker_size, color='white', marker='.', linewidths=0, 
-    zorder=2)
-
-    horizon = Circle((0, 0), radius=1, transform=ax.transData)
-    for col in ax.collections:
-        col.set_clip_path(horizon)
 
     # Otras configuraciones
     ax.set_xlim(-1, 1)
