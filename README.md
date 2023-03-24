@@ -37,6 +37,13 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
 - Figma para el diseño de las interfaces y Tkinter para codificarlas.
 
+### Guia de Instalación
+
+Instalar las librerías requeridas:
+```sh
+pip install -r requirements.txt
+```
+
 ### Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
 - [@JEROLPOA2](https://github.com/JEROLPOA2): Jerónimo Ledesma Patiño.
