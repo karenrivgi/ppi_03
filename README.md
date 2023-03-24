@@ -33,12 +33,13 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
     - Permitir la visualización de los planetas que estén en el mapa generado.
    
 ## **Tecnologías utilizadas**:
-- Lenguaje de programación Python y librerias de este como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, pandas, PRAW, requests, entre otros.
-- Aplicaciones para la creación de interfaces como Qt Designer o MatDeck GUI Designer.
+- Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
 
+### Autores:
+- [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
+- [@JEROLPOA2](https://github.com/JEROLPOA2): Jerónimo Ledesma Patiño.
+- [@DavedCV](https://github.com/DavedCV): David Castrillón Vallejo.
+- [@karenrivgi](https://github.com/karenrivgi): Karen Rivera Giraldo.
 
-### **Integrantes**:
-- Yamid Andrés Campo Gallego.
-- Jerónimo Ledesma Patiño.
-- David Castrillón Vallejo.
-- Karen Rivera Giraldo.
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
