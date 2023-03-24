@@ -1,4 +1,4 @@
-En base a las funcionalidades previstas para la aplicación, definimos las siguientes actividades a desarrollar para construirlas:
+## En base a las funcionalidades previstas para la aplicación, definimos las siguientes actividades a desarrollar para construirlas:
 
 - **Informe 03: 13 horas del viernes 24 de marzo, “Hola Mundo” de la aplicación:**
 -- Interfaz simple para la interacción del usuario con el aplicativo.
@@ -10,11 +10,11 @@ En base a las funcionalidades previstas para la aplicación, definimos las sigui
 -- Implementación de la lógica orientada a objetos para la creación de usuarios.
 -- Discretización de la interfaz para usuarios registrados y no registrados.
 -- Refinamiento de la interfaz gráfica usando programación orientada a objetos.
-    <br /><br />
+-- Aplicar la persistencia de datos para los usuarios creados, y un historial para los datos que ha ingresado al generar un mapa estelar.
+-- Implementación de la descarga del mapa generado como imagen para usuarios registrados.
+   <br /><br />
     ![image](./aux_images/DiagramaDeClasesInterfaz.jpeg)
     <br />
--- Implementación de la descarga del mapa generado como imagen para usuarios registrados.
--- Aplicar la persistencia de datos para los usuarios creados, y un historial para los datos que ha ingresado al generar un mapa estelar.
 
 
 - **Informe 05: 13 horas del viernes 14 de abril.** 
