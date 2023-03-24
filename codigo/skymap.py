@@ -1,5 +1,5 @@
 # IMPORTAMOS LAS LIBRERÍAS A USAR
-
+import math
 # librerías para el manejo de la ubicacion y hora
 from datetime import datetime
 from geopy import Nominatim
@@ -92,6 +92,73 @@ def generar_mapa(fecha_hora, lugar):
     bright_stars = (stars.magnitude <= limiting_magnitude) # Creamos una máscara para filtrar por la magnitud límite
 
     magnitude = stars['magnitude'][bright_stars] # Obtenemos las estrellas en el catálogo hiparco que cumplen con la condición de magnitud
+
+    def in_circle(row):
+        center_x = 0
+        center_y = 0
+        radius = 1
+        x = row["x"]
+        y = row["y"]
+
+        dist = math.sqrt((center_x - x) ** 2 + (center_y - y) ** 2)
+        return dist < radius
+
+    bright_stars_label = (stars.magnitude <= 2) 
+    oppp = stars.apply(in_circle, 1) & bright_stars_label
+    brightest_for_labels = stars[stars.apply(in_circle, 1) & bright_stars_label]
+
+    names_csv = pd.read_csv("names.csv")
+    brightest_and_labels = names_csv[names_csv["HIP"].isin(list(brightest_for_labels.index))]
+    brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
+
+    #Los contornos de la constelación provienen de Stellarium. Hacemos una lista
+    # de las estrellas en las que cada borde protagoniza y la estrella en la que cada borde
+    # termina.
+
+    # Hay que borrar el archivo cada vez, para que cargue el nuevo
+    #url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master/skycultures/maya/constellationship.fab')
+    url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master/skycultures/modern/constellationship.fab')
+
+    with load.open(url) as f:
+        constellations = stellarium.parse_constellations(f)
+
+    edges = [edge for name, edges in constellations for edge in edges]
+    edges_star1 = [star1 for star1, star2 in edges]
+    edges_star2 = [star2 for star1, star2 in edges]
+
+    # Las líneas de constelación comenzarán cada una en la (x, y) de una estrella y un final
+    # en la (x, y) de otra. Tenemos que "rollaxis" la coordenada resultante
+    # matriz en la forma que Matplotlib espera.
+
+    xy1 = stars[['x', 'y']].loc[edges_star1].values
+    xy2 = stars[['x', 'y']].loc[edges_star2].values
+    lines_xy = np.rollaxis(np.array([xy1, xy2]), 1)
+
+    fig, ax = plt.subplots(figsize=(chart_size, chart_size)) # Define el tamaño de la gráfica
+    
+    border = plt.Circle((0, 0), 1, color='black', fill=True) # Fondo para la proyección
+    ax.add_patch(border)
+
+    marker_size = max_star_size * 10 ** (magnitude / -2.5) #Calcula qué tan grande será el circulito (En base al cálculo descrito en la img)
+    #marker_size = (0.5 + limiting_magnitude - magnitude) ** 2.0
+
+    # Dibujar las lineas de las constelaciones.
+
+    ax.add_collection(LineCollection(lines_xy, colors='y'))
+
+    #Diagrama de dispersión usando su ubicación x e y, el tamaño del marcador que representa el brillo.
+    ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars], 
+    s=marker_size, color='white', marker='.', linewidths=0, 
+    zorder=2)
+
+    # Ponerle la equiqueta a cada estrella de las más brillantes
+    for label, x, y in zip(brightest_and_labels["common name"],brightest_for_labels["x"], brightest_for_labels["y"]):
+        
+        ax.annotate(label,
+        xy=(x, y),                          # Poner la etiqueta en el punto
+        xytext=(0.5,-0.5),                  # un poco desfasada
+        textcoords = "offset points", color="white",
+        fontsize=6)
 
     fig, ax = plt.subplots(figsize=(chart_size, chart_size)) # Define el tamaño de la gráfica
     
