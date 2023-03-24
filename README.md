@@ -25,7 +25,8 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
     - Guardado de los últimos mapas generados.
     - Guardado del historial de las últimas estrellas consultadas en los mapas estelares generados por el mismo.
     - Guardado del historial de publicaciones hechas en el subreddit compartiendo mapas de estrellas personalizados.
-    - Posibilida de consulta sobre cuál es la fase de la luna correspondiente a una fecha ingresada y mostrarla con una imagen representativa.
+    - Posibilidad de consulta sobre cuál es la fase de la luna correspondiente a una fecha ingresada y mostrarla con una imagen representativa.
+    - Consultar cuándo será visible en el horizonte un objeto celeste seleccionado, en base a fecha(y ubicación).
 
 - Funcionalidades para usuarios no registrados:
     - Generar un mapa estelar con las opciones predeterminadas por la aplicación en base a la ubicación ingresada por el usuario.
@@ -34,6 +35,7 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
    
 ## **Tecnologías utilizadas**:
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
+- Figma para el diseño de las interfaces y Tkinter para codificarlas.
 
 ### Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
