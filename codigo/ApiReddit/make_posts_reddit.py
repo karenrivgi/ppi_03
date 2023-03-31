@@ -24,4 +24,4 @@ dir_path = os.getcwd()
 map_path = os.path.join(dir_path, "map.png")
 
 sub = reddit.subreddit("PyMansSky")
-sub.submit_image(title="Prueba #2, StarMap", image_path=map_path)
+sub.submit_image(title="Prueba #3, StarMap", image_path=map_path)
