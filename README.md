@@ -39,7 +39,11 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 
 ### Guia de Instalación
 
-Instalar las librerías requeridas:
+Para poder ejecutar la aplicación en su etapa de desarrollo, se deben seguir los siguientes pasos:
+
+Descargar los archivos requeridos, ubicados en la carpeta "codigo" de este repositorio, e instalar las librerias requeridas para la correcta ejecucion de la aplicación.
+
+Para instalar las librerías requeridas:
 ```sh
 pip install -r requirements.txt
 ```
@@ -57,7 +61,9 @@ pip install -r requirements.txt
 | stdiomask | 0.0.6 |
 | praw | 7.7.0 |
 
-### Autores:
+Una vez se tengan todos los archivos solicitados, comenzar la ejecución del programa desde el archivo AccessMenu.py
+
+## Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
 - [@JEROLPOA2](https://github.com/JEROLPOA2): Jerónimo Ledesma Patiño.
 - [@DavedCV](https://github.com/DavedCV): David Castrillón Vallejo.
