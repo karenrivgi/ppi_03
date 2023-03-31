@@ -1,5 +1,7 @@
 # IMPORTAMOS LAS LIBRERÍAS A USAR
 
+import os
+
 # librerías para el manejo de la ubicacion y hora
 from datetime import datetime
 from geopy import Nominatim
@@ -17,10 +19,11 @@ from matplotlib.patches import Circle
 from skyfield.api import Star, load, wgs84
 from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
+from skyfield.api import Loader
 
-def generar_mapa(fecha_hora, lugar):
-
+def generar_mapa(fecha_hora, lugar, size: int):
     # de421 (de SkyField) Muestra la posición de la tierra y el sol en el espacio
+    load = Loader(os.path.dirname(__file__))
     eph = load('de421.bsp')
 
     # El catálogo de estrellas Hiparco del data de skifield contiene información sobre la ubicación y demás características de las estrellas
@@ -82,10 +85,12 @@ def generar_mapa(fecha_hora, lugar):
     stars['x'], stars['y'] = projection(star_positions) # En base a la proyección estereográfica hecha con centro el cenit del observador, 
                                                         # encontramos la posición de la estrella en un plano 2D y guardamos esos datos en el dataframe stars
 
-    #Las estrellas tienen magnitudes aparentes variables que definen qué tan brillantes son en comparación con la estrella más brillante de nuestro cielo. 
-    #Cuanto mayor es la magnitud, menos brillante nos parece la estrella, y queremos representar eso en el plano 2D
-    
-    chart_size = 10 # Tamaño del mapa estelar
+    '''
+    Las estrellas tienen magnitudes aparentes variables que definen qué tan brillantes son en comparación con la estrella más brillante de nuestro cielo. 
+    Cuanto mayor es la magnitud, menos brillante nos parece la estrella, y queremos representar eso en el plano 2D
+    '''
+
+    chart_size = int(size * 0.02) # Tamaño del mapa estelar
     max_star_size = 100 # Tamaño máximo de la estrella (en el gráfico)
     limiting_magnitude = 8 # No mostrará las estrellas que tengan magnitud mayor que 10: entre menor es su magnitud, más brillante es
 
@@ -94,7 +99,7 @@ def generar_mapa(fecha_hora, lugar):
     magnitude = stars['magnitude'][bright_stars] # Obtenemos las estrellas en el catálogo hiparco que cumplen con la condición de magnitud
 
     
-    # Obtenemos estrellas más brillantes y obtenemos sus nombres
+    #obtenemos las 15 estrellas más brillantes
     import math
     def in_circle(row):
         center_x = 0
@@ -110,14 +115,16 @@ def generar_mapa(fecha_hora, lugar):
     oppp = stars.apply(in_circle, 1) & bright_stars_label
     brightest_for_labels = stars[stars.apply(in_circle, 1) & bright_stars_label]
 
-    names_csv = pd.read_csv("names.csv")
+    names_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"names.csv")
+    print(names_path)
+    names_csv = pd.read_csv(names_path)
     brightest_and_labels = names_csv[names_csv["HIP"].isin(list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
 
 
-    # Los contornos de la constelación provienen de Stellarium. Hacemos una lista
-    # de las estrellas en las que cada borde protagoniza y la estrella en la que cada borde
-    # termina.
+    # And the constellation outlines come from Stellarium.  We make a list
+    # of the stars at which each edge stars, and the star at which each edge
+    # ends.
 
     # Hay que borrar el archivo cada vez, para que cargue el nuevo
     #url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master/skycultures/maya/constellationship.fab')
@@ -130,23 +137,23 @@ def generar_mapa(fecha_hora, lugar):
     edges_star1 = [star1 for star1, star2 in edges]
     edges_star2 = [star2 for star1, star2 in edges]
 
-    # Las líneas de constelación comenzarán cada una en la (x, y) de una estrella y un final
-    # en la (x, y) de otra. Tenemos que "rollaxis" la coordenada resultante
-    # matriz en la forma que Matplotlib espera.
+    # The constellation lines will each begin at the x,y of one star and end
+    # at the x,y of another.  We have to "rollaxis" the resulting coordinate
+    # array into the shape that matplotlib expects.
 
     xy1 = stars[['x', 'y']].loc[edges_star1].values
     xy2 = stars[['x', 'y']].loc[edges_star2].values
     lines_xy = np.rollaxis(np.array([xy1, xy2]), 1)
 
-    fig, ax = plt.subplots(figsize=(chart_size, chart_size)) # Define el tamaño de la gráfica
+    fig, ax = plt.subplots(figsize=(chart_size, chart_size),tight_layout = {'pad': 0}) # Define el tamaño de la gráfica
+    fig.set_facecolor("black")
     
     border = plt.Circle((0, 0), 1, color='black', fill=True) # Fondo para la proyección
     ax.add_patch(border)
 
     marker_size = max_star_size * 10 ** (magnitude / -2.5) #Calcula qué tan grande será el circulito (En base al cálculo descrito en la img)
     #marker_size = (0.5 + limiting_magnitude - magnitude) ** 2.0
-
-    # Dibujar las lineas de las constelaciones.
+    # Draw the constellation lines.
 
     ax.add_collection(LineCollection(lines_xy, colors='y'))
 
@@ -155,11 +162,11 @@ def generar_mapa(fecha_hora, lugar):
     s=marker_size, color='white', marker='.', linewidths=0, 
     zorder=2)
 
-    # Ponerle la equiqueta a cada estrella de las más brillantes
+    #label each point
     for label, x, y in zip(brightest_and_labels["common name"],brightest_for_labels["x"], brightest_for_labels["y"]):
         ax.annotate(label,
-        xy=(x, y),                          # Poner la etiqueta en el punto
-        xytext=(0.5,-0.5),                  # un poco desfasada
+        xy=(x, y),                          #put the label with its point
+        xytext=(0.5,-0.5),                      #but slightly offset
         textcoords = "offset points", color="white",
         fontsize=6)
 
@@ -168,14 +175,12 @@ def generar_mapa(fecha_hora, lugar):
         col.set_clip_path(horizon)
 
 
-    # Otras configuraciones
+    # other settings
     ax.set_xlim(-1, 1)
     ax.set_ylim(-1, 1)
     ax.axis('off')
 
     font1 = {'family':'serif','color':'black','size':15}
 
-    ax.set_title(locationstr + " " + when, fontdict = font1)
-    plt.savefig("map.png")
-
-    return fig      
+    #ax.set_title(locationstr + " " + when, fontdict = font1)
+    return fig          
