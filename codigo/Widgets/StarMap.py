@@ -139,10 +139,10 @@ class StarMap:
         self.canvasDate.grid(row=1, column=0, sticky="nsew")
         self.canvasDate.grid_anchor("center")
 
-        self.dateText = tk.Label(self.canvasDate, text= "Date", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
+        self.dateText = tk.Label(self.canvasDate, text= "Date(AAAA-MM-DD)", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
         self.dateText.grid(row = 0, column = 0)
 
-        self.hourText = tk.Label(self.canvasDate, text= "Hour", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
+        self.hourText = tk.Label(self.canvasDate, text= "Hour(HH:MM)", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
         self.hourText.grid(row = 0, column = 1)
 
 
