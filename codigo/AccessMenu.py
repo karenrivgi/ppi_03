@@ -8,12 +8,16 @@ from CreateAccount import CreateAccount
 
 class AccessMenu:
 
+    # Referencia al directorio con los recursos graficos.
+
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
 
-    def btn_clicked(self):
-        print("Button Clicked")
-
     def login(self):
+        """Recopila los datos ingresados en los campos de entrada de
+        nickname y password; y los compara con los datos de las cuentas
+        registradas para dar acceso al menu de usuarios registrados con
+        la cuenta ingresada."""
+
         nickname = self.nameEntry.get()
         password = self.passwordEntry.get()
 
@@ -31,21 +35,30 @@ class AccessMenu:
         
         MemberMenu(master= self.master, user = user)
 
+
     def create_account(self):
+        """Instancia una ventana de clase CreateAccount."""
+
         CreateAccount(master=self.master)
 
+
     def guestAccess(self):
+        """Instancia una ventana de clase GuestMenu."""
         GuestMenu(master= self.master)
 
+
     def __init__(self, master: tk.Tk) -> None:
+
+        # Creacion del contenedor de los objetos de la ventana.
 
         self.master = master
         self.access = tk.Canvas(master, width= master.winfo_width(), height= master.winfo_height(),bd = 0, highlightthickness = 0, relief = "ridge", bg="black")
         self.access.update_idletasks()
         self.access.place(x=0, y=0)
-
         self.background_img = tk.PhotoImage(file = os.path.join(AccessMenu.recursos_path,"AccessBack.png"), master=self.access) 
         self.background = self.access.create_image(512, 384, image=self.background_img)
+
+        # Creacion de cuadro de texto en el contenedor.
 
         self.access.create_text(
             512.5, 315.5,
@@ -53,7 +66,9 @@ class AccessMenu:
             fill = "#ffffff",
             font = ("BeVietnamPro-Bold", int(40.0)))
 
-        ########################################
+        #--------------------------------------------------
+        # Creacion de boton de acceso al menu de invitados.
+
         self.img0 = tk.PhotoImage(file = os.path.join(AccessMenu.recursos_path,"GuestButton.png"), master=self.access)
 
         self.guestButton = tk.Button(
@@ -69,7 +84,9 @@ class AccessMenu:
             width = 117,
             height = 23)
         
-        ########################################
+        #--------------------------------------------------
+        # Creacion del boton de acceso al menu de creacion de cuentas.
+
         self.img1 = tk.PhotoImage(file = os.path.join(AccessMenu.recursos_path,"RegisterButton.png"))
 
         self.createAccountButton = tk.Button(
@@ -85,7 +102,9 @@ class AccessMenu:
             width = 160,
             height = 23)
 
-        ########################################
+        #--------------------------------------------------
+        # Creacion del boton para carga de datos del login y acceso al menu de usuarios registrados.
+
         self.img2 = tk.PhotoImage(file = os.path.join(AccessMenu.recursos_path,"LoginButton.png"))
         
         self.loginButton = tk.Button(
@@ -101,7 +120,9 @@ class AccessMenu:
             width = 300,
             height = 40)
         
-        ########################################
+        #--------------------------------------------------
+        # Creacion de cuadros de texto para ingresar nombre de usuario y contraseña.
+
         self.nameEntry = tk.Entry(
             bd = 0,
             bg = "#ffffff",
@@ -113,7 +134,6 @@ class AccessMenu:
             width = 350,
             height = 38,)
 
-        ########################################
         self.passwordEntry = tk.Entry(
             bd = 0,
             bg = "#ffffff",
@@ -125,7 +145,6 @@ class AccessMenu:
             x = 362, y = 480,
             width = 350,
             height = 38)
-
 
 
 window = tk.Tk()
