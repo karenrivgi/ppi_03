@@ -11,11 +11,11 @@ class MemberMenu:
     def instance_widget(self, widget):
         """Instancia el widget pasado como parametro dentro de la ventana actual"""
 
-        canvasWidgets = tk.Canvas(master = self.mainMenu, width = 764, height = 748)
-        canvasWidgets.place(x = 262, y = 20)
-        canvasWidgets.update_idletasks()
+        for item in self.canvasWidgets.winfo_children():
+            item.destroy()
 
-        widget(master = canvasWidgets, user = self.user)
+        self.canvasWidgets.config(width=764, height=748)
+        widget(master = self.canvasWidgets, user = self.user)
 
 
     def close_session(self):
@@ -38,7 +38,9 @@ class MemberMenu:
         self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MainMenuBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
         
-        
+        self.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 0, height = 0)
+        self.canvasWidgets.place(x = 262, y = 20)
+        self.canvasWidgets.update_idletasks()
         # Creacion de cuadros de texto en el contenedor.
 
         self.mainMenu.create_text(

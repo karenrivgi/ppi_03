@@ -1,21 +1,22 @@
 import tkinter as tk
 from Widgets.StarMap import StarMap
 import os
+from Widgets.ObjectSearch import ObjectSearch
 
 class GuestMenu:
 
     # Referencia al directorio con los recursos graficos.
 
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
-
+    
     def instance_widget(self, widget):
         """Instancia el widget pasado como parametro dentro de la ventana actual"""
 
-        canvasWidgets = tk.Canvas(master = self.mainMenu, width = 764, height = 748)
-        canvasWidgets.place(x = 262, y = 20)
-        canvasWidgets.update_idletasks()
+        for item in self.canvasWidgets.winfo_children():
+            item.destroy()
 
-        widget(master = canvasWidgets)
+        self.canvasWidgets.config(width=764, height=748)
+        widget(master = self.canvasWidgets)
 
 
     def return_to_access(self):
@@ -45,6 +46,13 @@ class GuestMenu:
             text = "Explore",
             fill = "#ffffff",
             font = ("BeVietnamPro-Bold", int(25.0)))
+        
+        #--------------------------------------------------
+        # Creacion del cuadro contenedor de los widgets.
+
+        self.canvasWidgets = tk.Canvas(master=self.mainMenu, width=0, height=0)
+        self.canvasWidgets.place(x = 262, y = 20)
+        self.canvasWidgets.update_idletasks()
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase StarMap.
@@ -72,7 +80,7 @@ class GuestMenu:
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(ObjectSearch),
             background= "black",
             relief = "flat")
 
