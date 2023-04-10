@@ -39,9 +39,6 @@ def generar_mapa(fecha_hora, lugar, size: int):
     when =  fecha_hora #'2023-01-01 00:00'
 
     # Hacemos uso de geopy para obtener de la ubicación su latitud y longitud
-    locator = Nominatim(user_agent='my_request') 
-    location = locator.geocode(locationstr)
-    
     #Han estado ocurriendo problemas con los servidores de geopy, por eso dejamos estas coordenadas
     #locator = Nominatim(user_agent='my_request')
     #location = locator.geocode(locationstr)
