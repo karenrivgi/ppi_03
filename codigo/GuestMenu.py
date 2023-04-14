@@ -1,29 +1,40 @@
 import tkinter as tk
 from Widgets.StarMap import StarMap
 import os
-from Widgets.ObjectSearch import ObjectSearch
 
 class GuestMenu:
 
     # Referencia al directorio con los recursos graficos.
 
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
-    
+    canvasWidgets = None
+
     def instance_widget(self, widget):
         """Instancia el widget pasado como parametro dentro de la ventana actual"""
 
-        for item in self.canvasWidgets.winfo_children():
-            item.destroy()
+        if not GuestMenu.canvasWidgets:
+            GuestMenu.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 740, height = 730, bg="black", highlightthickness = 0)
+        else:
+            GuestMenu.canvasWidgets.delete("all")
+            GuestMenu.canvasWidgets.config(width = 740, height = 730)
 
-        self.canvasWidgets.config(width=764, height=748)
-        widget(master = self.canvasWidgets)
+        loadingText = tk.Label(GuestMenu.canvasWidgets, text = "Loading...", fg = "white", bg = "black")
+        loadingText.place(x = 352, y = 345)
+
+        GuestMenu.canvasWidgets.place(x = 262, y = 20)
+        GuestMenu.canvasWidgets.update_idletasks()
+
+        widget(master = GuestMenu.canvasWidgets, user = None)
 
 
-    def return_to_access(self):
+    def close_session(self):
         """Instancia una ventana de clase AccessMenu y destruye la ventana actual"""
-        
+
         for wid in self.widgets:
-            wid.destroy()
+            wid.destroy() 
+        
+        self.mainMenu.destroy()
+        GuestMenu.canvasWidgets = None
 
 
     def __init__(self, master: tk.Tk) -> None:
@@ -36,7 +47,7 @@ class GuestMenu:
         self.mainMenu.update_idletasks()
         self.mainMenu.place(x=0, y=0)
         self.widgets.append(self.mainMenu)
-        self.background_img = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"GuestBack.png"), master=self.mainMenu) 
+        self.background_img = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"GuestSessionBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
         
         # Creacion de cuadro de texto en el contenedor.
@@ -46,18 +57,11 @@ class GuestMenu:
             text = "Explore",
             fill = "#ffffff",
             font = ("BeVietnamPro-Bold", int(25.0)))
-        
-        #--------------------------------------------------
-        # Creacion del cuadro contenedor de los widgets.
-
-        self.canvasWidgets = tk.Canvas(master=self.mainMenu, width=0, height=0)
-        self.canvasWidgets.place(x = 262, y = 20)
-        self.canvasWidgets.update_idletasks()
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase StarMap.
 
-        self.img2 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"StarMapButton.png"))
+        self.img2 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"StarMapButtonG.png"))
         self.starMapButton = tk.Button(
             image = self.img2,
             borderwidth = 0,
@@ -68,42 +72,42 @@ class GuestMenu:
 
         self.starMapButton.place(
             x = 25, y = 80,
-            width = 109,
-            height = 32)  
+            width = 150,
+            height = 30)  
         self.widgets.append(self.starMapButton)      
         
         #--------------------------------------------------
-        # Creacion de boton de para instanciar un widget de clase ObjectSearch.
+        # Creacion de boton de para instanciar un widget de clase Map Info.
 
-        self.img1 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"ObjectSearchButton.png"))
-        self.objectSearchButton = tk.Button(
+        self.img1 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"MapInfoButton.png"))
+        self.mapInfoButton = tk.Button(
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
-            command = lambda: self.instance_widget(ObjectSearch),
+            command = self.instance_widget,
             background= "black",
             relief = "flat")
 
-        self.objectSearchButton.place(
+        self.mapInfoButton.place(
             x = 25, y = 130,
-            width = 171,
-            height = 32)
-        self.widgets.append(self.objectSearchButton)
+            width = 150,
+            height = 30)
+        self.widgets.append(self.mapInfoButton)
 
         #--------------------------------------------------
         # Creacion de boton de para cerrar la sesion y volver al menu de acceso.
 
-        self.img3 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"ReturnButton.png"))
+        self.img3 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"ReturnToMenuG.png"))
         self.closeSessionButton = tk.Button(
             image = self.img3,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.return_to_access,
+            command = self.close_session,
             background= "black",
             relief = "flat")
 
         self.closeSessionButton.place(
-            x = 25, y = 609,
-            width = 183,
-            height = 32)
+            x = 25, y = 709,
+            width = 196,
+            height = 42)
         self.widgets.append(self.closeSessionButton)

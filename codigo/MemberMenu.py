@@ -7,15 +7,25 @@ class MemberMenu:
     # Referencia al directorio con los recursos graficos.
 
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
+    canvasWidgets = None
 
     def instance_widget(self, widget):
         """Instancia el widget pasado como parametro dentro de la ventana actual"""
 
-        for item in self.canvasWidgets.winfo_children():
-            item.destroy()
+        # aca deberiamos mantener un canvas general, en estos momentos se esta creando uno cada vez y puede generar problemas
+        if not MemberMenu.canvasWidgets:
+            MemberMenu.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 740, height = 730, bg="black", highlightthickness = 0)
+        else:
+            MemberMenu.canvasWidgets.delete("all")
+            MemberMenu.canvasWidgets.config(width = 740, height = 730)
 
-        self.canvasWidgets.config(width=764, height=748)
-        widget(master = self.canvasWidgets, user = self.user)
+        loadingText = tk.Label(MemberMenu.canvasWidgets, text = "Loading...", fg = "white", bg = "black")
+        loadingText.place(x = 352, y = 345)
+
+        MemberMenu.canvasWidgets.place(x = 262, y = 20)
+        MemberMenu.canvasWidgets.update_idletasks()
+
+        widget(master = MemberMenu.canvasWidgets, user = self.user)
 
 
     def close_session(self):
@@ -23,6 +33,9 @@ class MemberMenu:
 
         for wid in self.widgets:
             wid.destroy() 
+        
+        self.mainMenu.destroy()
+        MemberMenu.canvasWidgets = None
 
 
     def __init__(self, master: tk.Tk, user = None) -> None:
@@ -35,12 +48,10 @@ class MemberMenu:
         self.mainMenu.update_idletasks()
         self.mainMenu.place(x=0, y=0)
         self.widgets.append(self.mainMenu)
-        self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MainMenuBack.png"), master=self.mainMenu) 
+        self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"GuestSessionBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
         
-        self.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 0, height = 0)
-        self.canvasWidgets.place(x = 262, y = 20)
-        self.canvasWidgets.update_idletasks()
+        
         # Creacion de cuadros de texto en el contenedor.
 
         self.mainMenu.create_text(
@@ -123,10 +134,28 @@ class MemberMenu:
             relief = "flat")
 
         self.closeSessionButton.place(
-            x = 25, y = 609,
+            x = 25, y = 659,
             width = 163,
             height = 32)
         self.widgets.append(self.closeSessionButton)
+
+        #--------------------------------------------------
+        # Creacion de boton de para entrar a historiales.
+
+        self.img7 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"Historial.png"))
+        self.historialButton = tk.Button(
+            image = self.img7,
+            borderwidth = 0,
+            highlightthickness = 0,
+            command = self.instance_widget,
+            background= "black",
+            relief = "flat")
+
+        self.historialButton.place(
+            x = 25, y = 559,
+            width = 87,
+            height = 32)
+        self.widgets.append(self.historialButton)
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase AccountSettings.
@@ -141,7 +170,7 @@ class MemberMenu:
             relief = "flat")
 
         self.settingsButton.place(
-            x = 25, y = 559,
+            x = 25, y = 609,
             width = 98,
             height = 32)
         self.widgets.append(self.settingsButton)
