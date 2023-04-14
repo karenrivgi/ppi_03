@@ -1,7 +1,4 @@
 # IMPORTAMOS LAS LIBRERÍAS A USAR
-
-import os
-
 # librerías para el manejo de la ubicacion y hora
 from datetime import datetime
 from geopy import Nominatim
@@ -9,6 +6,8 @@ from tzwhere import tzwhere
 from pytz import timezone, utc
 import numpy as np
 import pandas as pd
+import os
+import math
 
 # Matplotlib para mostrar nuestro mapa del cielo
 import matplotlib.pyplot as plt
@@ -21,87 +20,129 @@ from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
 from skyfield.api import Loader
 
-def generar_mapa(fecha_hora, lugar, size: int):
-    # de421 (de SkyField) Muestra la posición de la tierra y el sol en el espacio
+
+def generar_mapa(
+        fecha_hora,
+        lugar,
+        size: int,
+        magnitud_lim=8,
+        nombres_estrellas=True,
+        planeta='mars',
+        cons_color='y',
+        cultura='maya'):
+
     load = Loader(os.path.dirname(__file__))
+
+    # -------------------------
+    # CARGAR DATOS
+
+    # de421 (de SkyField) Muestra la posición de la tierra y el sol en el
+    # espacio
     eph = load('de421.bsp')
 
-    # El catálogo de estrellas Hiparco del data de skifield contiene información sobre la ubicación y demás características de las estrellas
-    # Lo cargamos como un dataframe
-
+    # El catálogo de estrellas Hiparco del data de skifield contiene
+    # información las estrellas
     with load.open(hipparcos.URL) as f:
+        # Lo cargamos como un dataframe
         stars = hipparcos.load_dataframe(f)
 
-    # Obtenemos la ubicación del usuario solicitando la infor en el formato: país, departamento o provincia y ciudad
-    locationstr =  lugar #'Colombia, Antioquia, Medellin'
+    # -------------------------
+    # PROCESAR UBICACIÓN Y FECHA
+
+    # Obtenemos la ubicación del usuario solicitando la infor en el formato:
+    # país, provincia y ciudad
+    locationstr = lugar  # 'Colombia, Antioquia, Medellin'
 
     # Obtenemos la hora en el formato: año-mes-dia hora
-    when =  fecha_hora #'2023-01-01 00:00'
+    when = fecha_hora  # '2023-01-01 00:00'
 
     # Hacemos uso de geopy para obtener de la ubicación su latitud y longitud
-    #Han estado ocurriendo problemas con los servidores de geopy, por eso dejamos estas coordenadas
-    #locator = Nominatim(user_agent='my_request')
-    #location = locator.geocode(locationstr)
-    lat, long = 6.2540146, -75.23649364737614 #location.latitude, location.longitude
+    # locator = Nominatim(user_agent='my_request')
+    # location = locator.geocode(locationstr)
+    # location.latitude, location.longitude
+    lat, long = 6.2540146, -75.23649364737614
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
 
-    # define datetime and convert to utc based on our timezone ***
+    # Obtener la zona horaria correspondiente a las coordenadas
     timezone_str = tzwhere.tzwhere().tzNameAt(lat, long)
     local = timezone(timezone_str)
 
-    # get UTC from local timezone and datetime ***
+    # Convertir la fecha y hora local a UTC (hora estándar que es igual en
+    # todo el mundo)
     local_dt = local.localize(dt, is_dst=None)
     utc_dt = local_dt.astimezone(utc)
 
-    # Encontramos la ubicación de la tierra de de421.bsp find location of earth and sun and set the observer position
-    earth = eph['earth']
-
-    # Definimos el tiempo de observación del datetime UTC 
+    # Convertir la fecha y hora UTC a un objeto "Time" para realizar cálculos
+    # astronómicos.
     ts = load.timescale()
     t = ts.from_datetime(utc_dt)
 
-    # Definimos un observador usando los datos del sistema geodésico mundial ("único sistema de referencia de coordenadas geográficas mundial utilizado hoy en día y que permite localizar cualquier punto de la Tierra" - https://www.aragon.es/documents/20127/2555757/Busqueda+de+COORDENADAS+GEOGRAFICAS+%282%29.pdf/547291f2-8704-2aa4-1a76-c6c4bfb60d0e?t=1624276052810#:~:text=El%20datum%20WGS84%20es%20el,en%20los%20dispositivos%20GPS%20comerciales.)
+    # -------------------------
+    # CREACIÓN DE LA PROYECCIÓN DE LA ESFERA CELESTE EN UN PLANO
+
+    # Encontramos la ubicación de la tierra de de421.bsp
+    earth = eph['earth']
+
+    # Crea un objeto "observador" en una ubicación geográfica específica y en
+    # un momento determinado.
     observer = wgs84.latlon(latitude_degrees=lat, longitude_degrees=long).at(t)
 
-    # Definimos la posición en el espacio a la que miraremos (Cenit del observaor) define the position in the sky where we will be looking
-    #position = observer.from_altaz(alt_degrees=90, az_degrees=0)
+    # Centramos el punto de observación en la mitad del cielo, justo arriba de la cabeza del observador
+    # (cenit), creando una estrella falsa como punto central
 
-    # Centramos el punto de observación en la mitad del cielo, justo arriba de la cabeza del observador (cenit), creando una estrella falsa como punto central
+    # Convertimos las coordenadas del observador a coordenadas astronómicas
+    ra, dec, distance = observer.radec()
+    # Creamos la estrella falsa (punto en el cielo y centro de la gráfica) con
+    # las coordenadas anteriores
+    center_object = Star(ra=ra, dec=dec)
 
-    ra, dec, distance = observer.radec() # Convertimos las coordenadas del observador a coordenadas astronómicas
-    center_object = Star(ra=ra, dec=dec) # Creamos la estrella falsa (punto en el cielo y centro de la gráfica) con las coordenadas anteriores
+    # Encontramos el centro relativo a la tierra en la fecha pasada y
+    # construimos la proyección estereográfica del cielo con ayuda de skyfield
 
-    # Encontramos el centro relativo a la tierra en la fecha pasada y construimos la proyección estereográfica del cielo con ayuda de skyfield 
-
-    center = earth.at(t).observe(center_object) # La tierra el (fecha), observa (punto falso (cenit del observador))
+    # La tierra el (fecha), observa (punto falso (cenit del observador))
+    center = earth.at(t).observe(center_object)
+    # Construye la proyección estereográfica centrada en el cenit del
+    # observador.
     projection = build_stereographic_projection(center)
-    field_of_view_degrees = 180.0
 
-    # Observamos las estrellas desde la posición en la tierra y las proyectamos en el mapa, permitiendo calcular sus posiciones
-    # en tèrminos de x y y* (nuevas columnas del dataframe) al proyectarlas en un plano 2D
+    # -------------------------
+    # POSICIONAMIENTO DE LAS ESTRELLAS EN LA PROYECCIÓN
 
-    star_positions = earth.at(t).observe(Star.from_dataframe(stars)) # Observamos las estrellas desde la posición en la tierra en el tiempo especificado (t)
-    stars['x'], stars['y'] = projection(star_positions) # En base a la proyección estereográfica hecha con centro el cenit del observador, 
-                                                        # encontramos la posición de la estrella en un plano 2D y guardamos esos datos en el dataframe stars
+    # Observamos las estrellas desde la tierra y guardamos sus posiciones, luego las proyectamos en nuestra
+    # gráfica en el plano 2D, y guardamos sus nuevas coordenadas en términos
+    # de x y y
+
+    # Observamos las estrellas desde la posición en la tierra en el tiempo
+    # especificado (t)
+    star_positions = earth.at(t).observe(Star.from_dataframe(stars))
+
+    # En base a la proyección estereográfica hecha con centro el cenit del observador,
+    # encontramos la posición de la estrella en un plano 2D y guardamos esos
+    # datos en el dataframe stars
+    stars['x'], stars['y'] = projection(star_positions)
 
     '''
-    Las estrellas tienen magnitudes aparentes variables que definen qué tan brillantes son en comparación con la estrella más brillante de nuestro cielo. 
+    Las estrellas tienen magnitudes aparentes variables que definen qué tan brillantes son en comparación con la estrella más brillante de nuestro cielo.
     Cuanto mayor es la magnitud, menos brillante nos parece la estrella, y queremos representar eso en el plano 2D
     '''
 
-    chart_size = int(size * 0.02) # Tamaño del mapa estelar
-    max_star_size = 100 # Tamaño máximo de la estrella (en el gráfico)
-    limiting_magnitude = 8 # No mostrará las estrellas que tengan magnitud mayor que 10: entre menor es su magnitud, más brillante es
+    chart_size = int(size * 0.02)  # Tamaño del mapa estelar
+    max_star_size = 100  # Tamaño máximo de la estrella (en el gráfico)
+    # No mostrará las estrellas que tengan una magnitud mayor: entre menor es
+    # su magnitud, más brillante es
+    limiting_magnitude = magnitud_lim
 
-    bright_stars = (stars.magnitude <= limiting_magnitude) # Creamos una máscara para filtrar por la magnitud límite
+    # Creamos una máscara para filtrar por la magnitud límite
+    bright_stars = (stars.magnitude <= limiting_magnitude)
+    # Obtenemos las estrellas en el catálogo hiparco que cumplen con la
+    # condición de magnitud
+    magnitude = stars['magnitude'][bright_stars]
 
-    magnitude = stars['magnitude'][bright_stars] # Obtenemos las estrellas en el catálogo hiparco que cumplen con la condición de magnitud
+    # -------------------------
+    # NOMBRAR LAS ESTRELLAS MÁS BRILLANTES MOSTRADAS EN EL MAPA*
 
-    
-    #obtenemos las 15 estrellas más brillantes
-    import math
     def in_circle(row):
         center_x = 0
         center_y = 0
@@ -112,76 +153,162 @@ def generar_mapa(fecha_hora, lugar, size: int):
         dist = math.sqrt((center_x - x) ** 2 + (center_y - y) ** 2)
         return dist < radius
 
-    bright_stars_label = (stars.magnitude <= 2) 
-    oppp = stars.apply(in_circle, 1) & bright_stars_label
-    brightest_for_labels = stars[stars.apply(in_circle, 1) & bright_stars_label]
+    bright_stars_label = (stars.magnitude <= 2)
+    brightest_for_labels = stars[stars.apply(
+        in_circle, 1) & bright_stars_label]
 
-    names_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"names.csv")
-    print(names_path)
+    names_path = os.path.join(
+        os.path.dirname(
+            os.path.abspath(__file__)),
+        "names.csv")
     names_csv = pd.read_csv(names_path)
-    brightest_and_labels = names_csv[names_csv["HIP"].isin(list(brightest_for_labels.index))]
+    brightest_and_labels = names_csv[names_csv["HIP"].isin(
+        list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
 
+    # -------------------------
+    # CONSTRUIR LAS CONSTELACIONES
 
-    # And the constellation outlines come from Stellarium.  We make a list
-    # of the stars at which each edge stars, and the star at which each edge
-    # ends.
+    # Obtenemos las constelaciones basadas en una cultura
+    constellations = get_constellations(cultura)
 
-    # Hay que borrar el archivo cada vez, para que cargue el nuevo
-    #url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master/skycultures/maya/constellationship.fab')
-    url = ('https://raw.githubusercontent.com/Stellarium/stellarium/master/skycultures/modern/constellationship.fab')
-
-    with load.open(url) as f:
-        constellations = stellarium.parse_constellations(f)
-
+    # Hacemos una lista de las estrellas en las que empieza y termina cada
+    # arista
     edges = [edge for name, edges in constellations for edge in edges]
     edges_star1 = [star1 for star1, star2 in edges]
     edges_star2 = [star2 for star1, star2 in edges]
 
-    # The constellation lines will each begin at the x,y of one star and end
-    # at the x,y of another.  We have to "rollaxis" the resulting coordinate
-    # array into the shape that matplotlib expects.
-
+    # Las líneas de constelación comenzarán cada una en el x,y de una estrella y terminarán en las
+    # x,y de otra. Hacemos la conversión de las coordenadas en la forma en que
+    # matplotlib las espera
     xy1 = stars[['x', 'y']].loc[edges_star1].values
     xy2 = stars[['x', 'y']].loc[edges_star2].values
     lines_xy = np.rollaxis(np.array([xy1, xy2]), 1)
 
-    fig, ax = plt.subplots(figsize=(chart_size, chart_size),tight_layout = {'pad': 0}) # Define el tamaño de la gráfica
+    # -------------------------
+    # POSICIONAR UN PLANETA EN LA PROYECCIÓN
+
+    # Si queremos observar un planeta, extraemos su posición en la fecha y ubicacion actual
+    # Usando la efemerides guardadas en eph
+
+    warning = False
+
+    if planeta:
+        planet = eph[planeta]
+        planet_position = earth.at(t).observe(planet)
+        planet_x, planet_y = projection(planet_position)
+        # Advertirmos al usuario en caso de que no se pueda ver el planeta
+        if planet_x < -0.9 or planet_x > 0.9 or planet_y < -0.9 or planet_y > 0.9:
+            warning = True
+
+    # ----------------------------------------
+    # CONSTRUCCIÓN DEL GRÁFICO
+
+    # Crear una figura con el tamaño especificado
+    fig, ax = plt.subplots(
+        figsize=(
+            chart_size, chart_size), tight_layout={
+            'pad': 0})
+
+    # Configurar el color de fondo de la figura
     fig.set_facecolor("black")
-    
-    border = plt.Circle((0, 0), 1, color='black', fill=True) # Fondo para la proyección
+
+    # Crear un círculo para el fondo de la proyección
+    # Fondo para la proyección
+    border = plt.Circle((0, 0), 1, color='black', fill=True)
     ax.add_patch(border)
 
-    marker_size = max_star_size * 10 ** (magnitude / -2.5) #Calcula qué tan grande será el circulito (En base al cálculo descrito en la img)
-    #marker_size = (0.5 + limiting_magnitude - magnitude) ** 2.0
-    # Draw the constellation lines.
+    # Calcular el tamaño del marcador que representa el brillo de la estrella
+    # Calcula qué tan grande será el circulo
+    marker_size = max_star_size * 10 ** (magnitude / -2.5)
 
-    ax.add_collection(LineCollection(lines_xy, colors='y'))
+    # Dibujar las líneas de la constelación
+    ax.add_collection(LineCollection(lines_xy, colors=cons_color))
 
-    #Diagrama de dispersión usando su ubicación x e y, el tamaño del marcador que representa el brillo.
-    ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars], 
-    s=marker_size, color='white', marker='.', linewidths=0, 
-    zorder=2)
+    # Diagrama de dispersión usando la ubicación x,y de las estrellas
+    # y el tamaño del marcador que representa el brillo.
+    ax.scatter(stars['x'][bright_stars], stars['y'][bright_stars],
+               s=marker_size, color='white', marker='.', linewidths=0,
+               zorder=2)
 
-    #label each point
-    for label, x, y in zip(brightest_and_labels["common name"],brightest_for_labels["x"], brightest_for_labels["y"]):
-        ax.annotate(label,
-        xy=(x, y),                          #put the label with its point
-        xytext=(0.5,-0.5),                      #but slightly offset
-        textcoords = "offset points", color="white",
-        fontsize=6)
+    # Si se especificó el planeta, agregarlo al gráfico
+    if planeta and not warning:
+        ax.scatter(
+            planet_x,
+            planet_y,
+            color='red',
+            s=500,
+            marker='.',
+            label='Mars')
+        ax.legend()
 
+    # Si se especificó mostrar los nombres de las estrellas, agregarlos al
+    # gráfico
+    if nombres_estrellas:
+        # Para cada estrella brillante, agregar el nombre como una etiqueta en
+        # la ubicación correspondiente
+        for label, x, y in zip(
+                brightest_and_labels["common name"], brightest_for_labels["x"], brightest_for_labels["y"]):
+            ax.annotate(
+                label, xy=(
+                    x, y), xytext=(
+                    0.5, -0.5), textcoords="offset points", color="white", fontsize=6)
+
+    # Configurar el horizonte de la gráfica, no mostrará lo que esté fuera de
+    # este horizonte
     horizon = Circle((0, 0), radius=1, transform=ax.transData)
     for col in ax.collections:
         col.set_clip_path(horizon)
 
-
-    # other settings
+    # Configurar los límites de los ejes y desactivar los ejes
     ax.set_xlim(-1, 1)
     ax.set_ylim(-1, 1)
     ax.axis('off')
 
-    font1 = {'family':'serif','color':'black','size':15}
+    # font1 = {'family':'serif','color':'black','size':15}
+    # ax.set_title(locationstr + " " + when, fontdict = font1)
 
-    #ax.set_title(locationstr + " " + when, fontdict = font1)
-    return fig          
+    if planeta:
+        return fig, warning
+
+    # Retorna la figura creada
+    return fig, False
+
+
+def get_constellations(culture):
+    """ Retorna un objeto que representa las constelaciones de una cultura especifica
+
+    Analiza el archivo.fab de Skyfield correspondiente a la cultura especificada
+    como parámetro.
+    """
+
+    # Configura la ruta de acceso a la carpeta Constellations
+    constelaciones_path = os.path.join(
+        os.path.dirname(__file__), "Constellations")
+
+    # Guarda en constelation la ruta al archivo .fab correspondiente a la
+    # cultura especificada
+    if culture == 'modern':
+        constelation = os.path.join(
+            constelaciones_path,
+            'constellationship_modern.fab')
+    elif culture == 'maya':
+        constelation = os.path.join(
+            constelaciones_path,
+            'constellationship_maya.fab')
+    elif culture == 'chinese':
+        constelation = os.path.join(
+            constelaciones_path,
+            'constellationship_chinese.fab')
+    elif culture == 'egyptian':
+        constelation = os.path.join(
+            constelaciones_path,
+            'constellationship_egyptian.fab')
+    else:
+        raise ValueError(f"Cultura {culture} no soportada")
+
+    # Abre el archivo y hace la conversión necesaria para manipularlo
+    with open(constelation, "rb") as f:
+        constellations = stellarium.parse_constellations(f)
+
+    return constellations   
