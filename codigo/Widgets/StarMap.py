@@ -397,11 +397,11 @@ class StarMap:
             self.cons_color = self.dicConsColor.get(self.color_seleccionado)
             self.culture = self.dicConsCulture.get(self.culture_seleccionada)
 
-        print(self.planet)
-        print(self.magnitud_lim)
-        print(self.nombres_estrellas)
-        print(self.cons_color)
-        print(self.culture)
+        #print(self.planet)
+        #print(self.magnitud_lim)
+        #print(self.nombres_estrellas)
+        #print(self.cons_color)
+        #print(self.culture)
 
     def show_image(self):
 

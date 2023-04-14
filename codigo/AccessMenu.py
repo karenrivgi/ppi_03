@@ -37,6 +37,7 @@ class AccessMenu:
         
         #Verificación del guardado de los historiales mientras se implementa en la interfaz:
         print(user.historial)
+        print(user.historial_reddit)
         
         MemberMenu(master= self.master, user = user)
 
@@ -45,6 +46,7 @@ class AccessMenu:
         
         """Instancia una ventana de clase CreateAccount."""
         CreateAccount(master=self.master)
+
 
     def recover_account(self):
         
