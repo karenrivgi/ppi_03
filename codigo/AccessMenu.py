@@ -1,15 +1,16 @@
 import tkinter as tk
-from GuestMenu import GuestMenu
-from MemberMenu import MemberMenu
-from user_data.User import Usuario
 import os
-from tkinter import messagebox
+from GuestMenu import GuestMenu
 from CreateAccount import CreateAccount
+from MemberMenu import MemberMenu
+from RecoverPasswordMenu import RecoverPasswordMenu
+from user_data.User import Usuario
+from tkinter import messagebox
+from api_reddit.get_posts_data import delete_folders
 
 class AccessMenu:
 
     # Referencia al directorio con los recursos graficos.
-
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
 
     def login(self):
@@ -37,9 +38,14 @@ class AccessMenu:
 
 
     def create_account(self):
+        
         """Instancia una ventana de clase CreateAccount."""
-
         CreateAccount(master=self.master)
+
+    def recover_account(self):
+        
+        """Instancia una ventana de clase CreateAccount."""
+        RecoverPasswordMenu(master=self.master)
 
 
     def guestAccess(self):
@@ -48,6 +54,9 @@ class AccessMenu:
 
 
     def __init__(self, master: tk.Tk) -> None:
+
+        # Elimina las imagenes de los post de reddir, si por alguna razón ya existen algunas
+        delete_folders()
 
         # Creacion del contenedor de los objetos de la ventana.
 
@@ -80,8 +89,8 @@ class AccessMenu:
             relief = "flat")
         
         self.guestButton.place(
-            x = 596, y = 650,
-            width = 117,
+            x = 606, y = 670,
+            width = 180,
             height = 23)
         
         #--------------------------------------------------
@@ -98,8 +107,8 @@ class AccessMenu:
             relief = "flat")
 
         self.createAccountButton.place(
-            x = 312, y = 650,
-            width = 160,
+            x = 282, y = 670,
+            width = 180,
             height = 23)
 
         #--------------------------------------------------
@@ -116,10 +125,27 @@ class AccessMenu:
             relief = "flat")
 
         self.loginButton.place(
-            x = 362, y = 580,
+            x = 374, y = 580,
             width = 300,
             height = 40)
         
+        #--------------------------------------------------
+        # Creacion del boton para opción de recuperar la cuenta si se olvidó la contraseña.
+
+        self.img3 = tk.PhotoImage(file = os.path.join(AccessMenu.recursos_path,"ForgotPasswordButton.png"))
+        
+        self.forgotPasswordButton = tk.Button(
+            image = self.img3,
+            borderwidth = 0,
+            highlightthickness = 0,
+            command= lambda: self.recover_account(),
+            relief = "flat")
+
+        self.forgotPasswordButton.place(
+            x = 444, y = 630,
+            width = 164,
+            height = 20)
+
         #--------------------------------------------------
         # Creacion de cuadros de texto para ingresar nombre de usuario y contraseña.
 
@@ -149,6 +175,7 @@ class AccessMenu:
 
 window = tk.Tk()
 window.geometry("1024x768")
+window.resizable(True, True)
 window.update_idletasks()
 AccessMenu(window)
 window.mainloop()
