@@ -30,9 +30,13 @@ class AccessMenu:
             return
         
         user = Usuario.login(nickname, password)
+        
         if not user:
             messagebox.showerror("Error", "Incorrect nickname or password")
             return
+        
+        #Verificación del guardado de los historiales mientras se implementa en la interfaz:
+        print(user.historial)
         
         MemberMenu(master= self.master, user = user)
 
