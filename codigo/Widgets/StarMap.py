@@ -345,7 +345,7 @@ class StarMap:
         self.nombres_estrellas = True
         self.planeta = None
         self.cons_color = 'y'
-        self.cultura = 'modern'
+        self.culture = 'modern'
 
     # MÉTODOS DE STARMAP
 
@@ -421,8 +421,8 @@ class StarMap:
         # Guarda en fig el gráfico generado por skymap.generar_mapa
         fig, warning = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
                                   self.figMaster.winfo_height(), self.magnitud_lim, 
-                                  self.nombres_estrellas, self.planeta, 
-                                  self.cons_color, self.cultura)
+                                  self.nombres_estrellas, self.planet, 
+                                  self.cons_color, self.culture)
         
         if warning:
             messagebox.showwarning("Warning", "Perhaps the planet cannot be visualized.")
