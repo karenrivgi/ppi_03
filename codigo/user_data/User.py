@@ -3,92 +3,80 @@ import os
 
 class Usuario:
 
-    data_path = os.path.abspath(os.path.dirname(__file__))
+    # Define la ruta absoluta del directorio donde se encuentra el archivo de datos.
+    DATA_PATH = os.path.abspath(os.path.dirname(__file__))
 
-    def __init__(self, nickname, contrasena, historial = None):
+    # Constructor de la clase Usuario.
+    def __init__(self, nickname, email, contrasena, historial = None, historial_reddit = None):
+        # Inicializa los atributos nickname, contrasena y historial del objeto.
         self.nickname = nickname
+        self.email = email
         self.contrasena = contrasena
         self.historial = historial or []
+        self.historial_reddit = historial_reddit or []
 
     @classmethod
-    def registrar_usuario(cls, nickname, contrasena):
+    def registrar_usuario(cls, nickname, email, contrasena):
+        # Lee los usuarios existentes del archivo de datos.
         usuarios = cls.leer_usuarios()
 
-        if nickname in usuarios:
-            return False
-
-        with open(os.path.join(Usuario.data_path,"usuarios.pickle"), "ab") as f:
-            usuario = Usuario(nickname, contrasena)
+         # Si el nickname no existe, crea un objeto Usuario con el nickname y la contraseña, y lo guarda en el archivo pickle
+        with open(os.path.join(Usuario.DATA_PATH,"usuarios.pickle"), "ab") as f:
+            usuario = Usuario(nickname, email, contrasena)
             pickle.dump(usuario, f)
-        
-        return True
 
+        # Devuelve el diccionario de usuarios
+        return usuarios
+    
     @classmethod
     def login(cls, nickname, contrasena):
+        # Carga los usuarios existentes desde el archivo pickle
         usuarios = cls.leer_usuarios()
 
         if nickname not in usuarios or usuarios[nickname].contrasena != contrasena:
+            # Si el nickname no existe o la contraseña no coincide, devuelve False
             return False 
         
+        # Si el nickname y la contraseña coinciden, devuelve el objeto Usuario correspondiente
         elif usuarios[nickname].contrasena == contrasena:
             return usuarios[nickname]
-        
+    
     @classmethod
-    def leer_usuarios(cls):
+    def leer_usuarios(cls) -> dict:
         try:
-            with open(os.path.join(Usuario.data_path,"usuarios.pickle"), "rb") as f:
+            # Abre el archivo pickle en modo lectura binaria
+            with open(os.path.join(Usuario.DATA_PATH,"usuarios.pickle"), "rb") as f:
                 usuarios = {}
                 while True:
                     try:
+                        # Lee un objeto Usuario desde el archivo y lo agrega al diccionario de usuarios
                         usuario = pickle.load(f)
                         usuarios[usuario.nickname] = usuario
                     except EOFError:
                         break
         except FileNotFoundError:
+            # Si el archivo no existe, devuelve un diccionario vacío
             usuarios = {}
 
+        # Devuelve el diccionario de usuarios
         return usuarios
+
+    def guardar_historial(self, datos, reddit = False):
     
-    def guardar_historial(self, datos):
-        self.historial.append(datos)
         # Carga los objetos del archivo pickle y actualiza el historial del usuario
         usuarios = Usuario.leer_usuarios()
         usuarios[self.nickname].historial = self.historial
 
+        if reddit:
+            # Agrega los datos al historial del usuario
+            self.historial_reddit.append(datos)
+            # Actualizar los datos del usuario en la base de datos
+            usuarios[self.nickname].historial_reddit = self.historial_reddit
+        else:
+            self.historial.append(datos)
+            usuarios[self.nickname].historial = self.historial
+
         # Guarda los objetos actualizados en el archivo pickle
-        with open(os.path.join(Usuario.data_path,"usuarios.pickle"), "wb") as f:
+        with open(os.path.join(Usuario.DATA_PATH,"usuarios.pickle"), "wb") as f:
             for usuario in usuarios.values():
                 pickle.dump(usuario, f)
-
-if __name__ == '__main__': # Implementación básica - Cambio con historial
-    while True:
-        print("1. Registrarse")
-        print("2. Iniciar sesión")
-        print("3. Salir")
-        # Continuar sin iniciar sesión o crear un usuario sin nombre ni contraseña y atributo bool "registrado" para manejar esto?
-
-        opcion = input("Ingrese una opción: ")
-
-        if opcion == "1":
-            nickname = input("Ingrese un nickname: ")
-            contrasena = input("Ingrese una contraseña: ")
-            Usuario.registrar_usuario(nickname, contrasena)
-
-        elif opcion == "2":
-            nickname = input("Ingrese su nickname: ")
-            contrasena = input("Ingrese su contraseña: ")
-            usuario = Usuario.login(nickname, contrasena)
-
-            if usuario:
-                print("Usuario recuperado")
-                print("Historial del usuario: ", usuario.historial)
-                # hacer algo con el usuario loggeado, por ejemplo, mostrar su historial
-
-        elif opcion == "3":
-            break
-
-        else:
-            print("Opción inválida")
-
-
-
