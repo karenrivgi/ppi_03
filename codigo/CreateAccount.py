@@ -36,11 +36,11 @@ class CreateAccount:
         # Verificaciones de existencia y validez de los datos suministrados para las cuentas.
         # Uso de Regex para comprobar la calidad de los datos para generar cuentas mas seguras.
 
-        if not nickname or re.search(nick_regex, nickname) == False:
+        if not nickname or re.search(nick_regex, nickname) == None:
             messagebox.showwarning("Warning", "Please enter a valid nickname.")
             return
 
-        if not password or re.search(password_regex, password) == False:
+        if not password or re.search(password_regex, password) == None:
 
             messagebox.showwarning("Warning", "Please enter a valid password.")
             return
