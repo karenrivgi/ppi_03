@@ -40,7 +40,7 @@ class CreateAccount:
             messagebox.showwarning("Warning", "Please enter a nickname.")
             return
 
-        elif re.search(nick_regex, nickname) == False:
+        if re.search(nick_regex, nickname) == False:
             messagebox.showwarning("Warning", "Please enter a valid nickname.")
             return
 
@@ -48,7 +48,7 @@ class CreateAccount:
             messagebox.showwarning("Warning", "Please enter a password.")
             return
 
-        elif re.search(password_regex, password) == False:
+        if re.search(password_regex, password) == False:
             messagebox.showwarning("Warning", "Please enter a valid password.")
             return
 
