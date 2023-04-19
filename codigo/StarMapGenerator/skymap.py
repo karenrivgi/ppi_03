@@ -20,6 +20,8 @@ from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
 from skyfield.api import Loader
 
+from geopy.exc import GeocoderUnavailable
+from tkinter import messagebox
 
 def generar_mapa(
         fecha_hora,
@@ -57,10 +59,15 @@ def generar_mapa(
     when = fecha_hora  # '2023-01-01 00:00'
 
     # Hacemos uso de geopy para obtener de la ubicación su latitud y longitud
-    # locator = Nominatim(user_agent='my_request')
-    # location = locator.geocode(locationstr)
-    # location.latitude, location.longitude
-    lat, long = 6.2540146, -75.23649364737614
+    try:
+        locator = Nominatim(user_agent='my_request')
+        location = locator.geocode(locationstr)
+        lat, long = location.latitude, location.longitude
+    except GeocoderUnavailable:
+        # Manejar la excepción de GeocoderUnavailable
+        messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map if in our default location: Colombia, Antioquia, Medellin.")
+        lat, long =  6.2443382 -75.573553
+        print("Nominatim no está disponible en este momento. Inténtalo de nuevo más tarde.")
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
@@ -194,9 +201,17 @@ def generar_mapa(
     warning = False
 
     if planeta:
-        planet = eph[planeta]
+
+        planets_b = ['jupiter', 'saturn', 'uranus', 'neptune', 'pluto']
+        if planeta in planets_b:
+            ef = f"{planeta} barycenter"
+            planet = eph[ef]
+        else:    
+            planet = eph[planeta]
+
         planet_position = earth.at(t).observe(planet)
         planet_x, planet_y = projection(planet_position)
+        
         # Advertirmos al usuario en caso de que no se pueda ver el planeta
         if planet_x < -0.9 or planet_x > 0.9 or planet_y < -0.9 or planet_y > 0.9:
             warning = True
@@ -239,7 +254,7 @@ def generar_mapa(
             color='red',
             s=500,
             marker='.',
-            label='Mars')
+            label = planeta.capitalize())
         ax.legend()
 
     # Si se especificó mostrar los nombres de las estrellas, agregarlos al

@@ -379,13 +379,14 @@ class StarMap:
         self.ubicacion_str = f"{pais}, {departamento}, {ciudad}"
 
         # Mostramos un mensaje al usuario indicando que los datos han sido guardados
-        messagebox.showinfo("Guardado", "Los datos han sido guardados.")
+        messagebox.showinfo("Saved", "The data has been saved correctly.")
 
         # Habilitar el botón "Mostrar gráfico"
         self.submitButton.config(state='normal')
 
         self.planeta_seleccionado=self.varViewPlanets.get()
         self.planet = self.dicViewPlanets.get(self.planeta_seleccionado)
+
         #Parametros personalizacion:
         if self.user:
             self.name_seleccionado=self.varAstrosNames.get()
@@ -416,7 +417,10 @@ class StarMap:
 
         # Si es un usuario registrado, guarda en su historial los datos suministrados para la graficación
         if self.user:
-            self.user.guardar_historial([self.fecha_hora_str, self.ubicacion_str])
+            # Si ese input ya ha sido usado con anterioridad o en repetidas
+            # ocasiones, no lo guardamos
+            if [self.fecha_hora_str, self.ubicacion_str] not in self.user.historial:
+                self.user.guardar_historial([self.fecha_hora_str, self.ubicacion_str])
 
         # Guarda en fig el gráfico generado por skymap.generar_mapa
         fig, warning = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
