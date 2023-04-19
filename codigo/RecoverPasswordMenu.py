@@ -67,7 +67,7 @@ class RecoverPasswordMenu:
             mensaje['To'] = user_email
             mensaje['Subject'] = "PyMan's Sky Password Recover"
 
-            cuerpo_mensaje = f"Greetings. \n\n Your account password is: {user.contrasena}"
+            cuerpo_mensaje = f"Greetings {nick}. \n\n Your account password is: {user.contrasena}"
             mensaje.attach(MIMEText(cuerpo_mensaje, 'plain'))
 
             # Enviar mensaje

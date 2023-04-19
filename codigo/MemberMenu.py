@@ -1,6 +1,7 @@
 import tkinter as tk
 from Widgets.StarMap import StarMap
 import os
+from Widgets.History import History
 
 class MemberMenu:
 
@@ -147,7 +148,7 @@ class MemberMenu:
             image = self.img7,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(History),
             background= "black",
             relief = "flat")
 
