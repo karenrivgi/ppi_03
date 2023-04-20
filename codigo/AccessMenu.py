@@ -36,8 +36,8 @@ class AccessMenu:
             return
         
         #Verificación del guardado de los historiales mientras se implementa en la interfaz:
-        print(user.historial)
-        print(user.historial_reddit)
+        #print(user.historial)
+        #print(user.historial_reddit)
         
         MemberMenu(master= self.master, user = user)
 

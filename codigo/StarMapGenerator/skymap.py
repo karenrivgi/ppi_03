@@ -66,7 +66,7 @@ def generar_mapa(
     except GeocoderUnavailable:
         # Manejar la excepción de GeocoderUnavailable
         messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map if in our default location: Colombia, Antioquia, Medellin.")
-        lat, long =  6.2443382 -75.573553
+        lat, long =  6.2443382, -75.573553
         print("Nominatim no está disponible en este momento. Inténtalo de nuevo más tarde.")
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
