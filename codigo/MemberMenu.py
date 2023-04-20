@@ -140,10 +140,27 @@ class MemberMenu:
             relief = "flat")
 
         self.closeSessionButton.place(
-            x = 25, y = 659,
+            x = 25, y = 609,
             width = 184,
             height = 30)
         
+        #--------------------------------------------------
+        # Creacion de boton de para instanciar un widget de clase AccountSettings.
+
+        self.img4 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"SettingsButton.png"))
+        self.settingsButton = tk.Button(
+            master = self.mainMenu,
+            image = self.img4,
+            borderwidth = 0,
+            highlightthickness = 0,
+            command = lambda: self.instance_widget(StarMap),
+            background= "black",
+            relief = "flat")
+
+        self.settingsButton.place(
+            x = 25, y = 559,
+            width = 184,
+            height = 30)
 
         #--------------------------------------------------
         # Creacion de boton de para entrar a historiales.
@@ -159,30 +176,10 @@ class MemberMenu:
             relief = "flat")
 
         self.historialButton.place(
-            x = 25, y = 559,
+            x = 25, y = 509,
             width = 184,
             height = 30)
         
-
-        #--------------------------------------------------
-        # Creacion de boton de para instanciar un widget de clase AccountSettings.
-
-        self.img4 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"SettingsButton.png"))
-        self.settingsButton = tk.Button(
-            master = self.mainMenu,
-            image = self.img4,
-            borderwidth = 0,
-            highlightthickness = 0,
-            command = lambda: self.instance_widget(StarMap),
-            background= "black",
-            relief = "flat")
-
-        self.settingsButton.place(
-            x = 25, y = 609,
-            width = 184,
-            height = 30)
-        
-
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MyStars.
 
@@ -197,26 +194,6 @@ class MemberMenu:
             relief = "flat")
 
         self.myStarsButton.place(
-            x = 25, y = 509,
-            width = 184,
-            height = 30)
-        
-
-        #--------------------------------------------------
-        # Creacion de boton de para instanciar un widget de clase MyMaps.
-
-        self.img6 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MyMapsButton.png"))
-        self.myMapsButton = tk.Button(
-            master = self.mainMenu,
-            image = self.img6,
-            borderwidth = 0,
-            highlightthickness = 0,
-            command = lambda: self.instance_widget(StarMap),
-            background= "black",
-            relief = "flat")
-
-        self.myMapsButton.place(
             x = 25, y = 459,
             width = 184,
-            height = 30)    
-        
+            height = 30)

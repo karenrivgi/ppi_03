@@ -47,8 +47,7 @@ class StarMap:
             font = ("BeVietnamPro-Bold", int(12)), 
             width = 15, 
             fg = "#ffffff", 
-            bg= "black",
-            highlightthickness=0)
+            bg= "black")
         
         self.countryText.grid(row = 0, column = 0)
 
@@ -68,8 +67,7 @@ class StarMap:
             font = ("BeVietnamPro-Bold", int(12)), 
             width = 15, 
             fg = "#ffffff", 
-            bg= "black",
-            highlightthickness=0
+            bg= "black"
         )
         self.cityText.grid(row = 0, column = 2)
 
@@ -79,14 +77,15 @@ class StarMap:
             bd = 0, 
             highlightthickness = 0, 
             font=("BeVietnamPro 12"), 
-            width = 15,
+            width = 15
         )
         self.country.grid(row = 1, column = 0, padx = 5, pady = 5)
 
         # Creamos un espacio para que el usuario pueda ingresar su providencia, y lo posicionamos en canvasPosition con Grid
         self.province = tk.Entry(
             master=self.canvasPosition, 
-            bd = 0,  
+            bd = 0, 
+            highlightthickness = 0, 
             font=("BeVietnamPro 12"), 
             width = 15
         )
@@ -96,6 +95,7 @@ class StarMap:
         self.city = tk.Entry(
             master=self.canvasPosition, 
             bd = 0, 
+            highlightthickness = 0, 
             font=("BeVietnamPro 12"), 
             width = 15
         )
@@ -115,8 +115,7 @@ class StarMap:
             font = ("BeVietnamPro-Bold", int(12)), 
             width = 18, 
             fg = "#ffffff", 
-            bg= "black",
-            highlightthickness=0)
+            bg= "black")
         self.dateText.grid(row = 0, column = 0)
 
         # Posicionamos el Label para la hora en canvasDate, usando grid
@@ -126,8 +125,7 @@ class StarMap:
             font = ("BeVietnamPro-Bold", int(12)), 
             width = 18, 
             fg = "#ffffff", 
-            bg= "black",
-            highlightthickness=0)
+            bg= "black")
         self.hourText.grid(row = 0, column = 1)
 
         # Creamos un espacio para que el usuario pueda ingresar una fecha, y lo posicionamos en canvasDate con Grid
@@ -248,8 +246,7 @@ class StarMap:
             self.canvasPosition2,
             width = 200,
             image = self.imgViewPlanets,
-            bg= "black",
-            highlightthickness=0)
+            bg= "black")
         
         self.viewPlanets.grid(row = 1, column = 0, padx = 0, pady = 0)
         
@@ -275,8 +272,7 @@ class StarMap:
                 self.canvasPosition2,
                 width = 200,
                 image = self.imgShowAstrosNames,
-                bg= "black",
-                highlightthickness=0)
+                bg= "black")
             self.showAstrosNames.grid(row = 4, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Astros Name.
@@ -294,8 +290,7 @@ class StarMap:
                 self.canvasPosition2,
                 width = 180,
                 image = self.imgStarsAmount,
-                bg= "black",
-                highlightthickness=0)
+                bg= "black")
             self.starsAmount.grid(row = 7, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Stars Amount.
@@ -313,8 +308,7 @@ class StarMap:
                 self.canvasPosition2,
                 width = 200,
                 image = self.imgConstellationsCulture,
-                bg= "black",
-                highlightthickness=0)
+                bg= "black")
             self.constellationsCulture.grid(row = 10, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Constellations Culture.
@@ -333,8 +327,7 @@ class StarMap:
                 self.canvasPosition2,
                 width = 200,
                 image = self.imgConstellationsColor,
-                bg= "black",
-                highlightthickness=0)
+                bg= "black")
             self.constellationsColor.grid(row = 13, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Constellations Color.
