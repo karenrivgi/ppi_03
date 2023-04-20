@@ -252,10 +252,10 @@ class StarMap:
         
         #Lista desplegable que contiene las opciones para View Planets. 
         self.varViewPlanets= tk.StringVar(self.canvasPosition2)
-        opcionesViewPlanets=['Sun','Mercury','Venus','Earth','Moon','Mars',
+        opcionesViewPlanets=['Sun','Mercury','Venus','Moon','Mars',
                   'Jupiter','Saturn','Uranus','Neptune','Pluto']
         self.varViewPlanets.set('Mars')
-        self.dicViewPlanets={'Sun':'sun','Mercury':'mercury','Venus':'venus','Earth':'earth',
+        self.dicViewPlanets={'Sun':'sun','Mercury':'mercury','Venus':'venus',
                         'Moon':'moon','Mars':'mars','Jupiter':'jupiter','Saturn':'saturn',
                         'Uranus':'uranus','Neptune':'neptune','Pluto':'pluto'}
         self.listaViewPlanets = tk.OptionMenu(self.canvasPosition2,self.varViewPlanets,*opcionesViewPlanets)
