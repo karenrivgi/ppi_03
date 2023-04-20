@@ -37,7 +37,7 @@ class Newsfeed:
         """
 
         self.master = master
-        self.newsfeed = tk.Frame(self.master, width=master.winfo_reqwidth(), height=master.winfo_reqheight())
+        self.newsfeed = tk.Frame(self.master, width=master.winfo_reqwidth(), height=750)
         self.create_widgets()
         self.get_posts()
         master.create_window((0,0), window = self.newsfeed, anchor = "nw")
