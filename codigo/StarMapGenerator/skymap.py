@@ -33,7 +33,8 @@ def generar_mapa(
         cons_color='y',
         cultura='maya'):
     
-    """Genera un gráfico del mapa estelar basado en una fecha y ubicación y demás parámetros pasados 
+    """
+    Genera un gráfico del mapa estelar basado en una fecha y ubicación y demás parámetros pasados 
     por el usuario.
         
     Se apoya en librerías como geopy y datetime para hacer el tratamiento de los parámetros, luego
@@ -72,7 +73,7 @@ def generar_mapa(
         lat, long = location.latitude, location.longitude
     except GeocoderUnavailable:
         # Manejar la excepción de GeocoderUnavailable
-        messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map if in our default location: Colombia, Antioquia, Medellin.")
+        messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
         lat, long =  6.2443382, -75.573553
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime

@@ -113,5 +113,4 @@ class GuestMenu:
             x = 25, y = 659,
             width = 196,
             height = 42)
-        
-        print("Continue")
+
