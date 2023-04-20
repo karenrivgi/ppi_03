@@ -1,7 +1,9 @@
 import tkinter as tk
-from Widgets.StarMap import StarMap
 import os
+from Widgets.StarMap import StarMap
 from Widgets.History import History
+from Widgets.Newsfeed import Newsfeed
+from Widgets.ObjectSearch import ObjectSearch
 
 class MemberMenu:
 
@@ -95,7 +97,7 @@ class MemberMenu:
             image = self.img0,
             borderwidth = 0,
             highlightthickness = 0,
-            command = lambda: self.instance_widget(StarMap),
+            command = lambda: self.instance_widget(Newsfeed),
             background= "black",
             relief = "flat")
         
@@ -114,7 +116,7 @@ class MemberMenu:
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
-            command = lambda: self.instance_widget(StarMap),
+            command = lambda: self.instance_widget(ObjectSearch),
             background= "black",
             relief = "flat")
 
