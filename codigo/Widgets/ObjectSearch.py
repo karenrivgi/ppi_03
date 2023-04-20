@@ -16,6 +16,10 @@ class ObjectSearch:
     def do_nothing():
         pass
 
+    def destroy(self):
+        self.starMap.destroy()
+    
+    
     def __init__(self, master: tk.Tk, user = None) -> None:
 
         self.user = user

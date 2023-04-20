@@ -17,6 +17,10 @@ class StarMap:
     # Define la ruta absoluta del directorio donde se encuentra la carpeta Recursos
     recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
 
+    def destroy(self):
+        self.starMap.destroy()
+    
+
     def __init__(self, master: tk.Tk, user = None) -> None:
 
         # Para llevar control de si tenemos un usuario registrado o no

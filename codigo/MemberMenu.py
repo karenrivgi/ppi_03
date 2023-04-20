@@ -8,35 +8,32 @@ class MemberMenu:
     # Referencia al directorio con los recursos graficos.
 
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
-    canvasWidgets = None
 
     def instance_widget(self, widget):
-        """Instancia el widget pasado como parametro dentro de la ventana actual"""
+        """Instancia el widget pasado como parametro dentro de la ventana actual y destruye el anterior
+        en caso de que exista"""
+        
+        try:
+            self.currentWidget.destroy()
+        except:
+            pass
 
-        # aca deberiamos mantener un canvas general, en estos momentos se esta creando uno cada vez y puede generar problemas
-        if not MemberMenu.canvasWidgets:
-            MemberMenu.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 740, height = 730, bg="black", highlightthickness = 0)
-        else:
-            MemberMenu.canvasWidgets.delete("all")
-            MemberMenu.canvasWidgets.config(width = 740, height = 730)
+        self.currentWidget = None
 
-        loadingText = tk.Label(MemberMenu.canvasWidgets, text = "Loading...", fg = "white", bg = "black")
+        loadingText = tk.Label(master = self.currentWidgetMaster, text = "Loading...", fg = "white", bg = "black")
         loadingText.place(x = 352, y = 345)
 
-        MemberMenu.canvasWidgets.place(x = 262, y = 20)
-        MemberMenu.canvasWidgets.update_idletasks()
-
-        widget(master = MemberMenu.canvasWidgets, user = self.user)
+        self.currentWidget = widget(master = self.currentWidgetMaster, user = self.user)
+        self.currentWidgetMaster.config(width=764, height=750, background= "black")
+        self.currentWidgetMaster.update_idletasks()
+        
+        loadingText.destroy()
 
 
     def close_session(self):
         """Instancia una ventana de clase AccessMenu y destruye la ventana actual"""
 
-        for wid in self.widgets:
-            wid.destroy() 
-        
         self.mainMenu.destroy()
-        MemberMenu.canvasWidgets = None
 
 
     def __init__(self, master: tk.Tk, user = None) -> None:
@@ -44,13 +41,15 @@ class MemberMenu:
         # Creacion del contenedor de los objetos de la ventana y referencia a la cuenta de usuario.
 
         self.user = user
-        self.widgets = []
         self.mainMenu = tk.Canvas(master, width= master.winfo_width(), height= master.winfo_height(),bd = 0, highlightthickness = 0, relief = "ridge", bg="black")
         self.mainMenu.update_idletasks()
         self.mainMenu.place(x=0, y=0)
-        self.widgets.append(self.mainMenu)
         self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MemberMenuBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
+
+        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu)
+        self.currentWidgetMaster.place(x = 250, y = 10)
+        self.currentWidget = None
         
         
         # Creacion de cuadros de texto en el contenedor.
@@ -72,6 +71,7 @@ class MemberMenu:
 
         self.img2 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"StarMapButton.png"))
         self.starMapButton = tk.Button(
+            master = self.mainMenu,
             image = self.img2,
             borderwidth = 0,
             highlightthickness = 0,
@@ -83,7 +83,7 @@ class MemberMenu:
             x = 25, y = 80,
             width = 184,
             height = 30)        
-        self.widgets.append(self.starMapButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase Newsfeed.
@@ -91,10 +91,11 @@ class MemberMenu:
         self.img0 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"NewsfeedButton.png"))
         
         self.newsfeedButton = tk.Button(
+            master = self.mainMenu,
             image = self.img0,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(StarMap),
             background= "black",
             relief = "flat")
         
@@ -102,17 +103,18 @@ class MemberMenu:
             x = 25, y = 180,
             width = 184,
             height = 30)
-        self.widgets.append(self.newsfeedButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase ObjectSearch.
 
         self.img1 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"ObjectSearchButton.png"))
         self.objectSearchButton = tk.Button(
+            master = self.mainMenu,
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(StarMap),
             background= "black",
             relief = "flat")
 
@@ -120,17 +122,18 @@ class MemberMenu:
             x = 25, y = 130,
             width = 184,
             height = 30)
-        self.widgets.append(self.objectSearchButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para cerrar sesion y vovler al menu de acceso.
 
         self.img3 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"CloseSessionButton.png"))
         self.closeSessionButton = tk.Button(
+            master = self.mainMenu,
             image = self.img3,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.close_session,
+            command = lambda: self.close_session(),
             background= "black",
             relief = "flat")
 
@@ -138,13 +141,14 @@ class MemberMenu:
             x = 25, y = 659,
             width = 184,
             height = 30)
-        self.widgets.append(self.closeSessionButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para entrar a historiales.
 
         self.img7 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"HistorialButton.png"))
         self.historialButton = tk.Button(
+            master = self.mainMenu,
             image = self.img7,
             borderwidth = 0,
             highlightthickness = 0,
@@ -156,17 +160,18 @@ class MemberMenu:
             x = 25, y = 559,
             width = 184,
             height = 30)
-        self.widgets.append(self.historialButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase AccountSettings.
 
         self.img4 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"SettingsButton.png"))
         self.settingsButton = tk.Button(
+            master = self.mainMenu,
             image = self.img4,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(StarMap),
             background= "black",
             relief = "flat")
 
@@ -174,17 +179,18 @@ class MemberMenu:
             x = 25, y = 609,
             width = 184,
             height = 30)
-        self.widgets.append(self.settingsButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MyStars.
 
         self.img5 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MyStarsButton.png"))
         self.myStarsButton = tk.Button(
+            master = self.mainMenu,
             image = self.img5,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(StarMap),
             background= "black",
             relief = "flat")
 
@@ -192,17 +198,18 @@ class MemberMenu:
             x = 25, y = 509,
             width = 184,
             height = 30)
-        self.widgets.append(self.myStarsButton)
+        
 
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MyMaps.
 
         self.img6 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MyMapsButton.png"))
         self.myMapsButton = tk.Button(
+            master = self.mainMenu,
             image = self.img6,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.instance_widget,
+            command = lambda: self.instance_widget(StarMap),
             background= "black",
             relief = "flat")
 
@@ -210,4 +217,4 @@ class MemberMenu:
             x = 25, y = 459,
             width = 184,
             height = 30)    
-        self.widgets.append(self.myMapsButton)   
+        

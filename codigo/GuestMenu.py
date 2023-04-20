@@ -10,31 +10,30 @@ class GuestMenu:
     canvasWidgets = None
 
     def instance_widget(self, widget):
-        """Instancia el widget pasado como parametro dentro de la ventana actual"""
+        """Instancia el widget pasado como parametro dentro de la ventana actual y destruye el anterior
+        en caso de que exista"""
+        
+        try:
+            self.currentWidget.destroy()
+        except:
+            pass
 
-        if not GuestMenu.canvasWidgets:
-            GuestMenu.canvasWidgets = tk.Canvas(master = self.mainMenu, width = 740, height = 730, bg="black", highlightthickness = 0)
-        else:
-            GuestMenu.canvasWidgets.delete("all")
-            GuestMenu.canvasWidgets.config(width = 740, height = 730)
+        self.currentWidget = None
 
-        loadingText = tk.Label(GuestMenu.canvasWidgets, text = "Loading...", fg = "white", bg = "black")
+        loadingText = tk.Label(master = self.currentWidgetMaster, text = "Loading...", fg = "white", bg = "black")
         loadingText.place(x = 352, y = 345)
 
-        GuestMenu.canvasWidgets.place(x = 262, y = 20)
-        GuestMenu.canvasWidgets.update_idletasks()
-
-        widget(master = GuestMenu.canvasWidgets, user = None)
+        self.currentWidget = widget(master = self.currentWidgetMaster, user = None)
+        self.currentWidgetMaster.config(width=764, height=750, background= "black")
+        self.currentWidgetMaster.update_idletasks()
+        
+        loadingText.destroy()
 
 
     def close_session(self):
         """Instancia una ventana de clase AccessMenu y destruye la ventana actual"""
 
-        for wid in self.widgets:
-            wid.destroy() 
-        
         self.mainMenu.destroy()
-        GuestMenu.canvasWidgets = None
 
 
     def __init__(self, master: tk.Tk) -> None:
@@ -42,13 +41,15 @@ class GuestMenu:
         # Creacion del contenedor de los objetos de la ventana.
 
         self.master = master
-        self.widgets = []
         self.mainMenu = tk.Canvas(master, width= master.winfo_width(), height= master.winfo_height(),bd = 0, highlightthickness = 0, relief = "ridge", bg="black")
         self.mainMenu.update_idletasks()
         self.mainMenu.place(x=0, y=0)
-        self.widgets.append(self.mainMenu)
         self.background_img = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"GuestSessionBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
+
+        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu)
+        self.currentWidgetMaster.place(x = 250, y = 10)
+        self.currentWidget = None
         
         # Creacion de cuadro de texto en el contenedor.
 
@@ -63,6 +64,7 @@ class GuestMenu:
 
         self.img2 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"StarMapButtonG.png"))
         self.starMapButton = tk.Button(
+            master = self.mainMenu,
             image = self.img2,
             borderwidth = 0,
             highlightthickness = 0,
@@ -73,14 +75,14 @@ class GuestMenu:
         self.starMapButton.place(
             x = 25, y = 80,
             width = 150,
-            height = 30)  
-        self.widgets.append(self.starMapButton)      
+            height = 30)      
         
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase Map Info.
 
         self.img1 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"MapInfoButton.png"))
         self.mapInfoButton = tk.Button(
+            master = self.mainMenu,
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
@@ -92,13 +94,14 @@ class GuestMenu:
             x = 25, y = 130,
             width = 150,
             height = 30)
-        self.widgets.append(self.mapInfoButton)
 
         #--------------------------------------------------
         # Creacion de boton de para cerrar la sesion y volver al menu de acceso.
 
         self.img3 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"ReturnToMenuG.png"))
+        
         self.closeSessionButton = tk.Button(
+            master = self.mainMenu,
             image = self.img3,
             borderwidth = 0,
             highlightthickness = 0,
@@ -107,7 +110,8 @@ class GuestMenu:
             relief = "flat")
 
         self.closeSessionButton.place(
-            x = 25, y = 709,
+            x = 25, y = 659,
             width = 196,
             height = 42)
-        self.widgets.append(self.closeSessionButton)
+        
+        print("Continue")

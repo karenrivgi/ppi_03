@@ -11,6 +11,10 @@ class History:
 
     recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
 
+    def destroy(self):
+        self.starMap.destroy()
+    
+    
     def __init__(self, master: tk.Tk, user = None) -> None:
 
         self.user = user
