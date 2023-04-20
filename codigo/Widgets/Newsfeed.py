@@ -1,7 +1,6 @@
 import os
 import tkinter as tk
 from tkinter import ttk
-
 from api_reddit import get_posts_data
 
 class Newsfeed:
@@ -23,6 +22,11 @@ class Newsfeed:
             - add_posts(): funcion encargada de crear cada estructura de un post
             - get_posts(): funcion encargada de recuperar los posts por medio de la API de reddit
     """
+
+    def destroy(self):
+        """Destruye el widget del objeto tkinter."""
+        self.newsfeed.destroy()
+
 
     def __init__(self, master, user):
         """constructor encargado de crear la estrucrura del newsfeed
