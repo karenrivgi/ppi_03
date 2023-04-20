@@ -172,3 +172,7 @@ class CreateAccount:
                 height = 38)
             self.widgets.append(self.passwordEntry2)
 
+            info = ["Nickname: Must be at least 8 characters, can be numbers or letters.",
+                    "Password: Must have at least 8 characters, at least one capital letter and one digit. No special characters."]
+            messagebox.showinfo("Requirements to create an account", "\n".join(info))
+

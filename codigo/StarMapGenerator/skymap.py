@@ -32,6 +32,13 @@ def generar_mapa(
         planeta='mars',
         cons_color='y',
         cultura='maya'):
+    
+    """Genera un gráfico del mapa estelar basado en una fecha y ubicación y demás parámetros pasados 
+    por el usuario.
+        
+    Se apoya en librerías como geopy y datetime para hacer el tratamiento de los parámetros, luego
+    con la librería skyfield y sus datos obtiene lo necesario para realizar el gráfico con matplotlib
+    y las personalizaciones especificadas."""
 
     load = Loader(os.path.dirname(__file__))
 
@@ -67,7 +74,6 @@ def generar_mapa(
         # Manejar la excepción de GeocoderUnavailable
         messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map if in our default location: Colombia, Antioquia, Medellin.")
         lat, long =  6.2443382, -75.573553
-        print("Nominatim no está disponible en este momento. Inténtalo de nuevo más tarde.")
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')

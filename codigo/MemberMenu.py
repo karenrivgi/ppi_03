@@ -47,7 +47,7 @@ class MemberMenu:
         self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MemberMenuBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
 
-        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu)
+        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu, width=0, height=0)
         self.currentWidgetMaster.place(x = 250, y = 10)
         self.currentWidget = None
         

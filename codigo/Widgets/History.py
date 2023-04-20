@@ -55,8 +55,6 @@ class History:
 
         for i in range(len(self.map_history)):
 
-            print(self.map_history[i])
-
             history_line = tk.Label(master=self.info_container, 
                                     text= " ".join(self.map_history[i]),
                                     background="black",
@@ -68,8 +66,6 @@ class History:
 
         
         for i in range(len(self.reddit_history)):
-
-            print(self.reddit_history[i][1])
 
             history_line = tk.Label(master=self.info_container, 
                                     text= "".join(self.reddit_history[i][1]),
