@@ -185,7 +185,7 @@ def generar_mapa(
     brightest_and_labels = names_csv[names_csv["HIP"].isin(
         list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
-
+        
 
     # -------------------------
     # CONSTRUIR LAS CONSTELACIONES
@@ -270,7 +270,10 @@ def generar_mapa(
         ax.legend()
 
     # Si se especificó mostrar los nombres de las estrellas, agregarlos al
-    # gráfico
+    # gráfico y a la variable a retornar
+
+    stars_name_list = None
+
     if nombres_estrellas:
         # Para cada estrella brillante, agregar el nombre como una etiqueta en
         # la ubicación correspondiente
@@ -280,7 +283,10 @@ def generar_mapa(
                 label, xy=(
                     x, y), xytext=(
                     0.5, -0.5), textcoords="offset points", color="white", fontsize=6)
-
+            
+        # Actualiza la variable con los nombres de estrellas a visualizar
+        stars_name_list = brightest_and_labels["common name"].tolist()
+        
     # Configurar el horizonte de la gráfica, no mostrará lo que esté fuera de
     # este horizonte
     horizon = Circle((0, 0), radius=1, transform=ax.transData)
@@ -296,7 +302,7 @@ def generar_mapa(
     # ax.set_title(locationstr + " " + when, fontdict = font1)
 
     # Retorna la figura creada y demás variables para el posterior manejo
-    return fig, warning, geopy_problem, brightest_and_labels["common name"].tolist()
+    return fig, warning, geopy_problem, stars_name_list
 
 
 def get_constellations(culture):
