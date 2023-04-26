@@ -175,10 +175,12 @@ def generar_mapa(
         os.path.dirname(
             os.path.abspath(__file__)),
         "names.csv")
+    
     names_csv = pd.read_csv(names_path)
     brightest_and_labels = names_csv[names_csv["HIP"].isin(
         list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
+
 
     # -------------------------
     # CONSTRUIR LAS CONSTELACIONES
