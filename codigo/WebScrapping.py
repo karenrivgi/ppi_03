@@ -15,11 +15,13 @@ def object_search(astro_type, astro):
         names = pd.read_csv(names_path)
 
         # common name debe estar en mayúsculas
+        #print(names.loc[names['common name'] == astro, 'source'])
         url = names.loc[names['common name'] == astro, 'source'].values[0]
 
     # Obtener el contenido de la URL y analizar el contenido HTML de la misma
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
+    
     contenido_html = ''
     title = soup.find('h1')
     contenido_html += str(title) +  '\n' 
@@ -27,6 +29,7 @@ def object_search(astro_type, astro):
     if astro_type == 'planet':
         
         siblings = title.find_next_siblings()
+
         # Buscar los párrafos antes del div
         for sibling in siblings:
             if sibling.name == 'div':
@@ -54,6 +57,19 @@ def object_search(astro_type, astro):
         
         contenido_html += '</ul>' +  '\n'
 
+        # Agregar la imagen del planeta
+
+        try:
+            image = soup.find("img", {"class": "deskview"})
+
+            if not "universeguide.com" in str(image["src"]):
+                image["src"] = "https://universeguide.com" + str(image["src"])
+
+            contenido_html += str(image)
+        except:
+            print("no hay imagen")
+
+
 
     else:
         info = soup.find('div', {'id': 'divinfo'})
@@ -61,7 +77,6 @@ def object_search(astro_type, astro):
         for item in info.children:
             if item.name == 'p': 
                 contenido_html += str(item) +  '\n'
-                
             elif item.name == 'h2':
                 break
 
@@ -79,16 +94,26 @@ def object_search(astro_type, astro):
         
         contenido_html += '</ul>' +  '\n'
 
+        try:
+            image = soup.find("img", {"class": "deskview"})
+
+            if not "universeguide.com" in str(image["src"]):
+                image["src"] = "https://universeguide.com" + str(image["src"])
+
+            contenido_html += str(image)
+        except:
+            print("no hay imagen")
+
     
     return contenido_html
 
 # Pruebas para estrellas
-astro_type = 'star'
-astro = 'Polaris'
+# astro_type = 'star'
+# astro = 'Merak'
 
 # Pruebas para planetas
-#astro_type = 'planet'
-#astro = 'earth'
+astro_type = 'planet'
+astro = 'venus'
 
 contenido_html = object_search(astro_type, astro)
 
@@ -99,6 +124,6 @@ ventana.title("Mi aplicación")
 my_label = HTMLLabel(ventana, html=contenido_html)
 
 # Adjust label
-my_label.pack(pady=20, padx=20)
+my_label.pack(pady=10, padx=10)
 
 ventana.mainloop()
