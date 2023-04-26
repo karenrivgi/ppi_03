@@ -483,7 +483,7 @@ class StarMap:
         messagebox.showinfo("Shared!", "You will be able to see your post on https://www.reddit.com/r/PyMansSky/ in a few minutes.")
         
         # Guarda en su historial los datos de la publicación
-        self.user.guardar_historial([title, link], True)
+        self.user.guardar_historial([title, link], 'reddit')
 
         # Verifica si el archivo existe
         if os.path.exists(filename):
