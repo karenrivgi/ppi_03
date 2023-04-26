@@ -346,10 +346,11 @@ class StarMap:
         self.fecha_hora_str = None
         self.ubicacion_str = None
         self.magnitud_lim = 8
-        self.nombres_estrellas = True
+        self.mostrar_nombres_estrellas = True
         self.planeta = None
         self.cons_color = 'y'
         self.culture = 'modern'
+        self.nombres_estrellas = None
 
     # MÉTODOS DE STARMAP
 
@@ -393,20 +394,15 @@ class StarMap:
 
         #Parametros personalizacion:
         if self.user:
-            self.name_seleccionado=self.varAstrosNames.get()
-            self.amount_seleccionado=self.varStarsAmount.get()
-            self.culture_seleccionada=self.varConstellationsCulture.get()
-            self.color_seleccionado=self.varConstellationsColor.get()
+            self.name_seleccionado = self.varAstrosNames.get()
+            self.amount_seleccionado = self.varStarsAmount.get()
+            self.culture_seleccionada = self.varConstellationsCulture.get()
+            self.color_seleccionado = self.varConstellationsColor.get()
             self.magnitud_lim = self.dicStarsAmount.get(self.amount_seleccionado)
-            self.nombres_estrellas = self.dicAstrosNames.get(self.name_seleccionado)
+            self.mostrar_nombres_estrellas = self.dicAstrosNames.get(self.name_seleccionado)
             self.cons_color = self.dicConsColor.get(self.color_seleccionado)
             self.culture = self.dicConsCulture.get(self.culture_seleccionada)
 
-        #print(self.planet)
-        #print(self.magnitud_lim)
-        #print(self.nombres_estrellas)
-        #print(self.cons_color)
-        #print(self.culture)
 
     def show_image(self):
 
@@ -419,6 +415,22 @@ class StarMap:
         Se guarda el historial y se muestran otros botones si se trata de un usuario registrado
         '''
 
+        # Guarda en fig el gráfico generado por skymap.generar_mapa
+        fig, warning, geopy_problem, nombres_estrellas = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
+                                  self.figMaster.winfo_height(), self.magnitud_lim, 
+                                  self.mostrar_nombres_estrellas, self.planet, 
+                                  self.cons_color, self.culture)
+        
+        if warning:
+            messagebox.showwarning("Warning", "Perhaps the planet cannot be visualized.")
+        
+        if geopy_problem:
+            self.ubicacion_str = 'Colombia, Antioquia, Medellin'
+
+        if nombres_estrellas:
+            self.nombres_estrellas = nombres_estrellas
+        
+        
         # Si es un usuario registrado, guarda en su historial los datos suministrados para la graficación
         if self.user:
             # Si ese input ya ha sido usado con anterioridad o en repetidas
@@ -426,14 +438,6 @@ class StarMap:
             if [self.fecha_hora_str, self.ubicacion_str] not in self.user.historial:
                 self.user.guardar_historial([self.fecha_hora_str, self.ubicacion_str])
 
-        # Guarda en fig el gráfico generado por skymap.generar_mapa
-        fig, warning = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
-                                  self.figMaster.winfo_height(), self.magnitud_lim, 
-                                  self.nombres_estrellas, self.planet, 
-                                  self.cons_color, self.culture)
-        
-        if warning:
-            messagebox.showwarning("Warning", "Perhaps the planet cannot be visualized.")
 
         # Crea un canvas a partir de fig para poder mostrar el gráfico con tkinter
         if self.canvas_skymap:

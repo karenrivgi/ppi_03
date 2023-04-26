@@ -42,6 +42,8 @@ def generar_mapa(
     y las personalizaciones especificadas."""
 
     load = Loader(os.path.dirname(__file__))
+    warning = False # Avertencia en caso de que el planeta no se pueda visualizar
+    geopy_problem = False # Para manejo de datos en caso de fallo en servidores geopy
 
     # -------------------------
     # CARGAR DATOS
@@ -73,8 +75,10 @@ def generar_mapa(
         lat, long = location.latitude, location.longitude
     except GeocoderUnavailable:
         # Manejar la excepción de GeocoderUnavailable
-        messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
+        if locationstr != 'Colombia, Antioquia, Medellin':
+            messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
         lat, long =  6.2443382, -75.573553
+        geopy_problem = True
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
@@ -177,6 +181,7 @@ def generar_mapa(
         "names.csv")
     
     names_csv = pd.read_csv(names_path)
+
     brightest_and_labels = names_csv[names_csv["HIP"].isin(
         list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
@@ -206,8 +211,6 @@ def generar_mapa(
 
     # Si queremos observar un planeta, extraemos su posición en la fecha y ubicacion actual
     # Usando la efemerides guardadas en eph
-
-    warning = False
 
     if planeta:
 
@@ -292,11 +295,8 @@ def generar_mapa(
     # font1 = {'family':'serif','color':'black','size':15}
     # ax.set_title(locationstr + " " + when, fontdict = font1)
 
-    if planeta:
-        return fig, warning
-
-    # Retorna la figura creada
-    return fig, False
+    # Retorna la figura creada y demás variables para el posterior manejo
+    return fig, warning, geopy_problem, brightest_and_labels["common name"].tolist()
 
 
 def get_constellations(culture):
