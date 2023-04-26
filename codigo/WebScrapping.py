@@ -23,8 +23,12 @@ def object_search(astro_type, astro):
     soup = BeautifulSoup(response.content, 'html.parser')
     
     contenido_html = ''
+
+    contenido_html += '<div style = "background-color: #47a3cb; color: white;">'
+    
     title = soup.find('h1')
     contenido_html += str(title) +  '\n' 
+
 
     if astro_type == 'planet':
         
@@ -65,11 +69,11 @@ def object_search(astro_type, astro):
             if not "universeguide.com" in str(image["src"]):
                 image["src"] = "https://universeguide.com" + str(image["src"])
 
-            contenido_html += str(image)
+            contenido_html += '<div style="text-align:center">' + str(image) + "</div>"
         except:
             print("no hay imagen")
 
-
+        contenido_html += "</div>"
 
     else:
         info = soup.find('div', {'id': 'divinfo'})
@@ -100,10 +104,12 @@ def object_search(astro_type, astro):
             if not "universeguide.com" in str(image["src"]):
                 image["src"] = "https://universeguide.com" + str(image["src"])
 
-            contenido_html += str(image)
+            contenido_html += '<div style="text-align:center">' + str(image) + "</div>"
+        
         except:
             print("no hay imagen")
 
+        contenido_html += "</div>"
     
     return contenido_html
 
@@ -113,7 +119,7 @@ def object_search(astro_type, astro):
 
 # Pruebas para planetas
 astro_type = 'planet'
-astro = 'venus'
+astro = 'saturn'
 
 contenido_html = object_search(astro_type, astro)
 
@@ -124,6 +130,6 @@ ventana.title("Mi aplicación")
 my_label = HTMLLabel(ventana, html=contenido_html)
 
 # Adjust label
-my_label.pack(pady=10, padx=10)
+my_label.pack(pady=5, padx=5, fill="both", expand=True)
 
 ventana.mainloop()
