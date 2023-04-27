@@ -1,17 +1,21 @@
 import datetime
 import tkinter as tk
-from PIL import Image
+import polars as pl
+import os
 import matplotlib.pyplot as plt
+from PIL import Image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
 from tkinter import filedialog
 from os.path import abspath, dirname, join
+
 # from api_reddit import make_posts_reddit
 
 
 class ObjectSearch:
 
     recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
+    names_path =  join(dirname(dirname(abspath(__file__))),"StarMapGenerator")
 
     def do_nothing():
         pass
@@ -19,8 +23,34 @@ class ObjectSearch:
     def destroy(self):
         self.starMap.destroy()
     
+    def planet_star_filter(self, data: pl.DataFrame, op_filter: str):
+        
+        options = None
+
+        if op_filter == "Star":
+
+            options = self.object_dataframe.get_column("common name").to_list()
+
+        else:
+            options = [
+                "Mercury", "Venus", "Earth", "Mars",
+                "Jupiter", "Saturn", "Uranus", "Neptune"
+            ]
+            
+        self.listaObjectName["menu"].delete(0,'end')
+        
+        for i in options:
+            pass
+            self.listaObjectName["menu"].add_command(label=i, command=tk._setit(self.varObjectName, i))
+        self.varObjectName.set(options[0])
+
+        self.submitButton.config(state="normal")
+
     
     def __init__(self, master: tk.Tk, user = None) -> None:
+
+        self.object_dataframe = pl.read_csv(join(ObjectSearch.names_path,"names.csv"), ignore_errors=True)
+        print(self.object_dataframe)
 
         self.user = user
 
@@ -43,20 +73,16 @@ class ObjectSearch:
         
         #Lista desplegable que contiene las opciones para Object Type
         self.varObjectType= tk.StringVar(self.canvasPosition)
-        opcionesObjectType=['Star','Planet']
-        self.varObjectType.set('Star')
-        self.dicObjectType={'Star':'stars','Planet':'planet'}
-        self.listaObjectType = tk.OptionMenu(self.canvasPosition,self.varObjectType,*opcionesObjectType)
+        self.opcionesObjectType=['Star','Planet']
+        self.dicObjectType={'Star':'star','Planet':'planet'}
+        self.listaObjectType = tk.OptionMenu(self.canvasPosition,self.varObjectType,*self.opcionesObjectType)
         self.listaObjectType.config(width = 15)
         self.listaObjectType.grid(row = 1, column = 0, padx = 5, pady = 5)
 
 
         #Lista desplegable que contiene las opciones para Object Name
         self.varObjectName= tk.StringVar(self.canvasPosition)
-        opcionesObjectName=['Prueba1','Prueba2']
-        self.varObjectName.set('Prueba1')
-        self.dicObjectName={}
-        self.listaObjectName = tk.OptionMenu(self.canvasPosition,self.varObjectName,*opcionesObjectName)
+        self.listaObjectName = tk.OptionMenu(self.canvasPosition,self.varObjectName, value= [])
         self.listaObjectName.config(width = 15)
         self.listaObjectName.grid(row = 1, column = 1, padx = 5, pady = 5)
 
@@ -86,7 +112,7 @@ class ObjectSearch:
             image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.do_nothing,
+            command = lambda: self.planet_star_filter(self.object_dataframe, self.varObjectType.get()),
             relief = "flat",
             bg= "black")
         
@@ -101,4 +127,4 @@ class ObjectSearch:
 
         self.canvasStarsInfo = tk.Canvas(self.starMap, width= 220, highlightthickness=0, background= "black")
         self.figMaster.update_idletasks()
-        self.canvasStarsInfo.grid(row = 0, column = 1, rowspan=4, sticky="ns")
+        self.canvasStarsInfo.grid(row = 0, column = 1, sticky="nsew")
