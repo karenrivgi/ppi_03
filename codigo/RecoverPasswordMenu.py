@@ -93,7 +93,7 @@ class RecoverPasswordMenu:
             #--------------------------------------------------
             # Creacion de boton de para registrar un nuevo usuario.
 
-            self.imgSignUp = tk.PhotoImage(file = os.path.join(RecoverPasswordMenu.recursos_path,"SignUpButton.png"))
+            self.imgSignUp = tk.PhotoImage(file = os.path.join(RecoverPasswordMenu.recursos_path,"RequestPasswordButton.png"))
             self.registerButton = tk.Button(
                 image=self.imgSignUp,
                 borderwidth = 0,

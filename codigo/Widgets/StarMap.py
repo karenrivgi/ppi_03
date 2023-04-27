@@ -273,7 +273,7 @@ class StarMap:
                 width = 200,
                 image = self.imgShowAstrosNames,
                 bg= "black")
-            self.showAstrosNames.grid(row = 4, column = 0, pady = 5)
+            self.showAstrosNames.grid(row = 3, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Astros Name.
             self.varAstrosNames= tk.StringVar(self.canvasPosition2)
@@ -282,7 +282,7 @@ class StarMap:
             self.dicAstrosNames={'Yes':True,'No':False}
             self.listaAstrosNames = tk.OptionMenu(self.canvasPosition2,self.varAstrosNames,*opcionesAstrosNames)
             self.listaAstrosNames.config(width = 15)
-            self.listaAstrosNames.grid(row = 5, column = 0)
+            self.listaAstrosNames.grid(row = 4, column = 0)
 
             #Label que contiene una de las funcionalidades de personalización con el texto Stars Amount.
             self.imgStarsAmount = tk.PhotoImage(file = os.path.join(StarMap.recursos_path,"StarsAmountButtonF.png"))
@@ -291,7 +291,7 @@ class StarMap:
                 width = 180,
                 image = self.imgStarsAmount,
                 bg= "black")
-            self.starsAmount.grid(row = 7, column = 0, pady = 5)
+            self.starsAmount.grid(row = 5, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Stars Amount.
             self.varStarsAmount= tk.StringVar(self.canvasPosition2)
@@ -300,7 +300,7 @@ class StarMap:
             self.dicStarsAmount={'Default':5,'Many stars':25}
             self.listaStarsAmount = tk.OptionMenu(self.canvasPosition2,self.varStarsAmount,*opcionesStarsAmount)
             self.listaStarsAmount.config(width = 15)
-            self.listaStarsAmount.grid(row = 8, column = 0)
+            self.listaStarsAmount.grid(row = 6, column = 0)
 
             #Label que contiene una de las funcionalidades de personalización con el texto Constellations Culture.
             self.imgConstellationsCulture = tk.PhotoImage(file = os.path.join(StarMap.recursos_path,"ConstellationsCultureButtonF.png"))
@@ -309,7 +309,7 @@ class StarMap:
                 width = 200,
                 image = self.imgConstellationsCulture,
                 bg= "black")
-            self.constellationsCulture.grid(row = 10, column = 0, pady = 5)
+            self.constellationsCulture.grid(row = 7, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Constellations Culture.
             self.varConstellationsCulture= tk.StringVar(self.canvasPosition2)
@@ -319,7 +319,7 @@ class StarMap:
                             'Egyptian':'egyptian'}
             self.listaConstellationsCulture = tk.OptionMenu(self.canvasPosition2,self.varConstellationsCulture,*opcionesConstellationsCulture)
             self.listaConstellationsCulture.config(width = 15)
-            self.listaConstellationsCulture.grid(row = 11, column = 0)
+            self.listaConstellationsCulture.grid(row = 8, column = 0)
 
             #Label que contiene una de las funcionalidades de personalización con el texto Constellations Color.
             self.imgConstellationsColor = tk.PhotoImage(file = os.path.join(StarMap.recursos_path,"ConstellationsColorButtonF.png"))
@@ -328,7 +328,7 @@ class StarMap:
                 width = 200,
                 image = self.imgConstellationsColor,
                 bg= "black")
-            self.constellationsColor.grid(row = 13, column = 0, pady = 5)
+            self.constellationsColor.grid(row = 9, column = 0, pady = 5)
 
             #Lista desplegable que contiene las opciones para Constellations Color.
             self.varConstellationsColor= tk.StringVar(self.canvasPosition2)
@@ -338,7 +338,7 @@ class StarMap:
                           'Cyan':'c','Magenta':'m'}
             self.listaConstellationsColor = tk.OptionMenu(self.canvasPosition2,self.varConstellationsColor,*opcionesConstellationsColor)
             self.listaConstellationsColor.config(width = 15)
-            self.listaConstellationsColor.grid(row = 14, column = 0)
+            self.listaConstellationsColor.grid(row = 10, column = 0)
 
         # Parámetros necesarios para la generación del mapa estelar, con valores por defecto
         self.canvas_skymap = None
@@ -351,6 +351,18 @@ class StarMap:
         self.cons_color = 'y'
         self.culture = 'modern'
         self.nombres_estrellas = None
+
+        # Creamos y posicionamos con grid en Canvas de CustomizeMap el botón para acceder al widget con la informacion del mapa.
+        self.img4 = tk.PhotoImage(file = join(StarMap.recursos_path,"MapInfosButton.png"))
+        self.cInfoButton = tk.Button(
+            master= self.canvasPosition2,
+            image = self.img4,
+            borderwidth = 0,
+            highlightthickness = 0,
+            relief = "flat",
+            bg= "black")
+        self.cInfoButton.grid(row=11, column=0, pady=15)
+
 
     # MÉTODOS DE STARMAP
 

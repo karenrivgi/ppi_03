@@ -183,7 +183,7 @@ class MemberMenu:
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MyStars.
 
-        self.img5 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MyStarsButton.png"))
+        self.img5 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MyAstrosButton.png"))
         self.myStarsButton = tk.Button(
             master = self.mainMenu,
             image = self.img5,

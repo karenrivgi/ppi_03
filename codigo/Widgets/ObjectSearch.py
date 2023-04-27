@@ -41,21 +41,24 @@ class ObjectSearch:
         self.objectIdText = tk.Label(self.canvasPosition, text= "Object ID", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
         self.objectIdText.grid(row = 0, column = 1)
         
-        self.objectName = tk.Entry(
-            master=self.canvasPosition,
-            bd = 0,
-            highlightthickness = 0,
-            font=("BeVietnamPro 12"), width = 15)
-        
-        self.objectName.grid(row = 1, column = 0, padx = 5, pady = 5)
+        #Lista desplegable que contiene las opciones para Object Type
+        self.varObjectType= tk.StringVar(self.canvasPosition)
+        opcionesObjectType=['Star','Planet']
+        self.varObjectType.set('Star')
+        self.dicObjectType={'Star':'stars','Planet':'planet'}
+        self.listaObjectType = tk.OptionMenu(self.canvasPosition,self.varObjectType,*opcionesObjectType)
+        self.listaObjectType.config(width = 15)
+        self.listaObjectType.grid(row = 1, column = 0, padx = 5, pady = 5)
 
-        self.objectId = tk.Entry(
-            master=self.canvasPosition,
-            bd = 0,
-            highlightthickness = 0,
-            font=("BeVietnamPro 12"), width = 15)
-        
-        self.objectId.grid(row = 1, column = 1, padx = 5, pady = 5)
+
+        #Lista desplegable que contiene las opciones para Object Name
+        self.varObjectName= tk.StringVar(self.canvasPosition)
+        opcionesObjectName=['Prueba1','Prueba2']
+        self.varObjectName.set('Prueba1')
+        self.dicObjectName={}
+        self.listaObjectName = tk.OptionMenu(self.canvasPosition,self.varObjectName,*opcionesObjectName)
+        self.listaObjectName.config(width = 15)
+        self.listaObjectName.grid(row = 1, column = 1, padx = 5, pady = 5)
 
     
         ###
