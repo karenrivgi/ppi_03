@@ -71,10 +71,10 @@ class ObjectSearch:
         self.canvasPosition.grid(row=0, column=0, sticky="nsew")
         self.canvasPosition.grid_anchor("center")
 
-        self.objectNameText = tk.Label(self.canvasPosition, text= "Object Name", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
+        self.objectNameText = tk.Label(self.canvasPosition, text= "Object Type", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
         self.objectNameText.grid(row = 0, column = 0)
 
-        self.objectIdText = tk.Label(self.canvasPosition, text= "Object ID", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
+        self.objectIdText = tk.Label(self.canvasPosition, text= "Object Name", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
         self.objectIdText.grid(row = 0, column = 1)
         
         #Lista desplegable que contiene las opciones para Object Type
