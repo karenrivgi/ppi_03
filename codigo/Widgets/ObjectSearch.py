@@ -3,6 +3,8 @@ import tkinter as tk
 import polars as pl
 import os
 import matplotlib.pyplot as plt
+import Widgets.Helpers.WebScrapping as ws
+from tkhtmlview import HTMLLabel
 from PIL import Image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
@@ -17,8 +19,12 @@ class ObjectSearch:
     recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
     names_path =  join(dirname(dirname(abspath(__file__))),"StarMapGenerator")
 
-    def do_nothing():
-        pass
+    def show_info(self):
+
+        info = ws.object_search(self.varObjectType.get().lower(), self.varObjectName.get().lower())
+        label = HTMLLabel(self.canvasStarsInfo, html= info)
+
+        
 
     def destroy(self):
         self.starMap.destroy()
@@ -99,7 +105,7 @@ class ObjectSearch:
             image = self.img0,
             borderwidth = 0,
             highlightthickness = 0,
-            command = self.do_nothing,
+            command = lambda: self.show_info(),
             relief = "flat",
             state="disabled",
             bg= "black")

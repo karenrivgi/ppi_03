@@ -148,43 +148,42 @@ def map_info(culture, stars_names = None, planet = None):
 
     return contenido_html
 
+if __name__ == "__main__":
+    # MUESTRA DE VISUALIZACIÓN EN TKINTER
 
-# MUESTRA DE VISUALIZACIÓN EN TKINTER
+    # Pruebas para estrellas
+    astro_type = 'star'
+    astro = 'Merak'
 
-# Pruebas para estrellas
-astro_type = 'star'
-astro = 'Merak'
+    # Pruebas para planetas
+    #astro_type = 'planet'
+    #astro = 'saturn'
 
-# Pruebas para planetas
-#astro_type = 'planet'
-#astro = 'saturn'
+    #contenido_html = object_search(astro_type, astro)
 
-#contenido_html = object_search(astro_type, astro)
+    stars_names = ['Acrux']
+    planet = 'mars'
 
-stars_names = ['Acrux']
-planet = 'mars'
+    contenido_html = map_info('chinese', stars_names, planet)
+    ventana = tk.Tk()
+    ventana.title("Mi aplicación")
 
-contenido_html = map_info('chinese', stars_names, planet)
-ventana = tk.Tk()
-ventana.title("Mi aplicación")
+    # Add label
+    for key in contenido_html.keys():
 
+        if key == 'Stars':
 
-# Add label
-for key in contenido_html.keys():
+            for star in contenido_html[key]:
+                my_label = HTMLLabel(ventana, html=star)
 
-    if key == 'Stars':
+                # Adjust label
+                my_label.pack(pady=5, padx=5, fill="both", expand=True)
 
-        for star in contenido_html[key]:
-            my_label = HTMLLabel(ventana, html=star)
+        else:
+            my_label = HTMLLabel(ventana, html=contenido_html[key])
 
             # Adjust label
             my_label.pack(pady=5, padx=5, fill="both", expand=True)
 
-    else:
-        my_label = HTMLLabel(ventana, html=contenido_html[key])
-
-        # Adjust label
-        my_label.pack(pady=5, padx=5, fill="both", expand=True)
-
-ventana.mainloop()
+    ventana.mainloop()
 
