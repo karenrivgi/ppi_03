@@ -171,7 +171,7 @@ def generar_mapa(
         dist = math.sqrt((center_x - x) ** 2 + (center_y - y) ** 2)
         return dist < radius
 
-    bright_stars_label = (stars.magnitude <= 2)
+    bright_stars_label = (stars.magnitude <= 1.5)
     brightest_for_labels = stars[stars.apply(
         in_circle, 1) & bright_stars_label]
 

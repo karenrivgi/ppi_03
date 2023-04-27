@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+from os.path import abspath, dirname, join
 import pandas as pd
 import html2text
 import tkinter as tk
@@ -11,12 +12,14 @@ def object_search(astro_type, astro):
     if astro_type == 'planet':
         url = f"https://www.universeguide.com/{astro_type}/{astro}"
     else:
-        names_path =  os.path.join(os.path.join(os.path.dirname(__file__),"StarMapGenerator"), "names.csv")
+        names_path =  join(join(dirname(dirname(dirname(abspath(__file__)))), 'StarMapGenerator'), "names.csv")
         names = pd.read_csv(names_path)
 
         # common name debe estar en mayúsculas
         #print(names.loc[names['common name'] == astro, 'source'])
-        url = names.loc[names['common name'] == astro, 'source'].values[0]
+        HIP = names.loc[names['common name'] == astro, 'HIP'].values[0]
+        url = f"https://www.universeguide.com/{astro_type}/{HIP}/{astro}"
+
 
     # Obtener el contenido de la URL y analizar el contenido HTML de la misma
     response = requests.get(url)
@@ -41,6 +44,10 @@ def object_search(astro_type, astro):
             elif sibling.name == 'h2':
                 break
             elif sibling.name == 'p':
+                grandchildren = sibling.find_all('a')
+                for children in grandchildren:
+                    if not "universeguide.com" in str(children['href']):
+                        children['href'] = "https://universeguide.com" + str(children['href'])
                 contenido_html += str(sibling) +  '\n' 
 
         # Busca el primer elemento <h2> que contenga un elemento <id> con el texto 'facts'
@@ -58,6 +65,7 @@ def object_search(astro_type, astro):
         # Imprime el texto de cada elemento de la lista
         for item in facts_items:
             contenido_html += str(item) +  '\n'
+
         
         contenido_html += '</ul>' +  '\n'
 
@@ -80,6 +88,10 @@ def object_search(astro_type, astro):
 
         for item in info.children:
             if item.name == 'p': 
+                grandchildren = item.find_all('a')
+                for children in grandchildren:
+                    if not "universeguide.com" in str(children['href']):
+                        children['href'] = "https://universeguide.com" + str(children['href'])
                 contenido_html += str(item) +  '\n'
             elif item.name == 'h2':
                 break
@@ -113,23 +125,66 @@ def object_search(astro_type, astro):
     
     return contenido_html
 
+
+def map_info(culture, stars_names = None, planet = None): 
+    contenido_html = {}
+    culture_path = join(join(dirname(dirname(dirname(abspath(__file__)))), 'StarMapGenerator'), 'ConstellationsDescriptions')
+    
+    with open(join(culture_path, f'description_{culture}.utf8') , 'r', encoding='utf-8') as archivo:
+        culture_content = archivo.read()
+
+    contenido_html['Constellation'] = culture_content
+
+    if stars_names:
+        contenido_stars = []
+        for star in stars_names:
+            contenido_star = object_search('star', star)
+            contenido_stars.append(contenido_star)
+        contenido_html['Stars'] = contenido_stars
+
+    if planet:
+        contenido_planet = object_search('planet', planet)
+        contenido_html['Planet'] = contenido_planet
+
+    return contenido_html
+
+
+# MUESTRA DE VISUALIZACIÓN EN TKINTER
+
 # Pruebas para estrellas
-# astro_type = 'star'
-# astro = 'Merak'
+astro_type = 'star'
+astro = 'Merak'
 
 # Pruebas para planetas
-astro_type = 'planet'
-astro = 'saturn'
+#astro_type = 'planet'
+#astro = 'saturn'
 
-contenido_html = object_search(astro_type, astro)
+#contenido_html = object_search(astro_type, astro)
 
+stars_names = ['Acrux']
+planet = 'mars'
+
+contenido_html = map_info('chinese', stars_names, planet)
 ventana = tk.Tk()
 ventana.title("Mi aplicación")
 
-# Add label
-my_label = HTMLLabel(ventana, html=contenido_html)
 
-# Adjust label
-my_label.pack(pady=5, padx=5, fill="both", expand=True)
+# Add label
+for key in contenido_html.keys():
+
+    if key == 'Stars':
+
+        for star in contenido_html[key]:
+            my_label = HTMLLabel(ventana, html=star)
+
+            # Adjust label
+            my_label.pack(pady=5, padx=5, fill="both", expand=True)
+
+    else:
+        my_label = HTMLLabel(ventana, html=contenido_html[key])
+
+        # Adjust label
+        my_label.pack(pady=5, padx=5, fill="both", expand=True)
 
 ventana.mainloop()
+
