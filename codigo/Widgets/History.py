@@ -18,30 +18,35 @@ class History:
         self.user = user
 
         # Creacion del contenedor de los objetos de la ventana.
-        self.history = tk.Frame(master, width= 764, height= 750, background= "black", highlightthickness=0)
-        self.history.update_idletasks()
+        self.history = tk.Frame(master, width=748, height=731, background="black", highlightthickness=0)
         self.history.grid(sticky="nsew")
 
         # Crea un scrollbar horizontal y lo posiciona, para visualizar todo el contenido
         scrollbar = ttk.Scrollbar(master=self.history, orient="horizontal")
-        scrollbar.grid(row=1, column=0, sticky="EW")
+        scrollbar.grid(row=1, column=0, sticky="ew")
+
+        # Crea un scrollbar vertical y lo posiciona, para visualizar todo el contenido
+        scrollbarv = ttk.Scrollbar(master=self.history, orient="vertical")
+        scrollbarv.grid(row=0, column=1, sticky='ns')
 
         # Creación del canvas auxiliar para el funcionamiento del scrollbar
-        self.canvasPosition = tk.Canvas(self.history, highlightthickness=0, background= "black", xscrollcommand= scrollbar.set, width=764)
-        self.canvasPosition.update_idletasks()
+        self.canvasPosition = tk.Canvas(self.history, highlightthickness=0, background="black", xscrollcommand=scrollbar.set, yscrollcommand=scrollbarv.set, width=748, height=731)
         self.canvasPosition.grid(row=0, column=0, sticky="nsew")
         self.canvasPosition.grid_anchor("center")
-        
-        # Configura el scrollbar para modificar en el eje x
-        scrollbar.config(command=self.canvasPosition.xview)
 
         # Crea un frame para contener la información del historial
-        self.info_container = tk.Frame(master = self.canvasPosition, background="black", width=764)
-        self.info_container.grid(row=0, column=0, sticky="nsew")
+        self.info_container = tk.Frame(master=self.canvasPosition, background="black", width=748, height=731)
+        self.canvasPosition.create_window((0, 0), window=self.info_container, anchor="nw")
+
+        # Configura el scrollbar horizontal para modificar el eje x del canvas
+        scrollbar.config(command=self.canvasPosition.xview)
+
+        # Configura el scrollbar vertical para modificar el eje y del canvas
+        scrollbarv.config(command=self.canvasPosition.yview)
 
         # Configuramos el frame para que se actualice en base a la posición del scrollbar
         self.info_container.bind("<Configure>", lambda e: self.canvasPosition.configure(scrollregion=self.canvasPosition.bbox("all")))
-        self.window = self.canvasPosition.create_window((0, 0), window=self.info_container, anchor="nw")
+
 
         # Creamos los títulos y los posicionamos en info_container
         self.objectNameText = tk.Label(self.info_container, text= "Maps", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
