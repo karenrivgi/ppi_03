@@ -80,7 +80,7 @@ class GuestMenu:
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase Map Info.
 
-        self.img1 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"MapInfoButton.png"))
+        '''self.img1 = tk.PhotoImage(file = os.path.join(GuestMenu.recursos_path,"MapInfoButton.png"))
         self.mapInfoButton = tk.Button(
             master = self.mainMenu,
             image = self.img1,
@@ -93,7 +93,7 @@ class GuestMenu:
         self.mapInfoButton.place(
             x = 25, y = 130,
             width = 150,
-            height = 30)
+            height = 30)'''
 
         #--------------------------------------------------
         # Creacion de boton de para cerrar la sesion y volver al menu de acceso.

@@ -9,6 +9,7 @@ from tkinter import filedialog
 import os
 from os.path import abspath, dirname, join
 from api_reddit.make_posts_reddit import make_post
+from Widgets.MapInfo import MapInfo
 # from api_reddit import make_posts_reddit
 
 
@@ -20,6 +21,24 @@ class StarMap:
     def destroy(self):
         self.starMap.destroy()
     
+    def instance_widget(self):
+        """Instancia el widget pasado como parametro dentro de la ventana actual y destruye el anterior
+        en caso de que exista"""
+        
+        try:
+            self.canvasDate.destroy()
+            self.buttonParent.destroy()
+            self.figMaster.destroy()
+            self.canvasPosition.destroy()
+            self.canvasPosition2.destroy()
+            self.starMap.grid_forget()
+            self.starMap.update_idletasks()
+        except:
+            pass
+        
+        MapInfo(master=self.starMap, estrellas=self.nombres_estrellas,
+                planeta = self.planet, constelacion = self.culture, user=self.user)
+
 
     def __init__(self, master: tk.Tk, user = None) -> None:
 
@@ -218,11 +237,6 @@ class StarMap:
         self.figMaster.grid_anchor("s")
         self.figMaster.update_idletasks()
 
-        # ---------------------------
-        self.canvasStarsInfo = tk.Frame(self.starMap, width= 230, highlightthickness=0, background= "black")
-        self.figMaster.update_idletasks()
-        self.canvasStarsInfo.grid(row = 0, column = 1, rowspan=4, sticky="ns")
-
         # -------------------------------------
         # Canvas donde posicionaremos las listas desplegables y textos para la personalizacion del mapa
         self.canvasPosition2 = tk.Frame(self.starMap, highlightthickness=0, background= "black")
@@ -357,12 +371,17 @@ class StarMap:
         self.cInfoButton = tk.Button(
             master= self.canvasPosition2,
             image = self.img4,
+            command = lambda: self.instance_widget(),
             borderwidth = 0,
             highlightthickness = 0,
             relief = "flat",
+            state='disabled',
             bg= "black")
         self.cInfoButton.grid(row=11, column=0, pady=15)
 
+        info=['You should generate a map with your preferred customization options.',
+              'After saving the data, the other buttons will be activated.']
+        messagebox.showinfo("To consider.", "\n".join(info))
 
     # MÉTODOS DE STARMAP
 
@@ -442,7 +461,7 @@ class StarMap:
         if nombres_estrellas:
             self.nombres_estrellas = nombres_estrellas
         
-        
+
         # Si es un usuario registrado, guarda en su historial los datos suministrados para la graficación
         if self.user:
             # Si ese input ya ha sido usado con anterioridad o en repetidas
@@ -466,6 +485,9 @@ class StarMap:
         if self.user:
             self.downloadButton.config(state='normal')
             self.shareButton.config(state='normal')
+
+        #Activa boton MapInfo.
+        self.cInfoButton.config(state='normal')
 
         #Mostrar la ventana de Tkinter
         # self.starMap.mainloop()
@@ -501,8 +523,8 @@ class StarMap:
         if os.path.exists(filename):
             # Elimina el archivo
             os.remove(filename)
-        
-        
+          
+
 
 
     
