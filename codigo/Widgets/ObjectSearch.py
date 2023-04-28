@@ -33,10 +33,10 @@ class ObjectSearch:
         
         if astro in self.user.historial_astros:
             pass
-        
-        else:
-            self.user.historial_astros.append(astro)
 
+        else:
+            self.user.guardar_historial(astro, "astros")
+            
         print(self.user.historial_astros)
 
     def destroy(self):
