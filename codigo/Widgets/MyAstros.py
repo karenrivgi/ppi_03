@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from os.path import abspath, dirname, join
 from user_data.User import Usuario
-from Widgets.ObjectSearch import ObjectSearch
-import webbrowser
 
 
 class MyAstros:
@@ -39,11 +37,11 @@ class MyAstros:
 
 
         # Creamos los títulos y los posicionamos en info_container
-        self.objectNameText = tk.Label(self.info_container, text= "Favorite Astros", font = ("BeVietnamPro-Bold", int(12)), width = 15, fg = "#ffffff", bg= "black")
-        self.objectNameText.grid(row = 0, column = 0)
+        self.objectNameText = tk.Label(self.info_container, text= "Favorite Astros", font = ("BeVietnamPro-Bold", int(18)), width = 15, fg = "#ffffff", bg= "black")
+        self.objectNameText.grid(row = 0, column = 1)
 
         # Obtenemos la información de los historiales del usuario
-        self.historial_astros = list(user.historial)
+        self.historial_astros = list(user.historial_astros)
 
         for i in range(len(self.historial_astros)):
             # Crea un label para el elemento actual del historial
@@ -51,22 +49,13 @@ class MyAstros:
                                     text= " ".join(self.historial_astros[i]),
                                     background="black",
                                     fg="white",
-                                    height=2, width=50)
+                                    height=2, width=50,
+                                    font=("BeVietnamPro", 12,))
             
             # Lo posiciona en info_container con grid
-            history_line.grid(row=(2*i)+1, column=0, sticky="EW")
+            history_line.grid(row=(2*i)+1, column=1, sticky="EW")
             history_line.update_idletasks()
-    
-    def open_link(self, url):
-        """ Devuelve una función que abrirá la URL especificada en el navegador web
-        cuando se ejecute como un controlador de eventos para un widget tkinter. """
-
-        def open_url(event):
-            # Abre la url especificada en el navegador web
-            webbrowser.open_new(url)
-        return open_url
-        
-    
+      
     def destroy(self):
         """Destruye el widget del objeto tkinter."""
         self.history.destroy()
