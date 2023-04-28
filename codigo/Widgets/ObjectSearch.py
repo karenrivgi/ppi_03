@@ -24,8 +24,20 @@ class ObjectSearch:
         info = ws.object_search(self.varObjectType.get().lower(), self.varObjectName.get().capitalize())
         label = HTMLLabel(self.figMaster, html= info)
         label.grid(row=0, column=0, sticky="nsew")
+        label.grid_anchor("center")
+        self.favouriteButton.config(state="normal")
 
+    def add_favourite(self):
         
+        astro = [self.varObjectType.get().lower(), self.varObjectName.get().capitalize()]
+        
+        if astro in self.user.historial_astros:
+            pass
+        
+        else:
+            self.user.historial_astros.append(astro)
+
+        print(self.user.historial_astros)
 
     def destroy(self):
         self.starMap.destroy()
@@ -100,10 +112,22 @@ class ObjectSearch:
         self.buttonParent.grid(row=1, column=0, sticky="nsew")
         self.buttonParent.grid_anchor("center")
 
-        self.img0 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"SubmitButton.png"))
-        self.submitButton = tk.Button(
+        self.img0 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"SaveButon.png"))
+        self.saveButton = tk.Button(
             master= self.buttonParent,
             image = self.img0,
+            borderwidth = 0,
+            highlightthickness = 0,
+            command = lambda: self.planet_star_filter(self.object_dataframe, self.varObjectType.get()),
+            relief = "flat",
+            bg= "black")
+        
+        self.saveButton.grid(row=0, column=0, pady = 5)
+
+        self.img1 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"SubmitButton.png"))
+        self.submitButton = tk.Button(
+            master= self.buttonParent,
+            image = self.img1,
             borderwidth = 0,
             highlightthickness = 0,
             command = lambda: self.show_info(),
@@ -111,21 +135,22 @@ class ObjectSearch:
             state="disabled",
             bg= "black")
         
-        self.submitButton.grid(row=0, column=1, columnspan=2, padx = 5, pady = 5)
+        self.submitButton.grid(row=0, column=1, padx = 5, pady = 5)
 
-        self.img1 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"SaveButon.png"))
-        self.saveButton = tk.Button(
+
+        self.img2 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"FavouriteButton.png"))
+        self.favouriteButton = tk.Button(
             master= self.buttonParent,
-            image = self.img1,
+            image = self.img2,
             borderwidth = 0,
             highlightthickness = 0,
-            command = lambda: self.planet_star_filter(self.object_dataframe, self.varObjectType.get()),
+            command = lambda: self.add_favourite(),
             relief = "flat",
+            state="disabled",
             bg= "black")
         
-        self.saveButton.grid(row=0, column=0, padx = 5, pady = 5)
+        self.favouriteButton.grid(row=0, column=2, padx = 2, pady=5)
            
-        self.figMaster = tk.Canvas(self.starMap, highlightthickness=0, background= "black")
-        self.figMaster.update_idletasks()
+        self.figMaster = tk.Canvas(self.starMap, highlightthickness=0, background= "black", width=764)
         self.figMaster.grid(row=2, column = 0, sticky="nsew")
         self.figMaster.update_idletasks()
