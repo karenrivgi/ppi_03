@@ -4,6 +4,7 @@ from Widgets.StarMap import StarMap
 from Widgets.History import History
 from Widgets.Newsfeed import Newsfeed
 from Widgets.ObjectSearch import ObjectSearch
+from Widgets.MyAstros import MyAstros
 
 class MemberMenu:
 
@@ -189,7 +190,7 @@ class MemberMenu:
             image = self.img5,
             borderwidth = 0,
             highlightthickness = 0,
-            command = lambda: self.instance_widget(StarMap),
+            command = lambda: self.instance_widget(MyAstros),
             background= "black",
             relief = "flat")
 
