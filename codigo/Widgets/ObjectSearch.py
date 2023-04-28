@@ -21,8 +21,9 @@ class ObjectSearch:
 
     def show_info(self):
 
-        info = ws.object_search(self.varObjectType.get().lower(), self.varObjectName.get().lower())
-        label = HTMLLabel(self.canvasStarsInfo, html= info)
+        info = ws.object_search(self.varObjectType.get().lower(), self.varObjectName.get().capitalize())
+        label = HTMLLabel(self.figMaster, html= info)
+        label.grid(row=0, column=0, sticky="nsew")
 
         
 
@@ -35,7 +36,9 @@ class ObjectSearch:
 
         if op_filter == "Star":
 
-            options = self.object_dataframe.get_column("common name").to_list()
+            filtered = self.object_dataframe.filter(pl.col("source").str.contains("universeguide"))
+            print(filtered)
+            options = filtered.get_column("common name").to_list()
 
         else:
             options = [
@@ -56,8 +59,6 @@ class ObjectSearch:
     def __init__(self, master: tk.Tk, user = None) -> None:
 
         self.object_dataframe = pl.read_csv(join(ObjectSearch.names_path,"names.csv"), ignore_errors=True)
-        print(self.object_dataframe)
-
         self.user = user
 
         self.starMap = tk.Canvas(master, width= 764, height= 750, background= "black", highlightthickness=0)
@@ -126,11 +127,5 @@ class ObjectSearch:
            
         self.figMaster = tk.Canvas(self.starMap, highlightthickness=0, background= "black")
         self.figMaster.update_idletasks()
-        self.figMaster.grid(row=3, column = 0, sticky="nsew")
-        self.figMaster.grid_anchor("s")
+        self.figMaster.grid(row=2, column = 0, sticky="nsew")
         self.figMaster.update_idletasks()
-        #print(self.figMaster.winfo_height())
-
-        self.canvasStarsInfo = tk.Canvas(self.starMap, width= 220, highlightthickness=0, background= "black")
-        self.figMaster.update_idletasks()
-        self.canvasStarsInfo.grid(row = 0, column = 1, sticky="nsew")
