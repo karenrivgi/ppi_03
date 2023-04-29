@@ -1,5 +1,6 @@
 import tkinter as tk
 import os
+
 from Widgets.StarMap import StarMap
 from Widgets.History import History
 from Widgets.Newsfeed import Newsfeed
@@ -9,7 +10,6 @@ from Widgets.MyAstros import MyAstros
 class MemberMenu:
 
     # Referencia al directorio con los recursos graficos.
-
     recursos_path = os.path.join(os.path.dirname(__file__),"Recursos")
 
     def instance_widget(self, widget):
@@ -17,43 +17,43 @@ class MemberMenu:
         en caso de que exista"""
         
         try:
-            self.currentWidget.destroy()
+            #self.currentWidget.destroy()
+            for child in self.currentWidgetMaster.winfo_children():
+                child.destroy()
         except:
             pass
 
-        self.currentWidget = None
+        # self.currentWidget = None
 
+        self.currentWidgetMaster.config(width=764, height=750, background= "black")
         loadingText = tk.Label(master = self.currentWidgetMaster, text = "Loading...", fg = "white", bg = "black")
         loadingText.place(x = 352, y = 345)
+        self.currentWidgetMaster.update_idletasks()        
 
         self.currentWidget = widget(master = self.currentWidgetMaster, user = self.user)
-        self.currentWidgetMaster.config(width=764, height=750, background= "black")
-        self.currentWidgetMaster.update_idletasks()
-        
-        loadingText.destroy()
 
+        # loadingText.destroy()
 
     def close_session(self):
         """Instancia una ventana de clase AccessMenu y destruye la ventana actual"""
-
         self.mainMenu.destroy()
 
 
     def __init__(self, master: tk.Tk, user = None) -> None:
         
         # Creacion del contenedor de los objetos de la ventana y referencia a la cuenta de usuario.
-
         self.user = user
-        self.mainMenu = tk.Canvas(master, width= master.winfo_width(), height= master.winfo_height(),bd = 0, highlightthickness = 0, relief = "ridge", bg="black")
+
+        self.mainMenu = tk.Canvas(master, width= master.winfo_width(), height= master.winfo_height(),bd = 0, highlightthickness = 0, relief = "ridge", bg="black")        
         self.mainMenu.update_idletasks()
         self.mainMenu.place(x=0, y=0)
+        
         self.background_img = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MemberMenuBack.png"), master=self.mainMenu) 
         self.background = self.mainMenu.create_image(512, 384, image=self.background_img)
 
-        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu, width=0, height=0)
+        self.currentWidgetMaster = tk.Canvas(master = self.mainMenu, width=0, height=0, highlightthickness=0)
         self.currentWidgetMaster.place(x = 250, y = 10)
         self.currentWidget = None
-        
         
         # Creacion de cuadros de texto en el contenedor.
 
