@@ -20,11 +20,14 @@ class ObjectSearch:
     names_path =  join(dirname(dirname(abspath(__file__))),"StarMapGenerator")
 
     def show_info(self):
+        for child in self.figMaster.winfo_children():
+            child.destroy()
 
         info = ws.object_search(self.varObjectType.get().lower(), self.varObjectName.get().capitalize())
         label = HTMLLabel(self.figMaster, html= info)
-        label.grid(row=0, column=0, sticky="nsew")
-        label.grid_anchor("center")
+        #label.grid(row=0, column=0, sticky="nsew")
+        #label.grid_anchor("center")
+        label.pack(expand=True, fill="both")
         self.favouriteButton.config(state="normal")
 
     def add_favourite(self):
@@ -75,8 +78,8 @@ class ObjectSearch:
 
         self.starMap = tk.Canvas(master, width= 764, height= 750, background= "black", highlightthickness=0)
         self.starMap.update_idletasks()
-        # self.starMap.place(x= posx, y= posy)
-        self.starMap.grid(sticky="nsew")
+        self.starMap.place(x= 0, y= 0)
+        #self.starMap.grid(sticky="nsew")
 
         ###
         self.canvasPosition = tk.Canvas(self.starMap, highlightthickness=0, background= "black")
@@ -98,14 +101,12 @@ class ObjectSearch:
         self.listaObjectType.config(width = 15)
         self.listaObjectType.grid(row = 1, column = 0, padx = 5, pady = 5)
 
-
         #Lista desplegable que contiene las opciones para Object Name
         self.varObjectName= tk.StringVar(self.canvasPosition)
         self.listaObjectName = tk.OptionMenu(self.canvasPosition,self.varObjectName, value= [])
         self.listaObjectName.config(width = 15)
         self.listaObjectName.grid(row = 1, column = 1, padx = 5, pady = 5)
 
-    
         ###
         self.buttonParent = tk.Canvas(self.starMap, highlightthickness=0, background= "black")
         self.buttonParent.update_idletasks()
@@ -137,7 +138,6 @@ class ObjectSearch:
         
         self.submitButton.grid(row=0, column=1, padx = 5, pady = 5)
 
-
         self.img2 = tk.PhotoImage(file = join(ObjectSearch.recursos_path,"FavouriteButton.png"))
         self.favouriteButton = tk.Button(
             master= self.buttonParent,
@@ -151,6 +151,8 @@ class ObjectSearch:
         
         self.favouriteButton.grid(row=0, column=2, padx = 2, pady=5)
            
-        self.figMaster = tk.Canvas(self.starMap, highlightthickness=0, background= "black", width=764)
+        self.figMaster = tk.Canvas(self.starMap, highlightthickness=0, background= "black", height=650)
+        self.figMaster.grid_propagate(False)
+        self.figMaster.pack_propagate(False)
         self.figMaster.grid(row=2, column = 0, sticky="nsew")
         self.figMaster.update_idletasks()
