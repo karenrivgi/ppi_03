@@ -79,7 +79,8 @@ def object_search(astro_type, astro):
 
             contenido_html += '<div style="text-align:center">' + str(image) + "</div>"
         except:
-            print("no hay imagen")
+            #print("no hay imagen")
+            pass
 
         contenido_html += "</div>"
 
@@ -133,7 +134,7 @@ def map_info(culture, stars_names = None, planet = None):
     with open(join(culture_path, f'description_{culture}.utf8') , 'r', encoding='utf-8') as archivo:
         culture_content = archivo.read()
 
-    contenido_html['Constellation'] = culture_content
+    contenido_html['Constellation'] = '<div style = "background-color: #47a3cb; color: white;">' + str(culture_content) + "</div>"
 
     if stars_names:
         contenido_stars = []
