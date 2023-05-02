@@ -113,15 +113,15 @@ def get_posts(POST_SEARCH_AMOUNT):
                         cv2.imwrite(f"{image_path}{sub}-{submission.id}.png", image)
                         cv2.imwrite(f"{ignore_path}{sub}-{submission.id}.png", compare_image)
 
-                        # crear las variables necesarias para construir un objeto de un post
-                        post_path = (f"{image_path}{sub}-{submission.id}.png")
-                        post_header = (submission.title)
-                        post_author = (submission.author.name)
-                        post_body = (submission.selftext)
-                        post_score = (str(submission.score))
+                    # crear las variables necesarias para construir un objeto de un post
+                    post_path = (f"{image_path}{sub}-{submission.id}.png")
+                    post_header = (submission.title)
+                    post_author = (submission.author.name)
+                    post_body = (submission.selftext)
+                    post_score = (str(submission.score))
 
-                        # agregar a la lista de posts, el nuevo post generado con los datos
-                        posts.append(Post(post_header, post_body, post_author, post_score, sub, post_path))
+                    # agregar a la lista de posts, el nuevo post generado con los datos
+                    posts.append(Post(post_header, post_body, post_author, post_score, sub, post_path))
                         
                 except Exception as e:
 
