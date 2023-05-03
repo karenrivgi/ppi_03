@@ -4,7 +4,7 @@ from GuestMenu import GuestMenu
 from CreateAccount import CreateAccount
 from MemberMenu import MemberMenu
 from RecoverPasswordMenu import RecoverPasswordMenu
-from user_data.User import Usuario
+from user_data.User import Usuario  
 from tkinter import messagebox
 from api_reddit.get_posts_data import delete_folders
 
@@ -182,6 +182,7 @@ class AccessMenu:
 window = tk.Tk()
 window.geometry("1024x768")
 window.resizable(True, True)
+window.title("Py Man's Sky")
 window.update_idletasks()
 AccessMenu(window)
 window.mainloop()

@@ -6,6 +6,7 @@ from Widgets.History import History
 from Widgets.Newsfeed import Newsfeed
 from Widgets.ObjectSearch import ObjectSearch
 from Widgets.MyAstros import MyAstros
+from Widgets.MoonPhase import MoonPhase
 
 class MemberMenu:
 
@@ -123,6 +124,24 @@ class MemberMenu:
 
         self.objectSearchButton.place(
             x = 25, y = 130,
+            width = 184,
+            height = 30)
+        
+        #--------------------------------------------------
+        # Creacion de boton de para instanciar un widget de clase MoonPhase
+
+        # self.img1 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"ObjectSearchButton.png"))
+        self.moonPhaseButton = tk.Button(
+            text='Moon Phase',
+            master = self.mainMenu,
+            borderwidth = 0,
+            highlightthickness = 0,
+            command = lambda: self.instance_widget(MoonPhase),
+            background= "black",
+            relief = "flat")
+
+        self.moonPhaseButton.place(
+            x = 25, y = 230,
             width = 184,
             height = 30)
         
