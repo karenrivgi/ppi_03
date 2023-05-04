@@ -491,8 +491,10 @@ class StarMap:
         if self.user:
             # Si ese input ya ha sido usado con anterioridad o en repetidas
             # ocasiones, no lo guardamos
-            if [self.fecha_hora_str, self.ubicacion_str] not in self.user.historial:
-                self.user.guardar_historial([self.fecha_hora_str, self.ubicacion_str])
+            # En este caso, guardamos la fecha de generacion, los datos de generacion, y el estado
+            # de no publicado en el subreddit
+            if [datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),self.fecha_hora_str, self.ubicacion_str, "Not published"] not in self.user.historial:
+                self.user.guardar_historial([datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),self.fecha_hora_str, self.ubicacion_str, "Not published"])
 
 
         # Crea un canvas a partir de fig para poder mostrar el gráfico con tkinter
@@ -541,8 +543,8 @@ class StarMap:
 
         messagebox.showinfo("Shared!", "You will be able to see your post on https://www.reddit.com/r/PyMansSky/ in a few minutes.")
         
-        # Guarda en su historial los datos de la publicación
-        self.user.guardar_historial([title, link], 'reddit')
+        # Actualiza en su historial los datos de la publicación
+        self.user.guardar_historial([self.fecha_hora_str, self.ubicacion_str, [title, link]], 'reddit')
 
         # Verifica si el archivo existe
         if os.path.exists(filename):

@@ -13,7 +13,7 @@ class Usuario:
         self.email = email
         self.contrasena = contrasena
         self.historial = historial or []
-        self.historial_reddit = historial_reddit or []
+        #self.historial_reddit = historial_reddit or []
         self.historial_astros = historial_astros or []
     
     @classmethod
@@ -107,10 +107,18 @@ class Usuario:
         usuarios[self.nickname].historial = self.historial
 
         if tipo == 'reddit':
-            # Agrega los datos al historial del usuario
-            self.historial_reddit.append(datos)
+            # Actualiza los datos al historial del usuario
+            # self.historial_reddit.append(datos)
+
+            # busca la entrada en el historial correspondiente al mapa generado
+            # y en la entrada correspondiente al estado de reddir, actualiza la info
+            for entry in self.historial:
+                if entry[1] == datos[0] and entry[2] == datos[1]:
+                    entry[3] = datos[2]
+
             # Actualizar los datos del usuario en la base de datos
-            usuarios[self.nickname].historial_reddit = self.historial_reddit
+            usuarios[self.nickname].historial = self.historial
+
         elif tipo == 'astros':
             self.historial_astros.append(datos)
             usuarios[self.nickname].historial_astros = self.historial_astros 
