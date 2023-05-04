@@ -46,84 +46,87 @@ class MoonPhase:
             background="black",
             highlightthickness=0)
         self.moonFrame.update_idletasks()
-        self.moonFrame.pack(
-            expand=True,
-            fill="both",
-            padx=64,
+        self.moonFrame.grid(
+            row=0,
+            column=0,
+            padx=45,
             pady=10,
-            anchor="n")
+            sticky="NSEW",
+            )
 
         # Label para el encabezado de la interfaz.
         self.header_label = tk.Label(
             self.moonFrame,
             text="What phase is the Moon?",
-            font=(
-                "BeVietnamPro-Bold",
-                int(30),
-                'bold'),
+            font=("BeVietnamPro 30"),
             fg="#ffffff",
-            bg="black")
-        self.header_label.grid(row=0, columnspan=3, padx=5, pady=5, sticky="W")
+            bg="black",
+            highlightthickness=0)
+        self.header_label.grid(row=0, column=0, columnspan=3, padx=5, pady=5, sticky="WE")
 
         # Label y campo de entrada para el año.
         self.year_label = tk.Label(
             self.moonFrame,
-            text="Year (AAAA)",
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
+            text="Year (YYYY)",
+            font=("BeVietnamPro 12"),
             fg="#ffffff",
-            bg="black")
-        self.year_label.grid(row=1, column=0, padx=5, pady=5, sticky="W")
+            bg="black",
+            highlightthickness=0,
+            width=23)
+        self.year_label.grid(row=1, column=0, padx=5, pady=5, sticky="WE")
 
         self.year_entry = tk.Entry(
             self.moonFrame,
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
-            fg="#ffffff",
-            bg="black")
-        self.year_entry.grid(row=2, column=0, padx=5, pady=5)
+            font=("BeVietnamPro 12"),
+            fg="black",
+            bg="white",
+            highlightthickness=0,
+            bd = 0,
+            width=23)
+        self.year_entry.grid(row=2, column=0, padx=5, pady=5, sticky="WE")
 
         # Label y campo de entrada para el mes.
         self.month_label = tk.Label(
             self.moonFrame,
             text="Month (M)",
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
+            font=("BeVietnamPro 12"),
             fg="#ffffff",
-            bg="black")
-        self.month_label.grid(row=1, column=1, padx=5, pady=5, sticky="W")
+            bg="black",
+            highlightthickness=0,
+            width=23)
+        self.month_label.grid(row=1, column=1, padx=5, pady=5, sticky="WE")
 
         self.month_entry = tk.Entry(
             self.moonFrame,
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
-            fg="#ffffff",
-            bg="black")
-        self.month_entry.grid(row=2, column=1, padx=5, pady=5)
+            font=("BeVietnamPro 12"),
+            fg="black",
+            bg="white",
+            highlightthickness=0,
+            bd = 0,
+            width=23)
+        self.month_entry.grid(row=2, column=1, padx=5, pady=5, sticky="WE")
 
         # Label y campo de entrada para el día.
         self.day_label = tk.Label(
             self.moonFrame,
             text="Day (D)",
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
-            fg="#ffffff",
-            bg="black")
-        self.day_label.grid(row=1, column=2, padx=5, pady=5, sticky="W")
+            font=("BeVietnamPro 12"),
+            fg="white",
+            bg="black",
+            highlightthickness=0,
+            width=23)
+        
+        self.day_label.grid(row=1, column=2, padx=5, pady=5, sticky="WE")
 
         self.day_entry = tk.Entry(
             self.moonFrame,
-            font=(
-                "BeVietnamPro-Bold",
-                int(14)),
-            fg="#ffffff",
-            bg="black")
-        self.day_entry.grid(row=2, column=2, padx=5, pady=5)
+            font=("BeVietnamPro 12"),
+            fg="black",
+            bg="white",
+            highlightthickness=0,
+            bd = 0,
+            width=23)
+        self.day_entry.grid(row=2, column=2, padx=5, pady=5, sticky="WE")
 
         # Botón que al ser clickeado llamará al método get_moon_phase
         self.img = tk.PhotoImage(file = os.path.join(MoonPhase.recursos_path, 'GetMoonPhaseButton.png'))
@@ -132,7 +135,9 @@ class MoonPhase:
             image=self.img,
             width=215,
             height=35,
-            command=self.get_moon_phase)
+            command=self.get_moon_phase,
+            highlightthickness=0,
+            bd = 0)
         self.button.grid(row=3, column=1, padx=5, pady=15, sticky='nsew')
 
     def get_moon_phase(self):
