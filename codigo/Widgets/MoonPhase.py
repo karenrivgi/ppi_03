@@ -1,4 +1,5 @@
 import calendar
+import os
 import webbrowser
 import tkinter as tk
 from tkinter import messagebox
@@ -8,6 +9,9 @@ from StarMapGenerator import MoonPhaseSearch
 
 
 class MoonPhase:
+
+    recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
+
     def __init__(self, master: tk.Tk, user=None):
         """ Constructor de la clase MoonPhase.
 
@@ -122,15 +126,14 @@ class MoonPhase:
         self.day_entry.grid(row=2, column=2, padx=5, pady=5)
 
         # Botón que al ser clickeado llamará al método get_moon_phase
+        self.img = tk.PhotoImage(file = os.path.join(MoonPhase.recursos_path, 'GetMoonPhaseButton.png'))
         self.button = tk.Button(
             self.moonFrame,
-            text="Get Moon Phase",
-            command=self.get_moon_phase,
-            font=(
-                "BeVietnamPro-Bold",
-                int(14),
-                'bold'))
-        self.button.grid(row=3, column=1, padx=5, pady=5, sticky='nsew')
+            image=self.img,
+            width=215,
+            height=35,
+            command=self.get_moon_phase)
+        self.button.grid(row=3, column=1, padx=5, pady=7, sticky='nsew')
 
     def get_moon_phase(self):
         """ Método que obtiene la fase lunar y la muestra en la interfaz
@@ -152,7 +155,7 @@ class MoonPhase:
             year = int(self.year_entry.get())
             if len(str(year)) != 4:
                 is_invalid = True
-                raise ValueError("El año debe tener 4 dígitos.")
+                raise ValueError("The year must have 4 digits.")
         except ValueError as e:
             is_invalid = True
             messagebox.showerror("Error", str(e))

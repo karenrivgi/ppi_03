@@ -130,9 +130,9 @@ class MemberMenu:
         #--------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MoonPhase
 
-        # self.img1 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"ObjectSearchButton.png"))
+        self.img8 = tk.PhotoImage(file = os.path.join(MemberMenu.recursos_path,"MoonPhaseButton.png"))
         self.moonPhaseButton = tk.Button(
-            text='Moon Phase',
+            image = self.img8,
             master = self.mainMenu,
             borderwidth = 0,
             highlightthickness = 0,
