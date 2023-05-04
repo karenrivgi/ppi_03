@@ -49,7 +49,7 @@ class MoonPhase:
         self.moonFrame.pack(
             expand=True,
             fill="both",
-            padx=80,
+            padx=64,
             pady=10,
             anchor="n")
 
@@ -153,9 +153,9 @@ class MoonPhase:
         # Obtener el año de la entrada del usuario y validarla
         try:
             year = int(self.year_entry.get())
-            if len(str(year)) != 4:
+            if year < 1900 or year > 2052:
                 is_invalid = True
-                raise ValueError("The year must have 4 digits.")
+                raise ValueError("The year should be between 1900 and 2052")
         except ValueError as e:
             is_invalid = True
             messagebox.showerror("Error", str(e))
