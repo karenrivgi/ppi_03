@@ -22,31 +22,14 @@ class RecoverPasswordMenu:
         """Envia el dato de contraseña al correo electronico del usuario en caso
         de ser solicitada"""
 
-        # Configuracion e inicializacion del srvidor SMTP
-
-        sender_email = "ppi_project@outlook.com"
-        sender_password = "ppi_123_4545"
-
-        smtp_server = "smtp.office365.com"
-        smtp_port = 587
-
-        server = smtplib.SMTP(smtp_server, smtp_port)
-
-
-        server.starttls()
-        server.login(sender_email, sender_password)
-
         # Tomar los valores de las entradas y encontrar el usuario correspondiente
         nick = self.nicknameEntry.get()
         user = None
         
-        try:
-            user = Usuario.leer_usuarios().get(nick)
-        except:
-             pass
+        user = Usuario.leer_usuarios().get(nick)
+
         
         if user == None:
-            
             messagebox.showwarning("Warning", "Please enter a valid user nickname.")
             return
         
@@ -59,7 +42,20 @@ class RecoverPasswordMenu:
             return
         
         else:
-            print("ENTRAMOS xd")
+            
+            # Configuracion e inicializacion del srvidor SMTP
+            sender_email = "ppi_project@outlook.com"
+            sender_password = "ppi_123_4545"
+
+            smtp_server = "smtp.office365.com"
+            smtp_port = 587
+
+            server = smtplib.SMTP(smtp_server, smtp_port)
+
+
+            server.starttls()
+            server.login(sender_email, sender_password)
+
             # Construccion y envio del mensaje a traves del email remitente
             mensaje = MIMEMultipart()
 
