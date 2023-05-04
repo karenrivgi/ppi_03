@@ -21,6 +21,8 @@ from skyfield.projections import build_stereographic_projection
 from skyfield.api import Loader
 
 from geopy.exc import GeocoderUnavailable
+from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderServiceError
 from tkinter import messagebox
 
 def generar_mapa(
@@ -73,12 +75,17 @@ def generar_mapa(
         locator = Nominatim(user_agent='my_request')
         location = locator.geocode(locationstr)
         lat, long = location.latitude, location.longitude
+    
     except GeocoderUnavailable:
         # Manejar la excepción de GeocoderUnavailable
         if locationstr != 'Colombia, Antioquia, Medellin':
             messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
         lat, long =  6.2443382, -75.573553
         geopy_problem = True
+    
+    except:
+        raise
+    
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
