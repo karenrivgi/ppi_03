@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+
 from tkinter import ttk
 from api_reddit import get_posts_data
 
