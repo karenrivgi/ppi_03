@@ -75,31 +75,34 @@ class Newsfeed:
         new_post = tk.Frame(self.post_frame, padx=10, pady=10, bg = "black")
         
         # crear el label del titulo
-        header_label = tk.Label(new_post, text=post.header, font=("Arial", 14, "bold"), fg = "#47a3cb", bg = "black", wraplength=self.post_container.winfo_reqwidth()-20)
+        header_label = tk.Label(new_post, text=post.header, font=("Arial", 19, "bold"), fg = "#47a3cb", bg = "black", wraplength=self.post_container.winfo_reqwidth()-20)
         header_label.pack(side="top", fill="x", pady=5)
         
         # agregar el label del body, si hay body
         if post.body:
-            body_label = tk.Label(new_post, text=post.body, font=("BeVietnamPro-Bold", 12), fg = "white", bg = "black", wraplength=self.post_container.winfo_reqwidth()-20)
+            body_label = tk.Label(new_post, text=post.body, font=("BeVietnamPro-Bold", 15), fg = "white", bg = "black", wraplength=self.post_container.winfo_reqwidth()-20)
             body_label.pack(side="top", fill="x", pady=5)
 
         # agregar label de imagen, si hay imagen
         if post.image_path:
-            image = tk.PhotoImage(file=post.image_path)
-            image_label = tk.Label(new_post, image=image, bg = "black")
-            image_label.image = image
-            image_label.pack(side="top", fill="x", pady=5)
+            try:
+                image = tk.PhotoImage(file=post.image_path)
+                image_label = tk.Label(new_post, image=image, bg="black")
+                image_label.image = image
+                image_label.pack(side="top", fill="x", pady=5)
+            except tk.TclError:
+                pass
 
         # agregar label de upvotes
-        upvotes_label = tk.Label(new_post, text="Upvotes: " + post.score, font=("BeVietnamPro-Bold", 12, "bold"), fg = "#47a3cb", bg = "black")
+        upvotes_label = tk.Label(new_post, text="Upvotes: " + post.score, font=("BeVietnamPro-Bold", 14, "bold"), fg = "#47a3cb", bg = "black")
         upvotes_label.pack(side="top", fill="x", pady=5)
 
         # agregar label del subreddit del que se recuperó la informacion 
-        subreddit_label = tk.Label(new_post, text="Subreddit: " + post.subreddit, font=("BeVietnamPro-Bold", 10, "bold"), fg = "white", bg = "black")
+        subreddit_label = tk.Label(new_post, text="Subreddit: " + post.subreddit, font=("BeVietnamPro-Bold", 12, "bold"), fg = "white", bg = "black")
         subreddit_label.pack(side="top", fill="x", pady=5)
 
         # agregar el label de la persona que hizo el post
-        author_label = tk.Label(new_post, text="Author: " + post.author, font=("BeVietnamPro-Bold", 10, "bold"), fg = "white", bg = "black")
+        author_label = tk.Label(new_post, text="Author: " + post.author, font=("BeVietnamPro-Bold", 12, "bold"), fg = "white", bg = "black")
         author_label.pack(side="top", fill="x", pady=5)
 
         new_post.pack(fill="x", pady=5)
