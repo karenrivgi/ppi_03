@@ -10,6 +10,10 @@ import os
 from os.path import abspath, dirname, join
 from api_reddit.make_posts_reddit import make_post
 from Widgets.MapInfo import MapInfo
+
+from geopy.exc import GeocoderTimedOut
+from geopy.exc import GeocoderServiceError
+from geopy.exc import GeocoderUnavailable
 # from api_reddit import make_posts_reddit
 
 
@@ -397,8 +401,19 @@ class StarMap:
         hora = self.hour.get()
 
         # Convertimos la fecha y hora a objetos datetime
-        fecha_obj = datetime.datetime.strptime(fecha, '%Y-%m-%d')
-        hora_obj = datetime.datetime.strptime(hora, '%H:%M')
+        try:
+            fecha_obj = datetime.datetime.strptime(fecha, '%Y-%m-%d')
+        
+        except:
+            messagebox.showerror("Error", "Please enter a valid formatted date.")
+            return
+        
+        try:
+            hora_obj = datetime.datetime.strptime(hora, '%H:%M')
+        
+        except:
+            messagebox.showerror("Error", "Please enter a valid formatted hour.")
+            return
 
         # Combinamos la fecha y hora en un solo objeto datetime
         fecha_hora_obj = fecha_obj.replace(hour=hora_obj.hour, minute=hora_obj.minute)
@@ -411,6 +426,10 @@ class StarMap:
         departamento = self.province.get()
         ciudad = self.city.get()
 
+        if pais == "" or departamento == "" or ciudad == "":
+            messagebox.showerror("Error", "Please enter a location.")
+            return
+        
         # Unimos los valores en una cadena de texto separada por comas y lo guardamos en la variable global
         self.ubicacion_str = f"{pais}, {departamento}, {ciudad}"
 
@@ -447,10 +466,16 @@ class StarMap:
         '''
 
         # Guarda en fig el gráfico generado por skymap.generar_mapa
-        fig, warning, geopy_problem, nombres_estrellas = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
-                                  self.figMaster.winfo_height(), self.magnitud_lim, 
-                                  self.mostrar_nombres_estrellas, self.planet, 
-                                  self.cons_color, self.culture)
+        try:
+            fig, warning, geopy_problem, nombres_estrellas = skymap.generar_mapa(self.fecha_hora_str, self.ubicacion_str, 
+                                    self.figMaster.winfo_height(), self.magnitud_lim, 
+                                    self.mostrar_nombres_estrellas, self.planet, 
+                                    self.cons_color, self.culture)
+        
+        except:
+            messagebox.showerror("Location Error", "The requested location is invalid, please enter a valid one.")
+            self.submitButton.config(state="disabled")
+            return
         
         if warning:
             messagebox.showwarning("Warning", "Perhaps the planet cannot be visualized.")
