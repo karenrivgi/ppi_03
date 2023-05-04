@@ -133,7 +133,7 @@ class MoonPhase:
             width=215,
             height=35,
             command=self.get_moon_phase)
-        self.button.grid(row=3, column=1, padx=5, pady=7, sticky='nsew')
+        self.button.grid(row=3, column=1, padx=5, pady=15, sticky='nsew')
 
     def get_moon_phase(self):
         """ Método que obtiene la fase lunar y la muestra en la interfaz
