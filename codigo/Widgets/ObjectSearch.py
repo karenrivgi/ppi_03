@@ -32,7 +32,9 @@ class ObjectSearch:
 
     def add_favourite(self):
         
-        astro = [self.varObjectType.get().lower(), self.varObjectName.get().capitalize()]
+        time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+        astro = [self.varObjectType.get().lower(), self.varObjectName.get().capitalize(), time]
         
         if astro in self.user.historial_astros:
             pass
