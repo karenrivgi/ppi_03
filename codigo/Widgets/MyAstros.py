@@ -12,50 +12,92 @@ class MyAstros:
 
         self.user = user
 
-        # Creacion del contenedor de los objetos de la ventana.
-        self.history = tk.Frame(master, width=748, height=731, background="black", highlightthickness=0)
-        self.history.grid(sticky="nsew")
-
-        # Crea un scrollbar vertical y lo posiciona, para visualizar todo el contenido
-        scrollbarv = ttk.Scrollbar(master=self.history, orient="vertical")
-        scrollbarv.grid(row=0, column=1, sticky='ns')
-
-        # Creación del canvas auxiliar para el funcionamiento del scrollbar
-        self.canvasPosition = tk.Canvas(self.history, highlightthickness=0, background="black", yscrollcommand=scrollbarv.set, width=748, height=731)
-        self.canvasPosition.grid(row=0, column=0, sticky="nsew")
-        self.canvasPosition.grid_anchor("center")
-
-        # Crea un frame para contener la información del historial
-        self.info_container = tk.Frame(master=self.canvasPosition, background="black", width=748, height=731)
-        self.canvasPosition.create_window((0, 0), window=self.info_container, anchor="nw")
-
-        # Configura el scrollbar vertical para modificar el eje y del canvas
-        scrollbarv.config(command=self.canvasPosition.yview)
-
-        # Configuramos el frame para que se actualice en base a la posición del scrollbar
-        self.info_container.bind("<Configure>", lambda e: self.canvasPosition.configure(scrollregion=self.canvasPosition.bbox("all")))
-
-
-        # Creamos los títulos y los posicionamos en info_container
-        self.objectNameText = tk.Label(self.info_container, text= "Favorite Astros", font = ("BeVietnamPro-Bold", int(18)), width = 15, fg = "#ffffff", bg= "black")
-        self.objectNameText.grid(row = 0, column = 1)
-
         # Obtenemos la información de los historiales del usuario
         self.historial_astros = list(user.historial_astros)
 
-        for i in range(len(self.historial_astros)):
-            # Crea un label para el elemento actual del historial
-            history_line = tk.Label(master=self.info_container, 
-                                    text= " ".join(self.historial_astros[i]),
-                                    background="black",
-                                    fg="white",
-                                    height=2, width=50,
-                                    font=("BeVietnamPro", 12,))
-            
-            # Lo posiciona en info_container con grid
-            history_line.grid(row=(2*i)+1, column=1, sticky="EW")
-            history_line.update_idletasks()
-      
+        # Creacion del contenedor de los objetos de la ventana.
+        self.myAstros = tk.Frame(master, background="black", highlightthickness=0)
+        self.myAstros.pack(fill='both', expand=True)
+
+        # Crea un scrollbar vertical y lo posiciona, para visualizar todo el contenido
+        scrollbarV = ttk.Scrollbar(master=self.myAstros, orient="vertical")
+        scrollbarV.pack(side="right", fill='y')
+
+        # Crea la tabla para contener la información del historial
+        self.treeAstros = ttk.Treeview(self.myAstros, yscrollcommand=scrollbarV.set)
+        self.treeAstros.pack(fill="both", expand=True)
+
+        # Configura el scrollbar vertical para modificar el eje y de la tabla
+        scrollbarV.config(command=self.treeAstros.yview)
+        
+        self.astros_table()
+
+    def astros_table(self):
+        
+        # Se le da estilo al Tree
+        styletable = ttk.Style()
+
+        styletable.theme_use("clam")
+
+        styletable.configure(
+            "Treeview",
+            background="LigthSteelBlue3",
+            foreground="black",
+            rowheigth=50,
+            fieldbackground="light cyan"
+                             )
+        
+        # Columnas del Tree
+        self.treeAstros["columns"] = ("Planets", "Stars")
+
+        # Le damos formato a las columnas
+        self.treeAstros.column("#0", width=0, stretch=False) # columna por defecto
+        self.treeAstros.column("Planets", width=375)
+        self.treeAstros.column("Stars", width=375)
+
+        # creamos los headings de las columnas
+        self.treeAstros.heading("#0", text="", anchor="w") # columna por defecto
+        self.treeAstros.heading("Planets", text="Planets", anchor="center")
+        self.treeAstros.heading("Stars", text="Stars", anchor="center")
+
+        # Listas para diferenciar por typo de astro y almacenarlos
+        listaplanetas=[]
+        listaestrella=[] 
+
+        #For para filtrar por tipo de dato y almacenar  
+        for astro in range(len(self.historial_astros)):
+            if self.historial_astros[astro][0] == 'planet':
+                listaplanetas.append(self.historial_astros[astro][1])
+            else:
+                listaestrella.append(self.historial_astros[astro][1])
+
+        #If para agregar los astros a la columna que pertenezca
+        if len(listaestrella)>=len(listaplanetas):
+            Contador1=len(listaestrella)
+            while Contador1>=1:
+                if len(listaplanetas)>0:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]))
+                    listaplanetas.pop(0)
+                    listaestrella.pop(0)        
+                elif len(listaestrella)>0:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(" ",listaestrella[0]))
+                    listaestrella.pop(0) 
+                else:
+                    break
+        else:
+            Contador2=len(listaplanetas)
+            while Contador2>=1:
+                if len(listaestrella)>0:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]))
+                    listaplanetas.pop(0)
+                    listaestrella.pop(0)
+                elif len(listaplanetas)>0: 
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0]," "))
+                    listaplanetas.pop(0)
+                else:
+                    break
+
+
     def destroy(self):
         """Destruye el widget del objeto tkinter."""
         self.history.destroy()
