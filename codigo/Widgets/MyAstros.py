@@ -12,6 +12,8 @@ class MyAstros:
 
         self.user = user
 
+        master.pack_propagate(False)
+        
         # Obtenemos la información de los historiales del usuario
         self.historial_astros = list(user.historial_astros)
 
@@ -41,10 +43,10 @@ class MyAstros:
 
         styletable.configure(
             "Treeview",
-            background="LigthSteelBlue3",
+            background="SkyBlue1",
             foreground="black",
             rowheigth=50,
-            fieldbackground="light cyan"
+            fieldbackground="LigthBlue1"
                              )
         
         # Columnas del Tree
