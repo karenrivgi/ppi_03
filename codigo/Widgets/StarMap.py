@@ -1,16 +1,16 @@
 import datetime
 import tkinter as tk
-from PIL import Image
 import matplotlib.pyplot as plt
+import os
+
+from PIL import Image
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
 from StarMapGenerator import skymap
 from tkinter import filedialog
-import os
 from os.path import abspath, dirname, join
 from api_reddit.make_posts_reddit import make_post
 from Widgets.MapInfo import MapInfo
-
 from geopy.exc import GeocoderTimedOut
 from geopy.exc import GeocoderServiceError
 from geopy.exc import GeocoderUnavailable
