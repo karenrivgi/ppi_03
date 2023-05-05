@@ -39,14 +39,14 @@ class MyAstros:
         # Se le da estilo al Tree
         styletable = ttk.Style()
 
-        styletable.theme_use("clam")
+        styletable.theme_use("alt")
 
         styletable.configure(
             "Treeview",
-            background="SkyBlue1",
+            background="royal blue",
             foreground="black",
             rowheigth=50,
-            fieldbackground="LigthBlue1"
+            fieldbackground="royal blue"
                              )
         
         # Columnas del Tree
