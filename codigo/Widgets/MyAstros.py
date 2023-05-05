@@ -39,14 +39,14 @@ class MyAstros:
         # Se le da estilo al Tree
         styletable = ttk.Style()
 
-        styletable.theme_use("clam")
+        styletable.theme_use("alt")
 
         styletable.configure(
             "Treeview",
-            background="SkyBlue1",
+            background="royal blue",
             foreground="black",
             rowheigth=50,
-            fieldbackground="LigthBlue1"
+            fieldbackground="royal blue"
                              )
         
         # Columnas del Tree
@@ -73,9 +73,11 @@ class MyAstros:
         #For para filtrar por tipo de dato y almacenar  
         for astro in range(len(self.historial_astros)):
             if self.historial_astros[astro][0] == 'planet':
-                listaplanetas.append(self.historial_astros[astro][1])
+                text = (f'{self.historial_astros[astro][1]}, saved as favorite on: {self.historial_astros[astro][2]}')
+                listaplanetas.append(text)
             else:
-                listaestrella.append(self.historial_astros[astro][1])
+                text = (f'{self.historial_astros[astro][1]}, saved as favorite on: {self.historial_astros[astro][2]}')
+                listaestrella.append(text)
 
         #If para agregar los astros a la columna que pertenezca
 
