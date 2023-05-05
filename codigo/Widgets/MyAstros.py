@@ -39,15 +39,16 @@ class MyAstros:
         # Se le da estilo al Tree
         styletable = ttk.Style()
 
-        styletable.theme_use("alt")
+        styletable.theme_use("clam")
 
         styletable.configure(
             "Treeview",
-            background="royal blue",
+            background="SkyBlue1",
             foreground="black",
             rowheigth=50,
-            fieldbackground="royal blue"
-                             )
+            fieldbackground="LigthBlue1",
+            font=("BeVietnamPro 11")
+        )
         
         # Columnas del Tree
         self.treeAstros["columns"] = ("Planets", "Stars")
@@ -72,12 +73,12 @@ class MyAstros:
 
         #For para filtrar por tipo de dato y almacenar  
         for astro in range(len(self.historial_astros)):
+
             if self.historial_astros[astro][0] == 'planet':
-                text = (f'{self.historial_astros[astro][1]}, saved as favorite on: {self.historial_astros[astro][2]}')
-                listaplanetas.append(text)
+
+                listaplanetas.append([self.historial_astros[astro][1], ", Saved on: " ,self.historial_astros[astro][2]])
             else:
-                text = (f'{self.historial_astros[astro][1]}, saved as favorite on: {self.historial_astros[astro][2]}')
-                listaestrella.append(text)
+                listaestrella.append([self.historial_astros[astro][1], ", Saved on: ",self.historial_astros[astro][2]])
 
         #If para agregar los astros a la columna que pertenezca
 
@@ -88,17 +89,49 @@ class MyAstros:
             if len(listaplanetas) >= len(listaestrella):
 
                 try:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i],listaestrella[i]),tags=tag)
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("".join(listaplanetas[i]), "".join(listaestrella[i])),tags=tag)
                 except:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i], ""),tags=tag)
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("".join(listaplanetas[i]), ""),tags=tag)
                 
             else:
 
                 try:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i],listaestrella[i]),tags=tag)
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("".join(listaplanetas[i]), "".join(listaestrella[i])),tags=tag)
                 except:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("", listaestrella[i]),tags=tag)
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("", "".join(listaestrella[i])),tags=tag)
 
+        
+        """if len(listaestrella)>=len(listaplanetas):
+
+            Contador1=len(listaestrella)
+            while Contador1>=1:
+                if len(listaplanetas)>0:
+
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]),tags=("par",))
+                    listaplanetas.pop(0)
+                    listaestrella.pop(0)        
+                
+                elif len(listaestrella)>0:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(" ",listaestrella[0]), tags=("par",))
+                    listaestrella.pop(0) 
+                
+                else:
+                    break
+        else:
+            Contador2=len(listaplanetas)
+            while Contador2>=1:
+                
+                if len(listaestrella)>0:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]), tags=("par",))
+                    listaplanetas.pop(0)
+                    listaestrella.pop(0)
+                
+                elif len(listaplanetas)>0: 
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0]," "), tags=("par",))
+                    listaplanetas.pop(0)
+                
+                else:
+                    break"""
 
 
     def destroy(self):
