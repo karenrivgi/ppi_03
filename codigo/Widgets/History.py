@@ -46,7 +46,7 @@ class History:
         # para agregarle estilos al tree
         style = ttk.Style()
         style.configure("Treeview", 
-                        background="lightblue",
+                        background="SkyBlue1",
                         foreground="black",
                         rowheight=30,
                         fieldbackground="lightblue",
@@ -74,16 +74,20 @@ class History:
         self.tree.tag_configure("par", background="#2255a5")
 
         # insertamos los datos
-        id = 0
-        for entry in self.user.historial:
-            tag = ("par",) if id % 2 == 0 else ("impar",)
+        try:
+            id = 0
+            for entry in self.user.historial:
+                tag = ("par",) if id % 2 == 0 else ("impar",)
 
-            if isinstance(entry[3], list):
-                self.tree.insert(parent="", index="end", iid=id, text="", values=(entry[0], " - ".join((entry[1], entry[2])), entry[3][1]), tags=tag)
-            else:
-                self.tree.insert(parent="", index="end", iid=id, text="", values=(entry[0], " - ".join((entry[1], entry[2])), entry[3]), tags=tag)
+                if isinstance(entry[3], list):
+                    self.tree.insert(parent="", index="end", iid=id, text="", values=(entry[0], " - ".join((entry[1], entry[2])), entry[3][1]), tags=tag)
+                else:
+                    self.tree.insert(parent="", index="end", iid=id, text="", values=(entry[0], " - ".join((entry[1], entry[2])), entry[3]), tags=tag)
 
-            id += 1
+                id += 1
+        
+        except:
+            pass
     
     def open_url(self,url):
         """función que abrirá la URL especificada en el navegador web"""

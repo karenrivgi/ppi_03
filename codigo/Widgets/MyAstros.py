@@ -62,6 +62,10 @@ class MyAstros:
         self.treeAstros.heading("Planets", text="Planets", anchor="center")
         self.treeAstros.heading("Stars", text="Stars", anchor="center")
 
+        # creamos tags para mostrar adecuadamente las filas segun su posicion
+        self.treeAstros.tag_configure("impar", background="lightblue")
+        self.treeAstros.tag_configure("par", background="#2255a5")
+
         # Listas para diferenciar por typo de astro y almacenarlos
         listaplanetas=[]
         listaestrella=[] 
@@ -74,30 +78,25 @@ class MyAstros:
                 listaestrella.append(self.historial_astros[astro][1])
 
         #If para agregar los astros a la columna que pertenezca
-        if len(listaestrella)>=len(listaplanetas):
-            Contador1=len(listaestrella)
-            while Contador1>=1:
-                if len(listaplanetas)>0:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]))
-                    listaplanetas.pop(0)
-                    listaestrella.pop(0)        
-                elif len(listaestrella)>0:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(" ",listaestrella[0]))
-                    listaestrella.pop(0) 
-                else:
-                    break
-        else:
-            Contador2=len(listaplanetas)
-            while Contador2>=1:
-                if len(listaestrella)>0:
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0],listaestrella[0]))
-                    listaplanetas.pop(0)
-                    listaestrella.pop(0)
-                elif len(listaplanetas)>0: 
-                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[0]," "))
-                    listaplanetas.pop(0)
-                else:
-                    break
+
+        for i in range(max(len(listaplanetas), len(listaestrella))):
+            
+            tag = ("par",) if i % 2 == 0 else ("impar",)
+
+            if len(listaplanetas) >= len(listaestrella):
+
+                try:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i],listaestrella[i]),tags=tag)
+                except:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i], ""),tags=tag)
+                
+            else:
+
+                try:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=(listaplanetas[i],listaestrella[i]),tags=tag)
+                except:
+                    self.treeAstros.insert(parent="" ,index="end" ,text="", values=("", listaestrella[i]),tags=tag)
+
 
 
     def destroy(self):
