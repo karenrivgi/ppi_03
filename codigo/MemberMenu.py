@@ -6,6 +6,7 @@ from Widgets.Newsfeed import Newsfeed
 from Widgets.ObjectSearch import ObjectSearch
 from Widgets.MyAstros import MyAstros
 from Widgets.MoonPhase import MoonPhase
+from Widgets.ObjectInHorizon import ObjectInHorizon
 
 
 class MemberMenu:
@@ -198,7 +199,7 @@ class MemberMenu:
             background="black",
             relief="flat")  # Creación del botón que llama a la funcion "close_session()".
         self.closeSessionButton.place(
-            x=25, y=609,
+            x=25, y=559,
             width=184,
             height=30)  # Posicionamiento del Botón en el contenedor principal.
 
@@ -276,5 +277,24 @@ class MemberMenu:
             relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "MoonPhase".
         self.moonPhaseButton.place(
             x=25, y=230,
+            width=184,
+            height=30)  # Posicionamiento del Botón en el contenedor principal.
+        
+                # --------------------------------------------------
+        # Creacion de boton de para instanciar un widget de clase MoonPhase
+
+        # Asigna la imagen "MoonPhaseButton.png" a la variable "img8".
+        # self.img8 = tk.PhotoImage(file=os.path.join(
+        #    MemberMenu.recursos_path, "MoonPhaseButton.png"))
+        self.horizonButton = tk.Button(
+            master=self.mainMenu,
+            text='Astro in Horizon',
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.instance_widget(ObjectInHorizon),
+            background="black",
+            relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "MoonPhase".
+        self.horizonButton.place(
+            x=25, y=280,
             width=184,
             height=30)  # Posicionamiento del Botón en el contenedor principal.
