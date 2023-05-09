@@ -73,7 +73,7 @@ def when_above_horizon(place, date, object):
     f = risings_and_settings(eph, body, observer)
 
     # Crea una lista para almacenar los momentos en que el objeto está arriba
-    # del horizonte 
+    # del horizonte
     times = []
 
     # Recorre los momentos en que el objeto está arriba y abajo del horizonte
