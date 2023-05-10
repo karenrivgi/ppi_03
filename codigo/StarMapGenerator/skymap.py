@@ -25,6 +25,7 @@ from geopy.exc import GeocoderTimedOut
 from geopy.exc import GeocoderServiceError
 from tkinter import messagebox
 
+
 def generar_mapa(
         fecha_hora,
         lugar,
@@ -34,18 +35,17 @@ def generar_mapa(
         planeta='mars',
         cons_color='y',
         cultura='maya'):
-    
     """
-    Genera un gráfico del mapa estelar basado en una fecha y ubicación y demás parámetros pasados 
+    Genera un gráfico del mapa estelar basado en una fecha y ubicación y demás parámetros pasados
     por el usuario.
-        
+
     Se apoya en librerías como geopy y datetime para hacer el tratamiento de los parámetros, luego
     con la librería skyfield y sus datos obtiene lo necesario para realizar el gráfico con matplotlib
     y las personalizaciones especificadas."""
 
     load = Loader(os.path.dirname(__file__))
-    warning = False # Avertencia en caso de que el planeta no se pueda visualizar
-    geopy_problem = False # Para manejo de datos en caso de fallo en servidores geopy
+    warning = False  # Avertencia en caso de que el planeta no se pueda visualizar
+    geopy_problem = False  # Para manejo de datos en caso de fallo en servidores geopy
 
     # -------------------------
     # CARGAR DATOS
@@ -75,17 +75,18 @@ def generar_mapa(
         locator = Nominatim(user_agent='my_request')
         location = locator.geocode(locationstr)
         lat, long = location.latitude, location.longitude
-    
+
     except GeocoderUnavailable:
         # Manejar la excepción de GeocoderUnavailable
         if locationstr != 'Colombia, Antioquia, Medellin':
-            messagebox.showinfo("GeocoderUnavailable", "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
-        lat, long =  6.2443382, -75.573553
+            messagebox.showinfo(
+                "GeocoderUnavailable",
+                "The servers that help us to position your location are not working at the moment, but we can show you the map in our default location: Colombia, Antioquia, Medellin.")
+        lat, long = 6.2443382, -75.573553
         geopy_problem = True
-    
-    except:
+
+    except BaseException:
         raise
-    
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d %H:%M')
@@ -186,13 +187,12 @@ def generar_mapa(
         os.path.dirname(
             os.path.abspath(__file__)),
         "names.csv")
-    
+
     names_csv = pd.read_csv(names_path)
 
     brightest_and_labels = names_csv[names_csv["HIP"].isin(
         list(brightest_for_labels.index))]
     brightest_for_labels = brightest_for_labels.loc[brightest_and_labels["HIP"]]
-        
 
     # -------------------------
     # CONSTRUIR LAS CONSTELACIONES
@@ -225,12 +225,12 @@ def generar_mapa(
         if planeta in planets_b:
             ef = f"{planeta} barycenter"
             planet = eph[ef]
-        else:    
+        else:
             planet = eph[planeta]
 
         planet_position = earth.at(t).observe(planet)
         planet_x, planet_y = projection(planet_position)
-        
+
         # Advertirmos al usuario en caso de que no se pueda ver el planeta
         if planet_x < -0.9 or planet_x > 0.9 or planet_y < -0.9 or planet_y > 0.9:
             warning = True
@@ -273,7 +273,7 @@ def generar_mapa(
             color='red',
             s=500,
             marker='.',
-            label = planeta.capitalize())
+            label=planeta.capitalize())
         ax.legend()
 
     # Si se especificó mostrar los nombres de las estrellas, agregarlos al
@@ -290,10 +290,10 @@ def generar_mapa(
                 label, xy=(
                     x, y), xytext=(
                     0.5, -0.5), textcoords="offset points", color="white", fontsize=6)
-            
+
         # Actualiza la variable con los nombres de estrellas a visualizar
         stars_name_list = brightest_and_labels["common name"].tolist()
-        
+
     # Configurar el horizonte de la gráfica, no mostrará lo que esté fuera de
     # este horizonte
     horizon = Circle((0, 0), radius=1, transform=ax.transData)
@@ -348,4 +348,4 @@ def get_constellations(culture):
     with open(constelation, "rb") as f:
         constellations = stellarium.parse_constellations(f)
 
-    return constellations   
+    return constellations
