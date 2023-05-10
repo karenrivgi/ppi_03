@@ -230,8 +230,8 @@ class ObjectInHorizon:
         self.button = tk.Button(
             self.horizonFrame,
             image=self.img,
-            width=275,
-            height=65,
+            width=340,
+            height=42,
             command=self.get_times_horizon)
         self.button.grid(row=3, column=1, padx=5, pady=15)
 
