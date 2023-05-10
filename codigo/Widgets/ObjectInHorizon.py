@@ -1,4 +1,5 @@
 import datetime
+import os
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
@@ -8,6 +9,7 @@ from StarMapGenerator import planetHorizon
 
 class ObjectInHorizon:
 
+    # Referencia al directorio con los recursos graficos.
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
     def __init__(self, master: tk.Tk, user=None):
@@ -224,16 +226,14 @@ class ObjectInHorizon:
 
         # --------------------------------------------
         # Botón que al ser clickeado llamará al método get_times_horizon
-        # self.img = tk.PhotoImage(file = os.path.join(MoonPhase.recursos_path, 'GetMoonPhaseButton.png'))
+        self.img = tk.PhotoImage(file = os.path.join(ObjectInHorizon.recursos_path, 'GetRiseAndSetButton.png'))
         self.button = tk.Button(
             self.horizonFrame,
-            text='Get times of Rise and Set',
-            command=self.get_times_horizon,
-            font=(
-                "BeVietnamPro-Bold",
-                int(14),
-                'bold'))
-        self.button.grid(row=3, column=1, padx=5, pady=15, sticky='nsew')
+            image=self.img,
+            width=275,
+            height=65,
+            command=self.get_times_horizon)
+        self.button.grid(row=3, column=1, padx=5, pady=15)
 
     def get_times_horizon(self):
         """ Obtiene los tiempos en que el objeto celeste se eleva y se pone por encima del

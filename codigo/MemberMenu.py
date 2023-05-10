@@ -283,17 +283,17 @@ class MemberMenu:
                 # --------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MoonPhase
 
-        # Asigna la imagen "MoonPhaseButton.png" a la variable "img8".
-        # self.img8 = tk.PhotoImage(file=os.path.join(
-        #    MemberMenu.recursos_path, "MoonPhaseButton.png"))
+        # Asigna la imagen "HorizonButton.png" a la variable "img9".
+        self.img9 = tk.PhotoImage(file=os.path.join(
+            MemberMenu.recursos_path, "HorizonButton.png"))
         self.horizonButton = tk.Button(
+            image=self.img9,
             master=self.mainMenu,
-            text='Astro in Horizon',
             borderwidth=0,
             highlightthickness=0,
             command=lambda: self.instance_widget(ObjectInHorizon),
             background="black",
-            relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "MoonPhase".
+            relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "ObjectInHorizon".
         self.horizonButton.place(
             x=25, y=280,
             width=184,
