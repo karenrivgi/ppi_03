@@ -29,25 +29,30 @@ class AccessMenu:
         registradas para dar acceso al menu de usuarios registrados con
         la cuenta ingresada.
 
-        Parámetro: 
+        Parámetro:
         -self.
 
         Return:
         Instacia una ventana de la clase MemberMenu
         """
 
-        # Se crea variable que almacena el valor del "nameEntry" de la funcion "__init__".
+        # Se crea variable que almacena el valor del "nameEntry" de la funcion
+        # "__init__".
         nickname = self.nameEntry.get()
-        # Se crea variable que almacena el valor del "passwordEntry" de la funcion "__init__".
+        # Se crea variable que almacena el valor del "passwordEntry" de la
+        # funcion "__init__".
         password = self.passwordEntry.get()
 
-        # Llamado de clase que elimina lo ingresado en el "nameEntry" una vez guardado.
+        # Llamado de clase que elimina lo ingresado en el "nameEntry" una vez
+        # guardado.
         self.nameEntry.delete(0, tk.END)
-        # Llamado de clase que elimina lo ingresado en el "passwordEntry" una vez guardado.
+        # Llamado de clase que elimina lo ingresado en el "passwordEntry" una
+        # vez guardado.
         self.passwordEntry.delete(0, tk.END)
 
         # If que verifica que si se ha ingresado los datos de nombre y contraseña en cada uno de los cuadros de textos respectivos.
-        # En caso de que no, muestra en la ventana principal una ventana emergente con un "Warning".
+        # En caso de que no, muestra en la ventana principal una ventana
+        # emergente con un "Warning".
 
         if not nickname or not password:
             messagebox.showwarning(
@@ -60,7 +65,8 @@ class AccessMenu:
         user = Usuario.login(nickname, password)
 
         # If que verifica que si se ha ingresado los datos de nombre y contraseña correctamente.
-        # En caso de que no, muestra en la ventana principal una ventana emergente con un "Error".
+        # En caso de que no, muestra en la ventana principal una ventana
+        # emergente con un "Error".
 
         if not user:
             messagebox.showerror("Error", "Incorrect nickname or password")
@@ -77,7 +83,7 @@ class AccessMenu:
         """
         Instancia una ventana de clase CreateAccount.
 
-        Parámetro: 
+        Parámetro:
         - self
         """
 
@@ -87,7 +93,7 @@ class AccessMenu:
         """
         Instancia una ventana de clase RecoverPasswordMenu.
 
-        Parámetro: 
+        Parámetro:
         - self
         """
 
@@ -97,7 +103,7 @@ class AccessMenu:
         """
         Instancia una ventana de clase GuestMenu.
 
-        Parámetro: 
+        Parámetro:
         - self
         """
 
@@ -107,7 +113,7 @@ class AccessMenu:
         '''
         Esta función crea una ventana gráfica para la clase AccessMenu, contiene una función
         que elimina imagenes del post de reddit, al igual que se encuentra el contenedor
-        principal, que incluye dentro de este: cuadro de texto "Log into your account", cuatro botones: 
+        principal, que incluye dentro de este: cuadro de texto "Log into your account", cuatro botones:
         - "guestButton" que llama la funcion guestAccess.
         - "createAccountButton" que llama la funcion create_account.
         - "loginButton" que llama la funcion login.
@@ -119,24 +125,34 @@ class AccessMenu:
         - master
         '''
 
-        # Elimina las imagenes de los post de reddit, si por alguna razón ya existen algunas.
+        # Elimina las imagenes de los post de reddit, si por alguna razón ya
+        # existen algunas.
         delete_folders()
 
         self.master = master  # Se crea variable "master" con atributo master.
 
-        # Creacion del contenedor principal "access" tipo Canvas, para los objetos de la ventana.
-        self.access = tk.Canvas(master, width=master.winfo_width(), height=master.winfo_height(
-        ), bd=0, highlightthickness=0, relief="ridge", bg="black")
+        # Creacion del contenedor principal "access" tipo Canvas, para los
+        # objetos de la ventana.
+        self.access = tk.Canvas(
+            master,
+            width=master.winfo_width(),
+            height=master.winfo_height(),
+            bd=0,
+            highlightthickness=0,
+            relief="ridge",
+            bg="black")
 
-        # Se llama al metodo "update_idletasks" para forzar la actualización de la interfaz.
-        self.access.update_idletasks() 
+        # Se llama al metodo "update_idletasks" para forzar la actualización de
+        # la interfaz.
+        self.access.update_idletasks()
 
         self.access.place(x=0, y=0)  # Se posicióna el contenedor principal
 
-        # Se crea variable background que contiene una clase tk.PhotoImage que asigna la imagen "AcessBack.png" a la variable.
+        # Se crea variable background que contiene una clase tk.PhotoImage que
+        # asigna la imagen "AcessBack.png" a la variable.
         self.background_img = tk.PhotoImage(file=os.path.join(
             AccessMenu.recursos_path, "AccessBack.png"), master=self.access)
-        
+
         # Asigna la imagen de la variable background_img al contenedor "acess".
         self.background = self.access.create_image(
             512, 384, image=self.background_img)
@@ -185,7 +201,8 @@ class AccessMenu:
             height=23)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion del boton para carga de datos del login y acceso al menu de usuarios registrados.
+        # Creacion del boton para carga de datos del login y acceso al menu de
+        # usuarios registrados.
 
         # Asigna la imagen "LoginButton.png" a la variable "img2".
         self.img2 = tk.PhotoImage(file=os.path.join(
@@ -203,7 +220,8 @@ class AccessMenu:
             height=40)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion del boton para opción de recuperar la cuenta si se olvidó la contraseña.
+        # Creacion del boton para opción de recuperar la cuenta si se olvidó la
+        # contraseña.
 
         # Asigna la imagen "ForgotPasswordButton.png" a la variable "img3".
         self.img3 = tk.PhotoImage(file=os.path.join(
@@ -220,7 +238,8 @@ class AccessMenu:
             height=20)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion de cuadros de texto para ingresar nombre de usuario y contraseña.
+        # Creacion de cuadros de texto para ingresar nombre de usuario y
+        # contraseña.
 
         self.nameEntry = tk.Entry(
             bd=0,
@@ -246,8 +265,10 @@ class AccessMenu:
 
 # Creación de la ventana principal de la aplicación.
 window = tk.Tk()  # Crea la ventana principal.
-window.geometry("1024x768")  # Asigna tamaño de la ventana principal, 1024 de ancho x 768 de alto.
-window.resizable(True, True)  # Activa la redimensionamiento de la ventana por parte del usuario.
+# Asigna tamaño de la ventana principal, 1024 de ancho x 768 de alto.
+window.geometry("1024x768")
+# Activa la redimensionamiento de la ventana por parte del usuario.
+window.resizable(True, True)
 window.title("Py Man's Sky")  # Asigna nombre a la ventana principal.
 window.update_idletasks()  # Forza la actualización de la ventana principal.
 

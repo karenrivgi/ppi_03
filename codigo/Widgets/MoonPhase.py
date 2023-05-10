@@ -10,7 +10,7 @@ from StarMapGenerator import MoonPhaseSearch
 
 class MoonPhase:
 
-    recursos_path = join(dirname(dirname(abspath(__file__))),"Recursos")
+    recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
     def __init__(self, master: tk.Tk, user=None):
         """ Constructor de la clase MoonPhase.
@@ -52,7 +52,7 @@ class MoonPhase:
             padx=45,
             pady=10,
             sticky="NSEW",
-            )
+        )
 
         # Label para el encabezado de la interfaz.
         self.header_label = tk.Label(
@@ -62,7 +62,13 @@ class MoonPhase:
             fg="#ffffff",
             bg="black",
             highlightthickness=0)
-        self.header_label.grid(row=0, column=0, columnspan=3, padx=5, pady=5, sticky="WE")
+        self.header_label.grid(
+            row=0,
+            column=0,
+            columnspan=3,
+            padx=5,
+            pady=5,
+            sticky="WE")
 
         # Label y campo de entrada para el año.
         self.year_label = tk.Label(
@@ -81,7 +87,7 @@ class MoonPhase:
             fg="black",
             bg="white",
             highlightthickness=0,
-            bd = 0,
+            bd=0,
             width=23)
         self.year_entry.grid(row=2, column=0, padx=5, pady=5, sticky="WE")
 
@@ -102,7 +108,7 @@ class MoonPhase:
             fg="black",
             bg="white",
             highlightthickness=0,
-            bd = 0,
+            bd=0,
             width=23)
         self.month_entry.grid(row=2, column=1, padx=5, pady=5, sticky="WE")
 
@@ -115,7 +121,7 @@ class MoonPhase:
             bg="black",
             highlightthickness=0,
             width=23)
-        
+
         self.day_label.grid(row=1, column=2, padx=5, pady=5, sticky="WE")
 
         self.day_entry = tk.Entry(
@@ -124,12 +130,15 @@ class MoonPhase:
             fg="black",
             bg="white",
             highlightthickness=0,
-            bd = 0,
+            bd=0,
             width=23)
         self.day_entry.grid(row=2, column=2, padx=5, pady=5, sticky="WE")
 
         # Botón que al ser clickeado llamará al método get_moon_phase
-        self.img = tk.PhotoImage(file = os.path.join(MoonPhase.recursos_path, 'GetMoonPhaseButton.png'))
+        self.img = tk.PhotoImage(
+            file=os.path.join(
+                MoonPhase.recursos_path,
+                'GetMoonPhaseButton.png'))
         self.button = tk.Button(
             self.moonFrame,
             image=self.img,
@@ -137,7 +146,7 @@ class MoonPhase:
             height=35,
             command=self.get_moon_phase,
             highlightthickness=0,
-            bd = 0)
+            bd=0)
         self.button.grid(row=3, column=1, padx=5, pady=15, sticky='nsew')
 
     def get_moon_phase(self):
@@ -301,5 +310,3 @@ class MoonPhase:
             padx=5,
             pady=5,
             sticky="nsew")
-        
-        

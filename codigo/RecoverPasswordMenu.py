@@ -35,31 +35,35 @@ class RecoverPasswordMenu:
         Envia el dato de contraseña al correo electronico del usuario en caso
         de ser solicitada.
 
-        Parámetro: 
+        Parámetro:
         - self.
         """
 
-        # Tomar los valores de las entradas y encontrar el usuario correspondiente.
+        # Tomar los valores de las entradas y encontrar el usuario
+        # correspondiente.
         nick = self.nicknameEntry.get()
 
         user = None  # Variable "user" con valor inicial "None".
 
-        # Variable "user" que almacena el metodo leer_usuarios() de User.py que toma como argumento "nick".
+        # Variable "user" que almacena el metodo leer_usuarios() de User.py que
+        # toma como argumento "nick".
         user = Usuario.leer_usuarios().get(nick)
 
-        if user == None:  # If que verifica si el nombre ingresado es inválido, si lo es muestra un "Warning" en la interfaz.
+        if user is None:  # If que verifica si el nombre ingresado es inválido, si lo es muestra un "Warning" en la interfaz.
             messagebox.showwarning(
                 "Warning", "Please enter a valid user nickname.")
             return
 
-        # Variable "user_email" que almacena el email del usuario desde User.py.
+        # Variable "user_email" que almacena el email del usuario desde
+        # User.py.
         user_email = user.email
-        
-        # Variable "email_entry" que almacena el valor ingresado en el cuadro de texto "emailEntry".
+
+        # Variable "email_entry" que almacena el valor ingresado en el cuadro
+        # de texto "emailEntry".
         email_entry = self.emailEntry.get()
 
         '''
-        If que verifica si el valor de "user_email" es diferente de "email_entry, si lo es, 
+        If que verifica si el valor de "user_email" es diferente de "email_entry, si lo es,
         muestra un "Warning" en la interfaz.
         Si no es diferente, inicia el servidor con los datos del correo de la aplicación,
         construyendo un mensaje que es enviado al usuario, por el correo ingresado por este,
@@ -80,29 +84,35 @@ class RecoverPasswordMenu:
             sender_password = "ppi_123_4545"
             # Variable que almacena el nombre del servidor SMTP de Office 365.
             smtp_server = "smtp.office365.com"
-            # Variable que almacena el valor del puerto asociado al servidor SMTP.
+            # Variable que almacena el valor del puerto asociado al servidor
+            # SMTP.
             smtp_port = 587
-            # Establece conexioncon un servidor SMTP utilizando servidor y puerto especificado.
+            # Establece conexioncon un servidor SMTP utilizando servidor y
+            # puerto especificado.
             server = smtplib.SMTP(smtp_server, smtp_port)
             # Inicia un conexion SMTP segura mediante el cifrado TLS.
             server.starttls()
-            # El servirdor inicia sesión con las variables del correo y contraseña.
+            # El servirdor inicia sesión con las variables del correo y
+            # contraseña.
             server.login(sender_email, sender_password)
 
             # Construccion y envio del mensaje a traves del email remitente.
 
             # Variable que almacena la clase del modulo "email.mime.multipart".
             mensaje = MIMEMultipart()
-            # Establece el correo electronico del remitente (correo de la aplicación).
+            # Establece el correo electronico del remitente (correo de la
+            # aplicación).
             mensaje['From'] = sender_email
             # Establece el correo electronico del receptor (usuario).
             mensaje['To'] = user_email
             # Establece el asunto del correo a enviar.
             mensaje['Subject'] = "PyMan's Sky Password Recover"
 
-            # Variable de texto con un mensaje que incluye, el nombre de usuario y contraseña del usuario.
+            # Variable de texto con un mensaje que incluye, el nombre de
+            # usuario y contraseña del usuario.
             cuerpo_mensaje = f"Greetings {nick}. \n\n Your account password is: {user.contrasena}"
-            # Adjunta el texto de la variable "cuerpo_mensaje" como texto plano "plain".
+            # Adjunta el texto de la variable "cuerpo_mensaje" como texto plano
+            # "plain".
             mensaje.attach(MIMEText(cuerpo_mensaje, 'plain'))
 
             # Envíar el mensaje.
@@ -112,10 +122,10 @@ class RecoverPasswordMenu:
 
     def __init__(self, master: tk.Tk) -> None:
         '''
-        Esta función crea una ventana gráfica para la clase RecoverPasswordMenu, donde se 
+        Esta función crea una ventana gráfica para la clase RecoverPasswordMenu, donde se
         encuentran el contenedor principal que incluye dentro de este dos entradas de texto
         para el nombre y correo del usuario que se guardan en la funcion recover_password,
-        también se encuentran dos botones: 
+        también se encuentran dos botones:
         - "returnButton" que llama la función returnHome
         - "registerButton" para llamar la función recover_password.
 
@@ -128,16 +138,27 @@ class RecoverPasswordMenu:
 
         self.widgets = []  # Lista que almacena objetos.
         self.master = master  # Asigna a la variable master el valor master.
-        self.recover = tk.Canvas(master, width=master.winfo_width(), height=master.winfo_height(
-        ), bd=0, highlightthickness=0, relief="ridge", bg="black")  # Crea contenedor principal tipo Canvas.
-        self.recover.update_idletasks() # Forza la actualización del widget "recover".
+        self.recover = tk.Canvas(
+            master,
+            width=master.winfo_width(),
+            height=master.winfo_height(),
+            bd=0,
+            highlightthickness=0,
+            relief="ridge",
+            bg="black")  # Crea contenedor principal tipo Canvas.
+        # Forza la actualización del widget "recover".
+        self.recover.update_idletasks()
         self.recover.place(x=0, y=0)  # Posiciona el widget "recover".
-        self.widgets.append(self.recover) # Se agrega el widget "recover" a la lista "widgets".
+        # Se agrega el widget "recover" a la lista "widgets".
+        self.widgets.append(self.recover)
 
         # Variable que almacena la imagen "RecoverBackground.png".
-        self.background_img = tk.PhotoImage(file=os.path.join(
-            RecoverPasswordMenu.recursos_path, "RecoverBackground.png"), master=self.recover)
-        
+        self.background_img = tk.PhotoImage(
+            file=os.path.join(
+                RecoverPasswordMenu.recursos_path,
+                "RecoverBackground.png"),
+            master=self.recover)
+
         # Asigna el fondo con la variable "background_img" al widget "recover".
         self.background = self.recover.create_image(
             512, 384, image=self.background_img)
@@ -145,7 +166,8 @@ class RecoverPasswordMenu:
         # --------------------------------------------------
         # Creacion de boton de para registrar un nuevo usuario.
 
-        # Asigna la imagen "RequestPasswordButton.png" a la variable "imgSignUp".
+        # Asigna la imagen "RequestPasswordButton.png" a la variable
+        # "imgSignUp".
         self.imgSignUp = tk.PhotoImage(file=os.path.join(
             RecoverPasswordMenu.recursos_path, "RequestPasswordButton.png"))
         self.registerButton = tk.Button(
@@ -157,8 +179,9 @@ class RecoverPasswordMenu:
         self.registerButton.place(
             x=251, y=500,
             width=248,
-            height=54) # Posicionamiento del Botón en el contenedor principal
-        self.widgets.append(self.registerButton) # Agrega el botón a la lista widgets.
+            height=54)  # Posicionamiento del Botón en el contenedor principal
+        # Agrega el botón a la lista widgets.
+        self.widgets.append(self.registerButton)
 
         # --------------------------------------------------
         # Creacion de boton de para regresar al menu de acceso.
@@ -175,8 +198,9 @@ class RecoverPasswordMenu:
         self.returnButton.place(
             x=555, y=500,
             width=248,
-            height=54) # Posicionamiento del Botón en el contenedor principal
-        self.widgets.append(self.returnButton) # Agrega el botón a la lista widgets.
+            height=54)  # Posicionamiento del Botón en el contenedor principal
+        # Agrega el botón a la lista widgets.
+        self.widgets.append(self.returnButton)
 
         # --------------------------------------------------
         # Creacion de entradas de texto para nombre y correo electronico.
@@ -189,8 +213,9 @@ class RecoverPasswordMenu:
         self.nicknameEntry.place(
             x=370, y=270,
             width=350,
-            height=38,) # Posicionamiento entrada de texto.
-        self.widgets.append(self.nicknameEntry) # Agrega la entrada de texto a la lista widgets.
+            height=38,)  # Posicionamiento entrada de texto.
+        # Agrega la entrada de texto a la lista widgets.
+        self.widgets.append(self.nicknameEntry)
 
         self.emailEntry = tk.Entry(
             bd=0,
@@ -200,5 +225,6 @@ class RecoverPasswordMenu:
         self.emailEntry.place(
             x=370, y=376,
             width=350,
-            height=38) # Posicionamiento entrada de texto.
-        self.widgets.append(self.emailEntry) # Agrega la entrada de texto a la lista widgets.
+            height=38)  # Posicionamiento entrada de texto.
+        # Agrega la entrada de texto a la lista widgets.
+        self.widgets.append(self.emailEntry)

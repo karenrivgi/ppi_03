@@ -226,7 +226,10 @@ class ObjectInHorizon:
 
         # --------------------------------------------
         # Botón que al ser clickeado llamará al método get_times_horizon
-        self.img = tk.PhotoImage(file = os.path.join(ObjectInHorizon.recursos_path, 'GetRiseAndSetButton.png'))
+        self.img = tk.PhotoImage(
+            file=os.path.join(
+                ObjectInHorizon.recursos_path,
+                'GetRiseAndSetButton.png'))
         self.button = tk.Button(
             self.horizonFrame,
             image=self.img,

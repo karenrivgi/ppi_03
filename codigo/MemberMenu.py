@@ -31,12 +31,13 @@ class MemberMenu:
         - widget
         """
 
-        # Try que elimina el widget anterior, en caso del except no realizará ninguna acción.
+        # Try que elimina el widget anterior, en caso del except no realizará
+        # ninguna acción.
         try:
             # self.currentWidget.destroy()
             for child in self.currentWidgetMaster.winfo_children():
                 child.destroy()
-        except:
+        except BaseException:
             pass
 
         # self.currentWidget = None
@@ -44,16 +45,20 @@ class MemberMenu:
         # Configura tamaño y fondo del widget "currentWidgetMaster".
         self.currentWidgetMaster.config(
             width=764, height=750, background="black")
-        
+
         # Crea un Label que contiene la palabra "Loading".
         loadingText = tk.Label(
-            master=self.currentWidgetMaster, text="Loading...", fg="white", bg="black")
-        
+            master=self.currentWidgetMaster,
+            text="Loading...",
+            fg="white",
+            bg="black")
+
         loadingText.place(x=352, y=345)  # Posicona el Label.
         # Forza la actualización del widget.
         self.currentWidgetMaster.update_idletasks()
 
-        # Crea la variable "currentWidget" que almacena un widget con parametros del widget "currentWidgetMaster" y "user".
+        # Crea la variable "currentWidget" que almacena un widget con
+        # parametros del widget "currentWidgetMaster" y "user".
         self.currentWidget = widget(
             master=self.currentWidgetMaster, user=self.user)
 
@@ -73,7 +78,7 @@ class MemberMenu:
         Esta función crea una ventana gráfica para la clase MemberMenu, donde se encuentran el contenedor
         principal que incluye dentro de este: dos cuadros de texto "Explore y "Profile",
         seis botones: starMapButton, newsfeedButton, objectSearchButton, moonphaseButton,
-        historialButton, myStarsButton y  closeSessionButton, 
+        historialButton, myStarsButton y  closeSessionButton,
         también contiene otro contenedor que instancia un Widget al ser apretado por uno de los siguientes botones:
         - "starMapButton" que llama la función instance_widget tomando como arguemento la clase "StarMap"
         - "newsfeedButton" que llama la función instance_widget tomando como arguemento la clase "Newsfeed"
@@ -84,28 +89,43 @@ class MemberMenu:
         exceptuando por el botón que llama la función close_session.
         '''
 
-        # Creacion del contenedor de los objetos de la ventana y referencia a la cuenta de usuario.
+        # Creacion del contenedor de los objetos de la ventana y referencia a
+        # la cuenta de usuario.
 
-        self.user = user  # Creación variable user que almacena la clase "user".
-        self.mainMenu = tk.Canvas(master, width=master.winfo_width(), height=master.winfo_height(
-        ), bd=0, highlightthickness=0, relief="ridge", bg="black")  # Creación del contenedor principal tipo Canvas.
+        # Creación variable user que almacena la clase "user".
+        self.user = user
+        self.mainMenu = tk.Canvas(
+            master,
+            width=master.winfo_width(),
+            height=master.winfo_height(),
+            bd=0,
+            highlightthickness=0,
+            relief="ridge",
+            bg="black")  # Creación del contenedor principal tipo Canvas.
 
         self.mainMenu.update_idletasks()  # Forzar actualizar contenedor.
 
         self.mainMenu.place(x=0, y=0)  # Posicionamiento contenedor.
 
-        # Creación variable "background_img" que almacena la imagen "MemberMenuBack.png"
-        self.background_img = tk.PhotoImage(file=os.path.join(
-            MemberMenu.recursos_path, "MemberMenuBack.png"), master=self.mainMenu)
-        
-        # Creación variable que almacena el contenedor agregandole el fondo de la variable "backgroun_img"
+        # Creación variable "background_img" que almacena la imagen
+        # "MemberMenuBack.png"
+        self.background_img = tk.PhotoImage(
+            file=os.path.join(
+                MemberMenu.recursos_path,
+                "MemberMenuBack.png"),
+            master=self.mainMenu)
+
+        # Creación variable que almacena el contenedor agregandole el fondo de
+        # la variable "backgroun_img"
         self.background = self.mainMenu.create_image(
             512, 384, image=self.background_img)
-        
-        # Creación del contenedor hijo "currentWidgetMaster" tipo Canvas que tendrá dentro uno de los widgets instanciados por medio de los botones.
+
+        # Creación del contenedor hijo "currentWidgetMaster" tipo Canvas que
+        # tendrá dentro uno de los widgets instanciados por medio de los
+        # botones.
         self.currentWidgetMaster = tk.Canvas(
             master=self.mainMenu, width=0, height=0, highlightthickness=0)
-        
+
         # Posicionamiento widget "currentWidgetMaster".
         self.currentWidgetMaster.place(x=250, y=10)
 
@@ -116,16 +136,22 @@ class MemberMenu:
         # Creacion de cuadros de texto en el contenedor.
 
         self.mainMenu.create_text(
-            73.5, 41.0,
+            73.5,
+            41.0,
             text="Explore",
             fill="#ffffff",
-            font=("BeVietnamPro-Bold", int(25.0)))  # Cuadro de Texto "Explore".
+            font=(
+                "BeVietnamPro-Bold",
+                int(25.0)))  # Cuadro de Texto "Explore".
 
         self.mainMenu.create_text(
-            67.0, 420.0,
+            67.0,
+            420.0,
             text="Profile",
             fill="#ffffff",
-            font=("BeVietnamPro-Bold", int(25.0)))  # Cuadro de Texto "Profile".
+            font=(
+                "BeVietnamPro-Bold",
+                int(25.0)))  # Cuadro de Texto "Profile".
 
         # --------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase Newsfeed.
@@ -204,7 +230,8 @@ class MemberMenu:
             height=30)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion de boton de para instanciar un widget de clase AccountSettings.
+        # Creacion de boton de para instanciar un widget de clase
+        # AccountSettings.
         '''
         # Asigna la imagen "SettingsButton.png" a la variable "img4".
         self.img4 = tk.PhotoImage(file=os.path.join(
@@ -279,8 +306,8 @@ class MemberMenu:
             x=25, y=230,
             width=184,
             height=30)  # Posicionamiento del Botón en el contenedor principal.
-        
-                # --------------------------------------------------
+
+        # --------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MoonPhase
 
         # Asigna la imagen "HorizonButton.png" a la variable "img9".

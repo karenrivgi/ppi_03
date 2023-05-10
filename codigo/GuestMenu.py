@@ -16,10 +16,11 @@ class GuestMenu:
         en caso de que exista.
         """
 
-        # Try que elimina el widget anterior, en caso del except no realizará ninguna acción.
+        # Try que elimina el widget anterior, en caso del except no realizará
+        # ninguna acción.
         try:
             self.currentWidget.destroy()
-        except:
+        except BaseException:
             pass
 
         # Creación variable "currentWidget" con valor inicial "None".
@@ -27,16 +28,20 @@ class GuestMenu:
 
         # Variable que contiene un Label con texto.
         loadingText = tk.Label(
-            master=self.currentWidgetMaster, text="Loading...", fg="white", bg="black")
+            master=self.currentWidgetMaster,
+            text="Loading...",
+            fg="white",
+            bg="black")
         loadingText.place(x=352, y=345)  # Posiciona el label.
 
-        # Se crea el widget con parametro master y user con valor inicial "None".
+        # Se crea el widget con parametro master y user con valor inicial
+        # "None".
         self.currentWidget = widget(master=self.currentWidgetMaster, user=None)
 
         # Se configura el tamaño y fondo del widget.
         self.currentWidgetMaster.config(
             width=764, height=750, background="black")
-        
+
         # Forza la actualización del widget.
         self.currentWidgetMaster.update_idletasks()
 
@@ -66,24 +71,38 @@ class GuestMenu:
 
         # Creacion del contenedor de los objetos de la ventana.
 
-        self.master = master  # Creación variable user que almacena la clase "user".
-        self.mainMenu = tk.Canvas(master, width=master.winfo_width(), height=master.winfo_height(
-        ), bd=0, highlightthickness=0, relief="ridge", bg="black")  # Creación del contenedor principal tipo Canvas.
+        # Creación variable user que almacena la clase "user".
+        self.master = master
+        self.mainMenu = tk.Canvas(
+            master,
+            width=master.winfo_width(),
+            height=master.winfo_height(),
+            bd=0,
+            highlightthickness=0,
+            relief="ridge",
+            bg="black")  # Creación del contenedor principal tipo Canvas.
         self.mainMenu.update_idletasks()  # Forzar actualizar contenedor.
         self.mainMenu.place(x=0, y=0)  # Posicionamiento contenedor.
 
-        # Creación variable "background_img" que almacena la imagen "GuestSessionBack.png".
-        self.background_img = tk.PhotoImage(file=os.path.join(
-            GuestMenu.recursos_path, "GuestSessionBack.png"), master=self.mainMenu)
-        
-        # Creación variable que almacena el contenedor agregandole el fondo de la variable "backgroun_img".
+        # Creación variable "background_img" que almacena la imagen
+        # "GuestSessionBack.png".
+        self.background_img = tk.PhotoImage(
+            file=os.path.join(
+                GuestMenu.recursos_path,
+                "GuestSessionBack.png"),
+            master=self.mainMenu)
+
+        # Creación variable que almacena el contenedor agregandole el fondo de
+        # la variable "backgroun_img".
         self.background = self.mainMenu.create_image(
             512, 384, image=self.background_img)
-        
-        # Creación del contenedor hijo "currentWidgetMaster" tipo Canvas que tendrá dentro uno de los widgets instanciados por medio de los botones.
+
+        # Creación del contenedor hijo "currentWidgetMaster" tipo Canvas que
+        # tendrá dentro uno de los widgets instanciados por medio de los
+        # botones.
         self.currentWidgetMaster = tk.Canvas(
             master=self.mainMenu, width=0, height=0)
-        
+
         # Posicionamiento widget "currentWidgetMaster".
         self.currentWidgetMaster.place(x=250, y=10)
 
@@ -94,10 +113,13 @@ class GuestMenu:
         # Creacion de cuadros de texto en el contenedor.
 
         self.mainMenu.create_text(
-            73.5, 41.0,
+            73.5,
+            41.0,
             text="Explore",
             fill="#ffffff",
-            font=("BeVietnamPro-Bold", int(25.0)))  # Creacion de cuadro de texto "Explore".
+            font=(
+                "BeVietnamPro-Bold",
+                int(25.0)))  # Creacion de cuadro de texto "Explore".
 
         # --------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase StarMap.
@@ -119,7 +141,8 @@ class GuestMenu:
             height=30)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion de boton de para cerrar la sesion y volver al menu de acceso.
+        # Creacion de boton de para cerrar la sesion y volver al menu de
+        # acceso.
 
         # Asigna la imagen "ReturnToMenuG.png" a la variable "img3".
         self.img3 = tk.PhotoImage(file=os.path.join(
