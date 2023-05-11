@@ -266,12 +266,23 @@ def generar_mapa(
                s=marker_size, color='white', marker='.', linewidths=0,
                zorder=2)
 
+    dic_colores_planetas = {
+            'mercury': 'moccasin',
+            'venus': 'khaki',
+            'mars': 'lightsalmon',
+            'jupiter': 'wheat',
+            'saturn': 'peachpuff',
+            'uranus': 'lightblue',
+            'neptune': 'royalblue',
+            'pluto': 'rosybrown'}
+    color_planeta = dic_colores_planetas.get(planeta)
+
     # Si se especificó el planeta, agregarlo al gráfico
     if planeta and not warning:
         ax.scatter(
             planet_x,
             planet_y,
-            color='red',
+            color=color_planeta,
             s=500,
             marker='.',
             label=planeta.capitalize())
