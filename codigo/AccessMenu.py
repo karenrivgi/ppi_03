@@ -77,7 +77,7 @@ class AccessMenu:
         # print(user.historial)
         # print(user.historial_reddit)
 
-        # Instacia una ventana de la clase MemberMenu.
+        # Instacia una ventana de la clase MemberMenu siempre y cuando haya coneccion a internet.
         try:
             urllib.request.urlopen('http://google.com')
             MemberMenu(master=self.master, user=user)
@@ -114,6 +114,8 @@ class AccessMenu:
         Parámetro:
         - self
         """
+
+        # Instacia una ventana de la clase GuestMenu siempre y cuando haya coneccion a internet.
         try:
             urllib.request.urlopen('http://google.com')
             GuestMenu(master=self.master)
