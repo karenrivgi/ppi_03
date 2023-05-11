@@ -76,28 +76,49 @@ class MapInfo:
 
         # crea un frame interior sobre el cual se podrá scrollear
         self.inner_frame = tk.Frame(canvas, background="black")
+
+        # If que, si no es usuario define altura y propaga el frame
+        # Si es usuario, no define altura en el frame.
+        if not self.user:
+            self.inner_frame.pack_propagate(False)
+            altura = 750
+        else:
+            altura = None
+
+        # Se crea la ventana
         canvas.create_window(
-            (0, 0), window=self.inner_frame, anchor="nw", width=745)
+            (0, 0), window=self.inner_frame, anchor="nw", width=745, height=altura)
 
         # extraemos la informacion del mapa, pormedio de la funcion de web scrapping
         mapinfo = WebScrapping.map_info(constelacion, estrellas, planeta)
 
         # llenamos el frame interno con la informacion extraida
         for key in mapinfo.keys():
+            
+            # If que filtra los labels por usuario o por invitado.
+            # Mostrando solo constelaciones para invitado, y
+            # planetas, estrellas y constelaciones para usuario.
+            if self.user:
+                if key == 'Stars':
 
-            if key == 'Stars':
+                    for star in mapinfo[key]:
+                        my_label = HTMLLabel(self.inner_frame, html=star)
 
-                for star in mapinfo[key]:
-                    my_label = HTMLLabel(self.inner_frame, html=star)
+                        # Adjust label
+                        my_label.pack(pady=3, fill="both", expand=True)
+        
+                else:
+                    my_label = HTMLLabel(self.inner_frame, html=mapinfo[key])
+
+                    # Adjust label
+                    my_label.pack(pady=3, fill="both", expand=True)
+            else: 
+                if key == 'Constellation':
+                    my_label = HTMLLabel(self.inner_frame, html=mapinfo[key])
 
                     # Adjust label
                     my_label.pack(pady=3, fill="both", expand=True)
 
-            else:
-                my_label = HTMLLabel(self.inner_frame, html=mapinfo[key])
-
-                # Adjust label
-                my_label.pack(pady=3, fill="both", expand=True)
 
         # event listener que ayuda a lograr el scrolleo sobre el frame interno
         self.inner_frame.bind(

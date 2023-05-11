@@ -268,9 +268,9 @@ def generar_mapa(
 
     # Diccionario con los colores para cada planeta.
     dic_colores_planetas = {
-            'mercury': 'moccasin',
+            'mercury': 'silver',
             'venus': 'khaki',
-            'mars': 'lightsalmon',
+            'mars': 'red',
             'jupiter': 'wheat',
             'saturn': 'peachpuff',
             'uranus': 'lightblue',
