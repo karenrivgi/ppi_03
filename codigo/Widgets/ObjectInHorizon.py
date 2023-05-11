@@ -48,9 +48,11 @@ class ObjectInHorizon:
         # Se crean los widgets (labels, campos de entrada, listas y botón).
         self.create_widgets()
 
+
     def destroy(self):
         """ Destruye el canvas principal de la aplicación. """
         self.horizonCanvas.destroy()
+
 
     def create_widgets(self):
         """ Crea los widgets de la interfaz de usuario de la aplicación. """
@@ -254,6 +256,7 @@ class ObjectInHorizon:
             command=self.get_times_horizon)
         self.button.grid(row=3, column=1, padx=5, pady=15)
 
+
     def get_times_horizon(self):
         """ Obtiene los tiempos en que el objeto celeste se eleva y se pone por encima del
         horizonte para una ubicación y fecha dadas y los muestra por pantalla
@@ -261,29 +264,34 @@ class ObjectInHorizon:
 
         # Obtener la ubicación, fecha y objeto celeste seleccionado por el
         # usuario
-        ubicacion, fecha, astro = self.save_data()
+        try: 
+            ubicacion, fecha, astro = self.save_data()
 
-        # Utilizar el módulo planetHorizon para obtener los tiempos en que el
-        # objeto celeste se eleva y se pone por encima del horizonte
-        times = planetHorizon.when_above_horizon(ubicacion, fecha, astro)
+            # Utilizar el módulo planetHorizon para obtener los tiempos en que el
+            # objeto celeste se eleva y se pone por encima del horizonte
+            times = planetHorizon.when_above_horizon(ubicacion, fecha, astro)
 
-        # Crear una etiqueta para cada tiempo y mostrarlo en la interfaz
-        # gráfica de usuario
-        for i in range(len(times)):
-            date_label = tk.Label(
-                self.horizonFrame,
-                text=times[i],
-                font=(
-                    "BeVietnamPro-Bold",
-                    int(14)),
-                fg="#ffffff",
-                bg="black")
-            date_label.grid(
-                row=4 + i,
-                columnspan=3,
-                padx=5,
-                pady=2,
-                sticky='nsew')
+            # Crear una etiqueta para cada tiempo y mostrarlo en la interfaz
+            # gráfica de usuario
+            for i in range(len(times)):
+                date_label = tk.Label(
+                    self.horizonFrame,
+                    text=times[i],
+                    font=(
+                        "BeVietnamPro-Bold",
+                        int(14)),
+                    fg="#ffffff",
+                    bg="black")
+                date_label.grid(
+                    row=4 + i,
+                    columnspan=3,
+                    padx=5,
+                    pady=2,
+                    sticky='nsew')
+                
+        except TypeError:
+            pass
+
 
     def save_data(self):
         ''' Guarda los datos pasados por el usuario
