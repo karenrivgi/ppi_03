@@ -44,17 +44,36 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
         ![image](./aux_images/newsfeed.png)
 
     - Posibilidad de publicar su mapa del cielo en Reddit, en el subreddit exclusivo de la aplicación.
+
+        ![image](./aux_images/publicacion_reddit.png)
+
     - Posibilidad de descargar el mapa generado como un archivo local.
+
+        ![image](./aux_images/descargar_starmap.png)
+
     - Guardado de los últimos mapas generados.
-    - Guardado del historial de las últimas estrellas consultadas en los mapas estelares generados por el mismo.
     - Guardado del historial de publicaciones hechas en el subreddit compartiendo mapas de estrellas personalizados.
+
+        ![image](./aux_images/historial.png)
+
+    - Guardado del historial de los últimos astros consultados y agregadas a favoritos.
+
+        ![image](./aux_images/object_search.png)
+        ![image](./aux_images/my_stars.png)
+
     - Posibilidad de consulta sobre cuál es la fase de la luna correspondiente a una fecha ingresada y mostrarla con una imagen representativa.
+
+        ![image](./aux_images/moon_phase.png)
+
     - Consultar cuándo será visible en el horizonte un objeto celeste seleccionado, en base a fecha(y ubicación).
 
 - Funcionalidades para usuarios no registrados:
     - Generar un mapa estelar con las opciones predeterminadas por la aplicación en base a la ubicación ingresada por el usuario.
-    - Mostrar información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
     - Permitir la visualización de los planetas que estén en el mapa generado.
+
+        ![image](./aux_images/guest_starmap.png)
+
+    - Mostrar información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
    
 ## **Tecnologías utilizadas**:
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
