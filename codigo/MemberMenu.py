@@ -230,27 +230,6 @@ class MemberMenu:
             height=30)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
-        # Creacion de boton de para instanciar un widget de clase
-        # AccountSettings.
-        '''
-        # Asigna la imagen "SettingsButton.png" a la variable "img4".
-        self.img4 = tk.PhotoImage(file=os.path.join(
-            MemberMenu.recursos_path, "SettingsButton.png"))
-        self.settingsButton = tk.Button(
-            master=self.mainMenu,
-            image=self.img4,
-            borderwidth=0,
-            highlightthickness=0,
-            command=lambda: self.instance_widget(StarMap),
-            background="black",
-            relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "StarMap".
-        self.settingsButton.place(
-            x=25, y=559,
-            width=184,
-            height=30)  # Posicionamiento del Botón en el contenedor principal.
-        '''
-
-        # --------------------------------------------------
         # Creacion de boton de para instanciar un widget de clase MyAstros.
 
         # Asigna la imagen "MyAstrosButton.png" a la variable "img5".
