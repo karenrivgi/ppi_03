@@ -1,9 +1,10 @@
-import tkinter as tk
 import os
+import pickle
+import smtplib
+import tkinter as tk
 from user_data.User import Usuario
 from tkinter import messagebox
-import re
-import smtplib
+from tkinter import messagebox
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -78,10 +79,19 @@ class RecoverPasswordMenu:
 
             # Configuracion e inicializacion del servidor SMTP.
 
+            # Dirección de los tokens de la cuenta sender
+            data_dir = os.path.join(os.path.dirname(__file__), "user_data")
+            token_file = os.path.join(data_dir, "tokenPpi.pickle")
+
+            # Abrir el archivo y guardar su información en creds
+            if os.path.exists(token_file):
+                with open(token_file, 'rb') as token:
+                    creds = pickle.load(token)
+
             # Variable que almacena el correo de la aplicación.
-            sender_email = "ppi_project@outlook.com"
+            sender_email = creds['email']
             # Variable que almacena la contraseña del correo de la aplicación.
-            sender_password = "ppi_123_4545"
+            sender_password = creds['password']
             # Variable que almacena el nombre del servidor SMTP de Office 365.
             smtp_server = "smtp.office365.com"
             # Variable que almacena el valor del puerto asociado al servidor
@@ -118,7 +128,16 @@ class RecoverPasswordMenu:
             # Envíar el mensaje.
             server.sendmail(sender_email, user_email, mensaje.as_string())
 
-            server.quit()  # Cerrar conexión.
+            # Cerrar conexión.
+            server.quit() 
+
+            # Notificarle al usuario el envío del correo
+            messagebox.showinfo(
+                "Mail sent",
+                "The email with your password has been sent, please check your inbox in a few seconds.")
+
+            # Regresar al menú principal
+            self.returnHome()
 
     def __init__(self, master: tk.Tk) -> None:
         '''
