@@ -94,19 +94,6 @@ Para instalar las librerías requeridas:
 pip install -r requirements.txt
 ```
 
-| Librería | Versión |
-| ------ | ------ |
-| datetime | 5.1|
-| geopy | 2.3.0 |
-| tzwhere | 3.0.3 |
-| pytz | 2022.7 |
-| numpy | 1.23.5 |
-| pandas | 1.5.2 |
-| skyfield | 1.45 |
-| matplotlib | 3.6.2 |
-| stdiomask | 0.0.6 |
-| praw | 7.7.0 |
-
 Una vez se tengan todos los archivos solicitados, comenzar la ejecución del programa desde el archivo AccessMenu.py
 
 ## Autores:
@@ -114,6 +101,8 @@ Una vez se tengan todos los archivos solicitados, comenzar la ejecución del pro
 - [@JEROLPOA2](https://github.com/JEROLPOA2): Jerónimo Ledesma Patiño.
 - [@DavedCV](https://github.com/DavedCV): David Castrillón Vallejo.
 - [@karenrivgi](https://github.com/karenrivgi): Karen Rivera Giraldo.
+
+<br/>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
