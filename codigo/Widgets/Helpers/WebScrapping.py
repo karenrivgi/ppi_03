@@ -1,12 +1,6 @@
-import os
-import tkinter as tk
-
 import requests
 import pandas as pd
-import html2text
-
 from os.path import abspath, dirname, join
-from tkhtmlview import HTMLLabel
 from bs4 import BeautifulSoup
 
 

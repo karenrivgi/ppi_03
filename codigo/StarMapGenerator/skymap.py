@@ -20,9 +20,10 @@ from skyfield.data import hipparcos, stellarium
 from skyfield.projections import build_stereographic_projection
 from skyfield.api import Loader
 
+# Librería para manejo de excepciones para los datos en geopy
 from geopy.exc import GeocoderUnavailable
-from geopy.exc import GeocoderTimedOut
-from geopy.exc import GeocoderServiceError
+
+# Librería para los mensajes en ventanas emergentes
 from tkinter import messagebox
 
 

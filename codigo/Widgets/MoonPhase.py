@@ -1,6 +1,5 @@
 import calendar
 import os
-import webbrowser
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk

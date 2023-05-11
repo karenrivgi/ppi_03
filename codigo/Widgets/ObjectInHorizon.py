@@ -2,7 +2,6 @@ import datetime
 import os
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk
 from os.path import abspath, dirname, join
 from StarMapGenerator import planetHorizon
 

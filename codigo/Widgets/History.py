@@ -1,8 +1,6 @@
 import tkinter as tk
 import webbrowser
-
 from tkinter import ttk
-from os.path import abspath, dirname, join
 from user_data.User import Usuario
 
 
