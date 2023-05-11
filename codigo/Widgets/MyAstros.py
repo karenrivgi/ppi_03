@@ -5,6 +5,22 @@ from user_data.User import Usuario
 
 
 class MyAstros:
+    """Esta clase se encarga de crear elo widget necesario para manejar
+    la funcionalidad encargada de mostrar el historial de astros favoritos
+    del usurio.
+
+    atributos:
+    - user (User): usuario sobre el cual se consulta el historial
+    - historial_astros (list): historial de astros favoritos
+    - myAstros (tk.Frame): frame contenedor de los objetos de la ventana
+    - treeAstros (tk.Treeview): tabla para mostrar los atros favoritos
+
+    metodos:
+    - astros_table(): Funcion encargada de darle estilo a la table, y 
+    de llenar la misma con los datos correspondientes en el 
+    historial de astros. 
+    - destroy(): Destruye el widget del objeto tkinter.
+    """
 
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
@@ -40,6 +56,9 @@ class MyAstros:
         self.astros_table()
 
     def astros_table(self):
+        """Funcion encargada de darle estilo a la table, y de llenar la 
+        misma con los datos correspondientes en el historial de astros. 
+        """
 
         # Se le da estilo al Tree
         styletable = ttk.Style()
