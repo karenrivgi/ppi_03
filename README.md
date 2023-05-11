@@ -67,6 +67,8 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 
     - Consultar cuándo será visible en el horizonte un objeto celeste seleccionado, en base a fecha(y ubicación).
 
+        ![image](./aux_images/object_horizon.jpeg)
+
 - Funcionalidades para usuarios no registrados:
     - Generar un mapa estelar con las opciones predeterminadas por la aplicación en base a la ubicación ingresada por el usuario.
     - Permitir la visualización de los planetas que estén en el mapa generado.
@@ -74,6 +76,8 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
         ![image](./aux_images/guest_starmap.png)
 
     - Mostrar información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
+
+        ![image](./aux_images/guest_map_infos.jpeg)
    
 ## **Tecnologías utilizadas**:
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
