@@ -15,6 +15,7 @@ from geopy.exc import GeocoderTimedOut
 from geopy.exc import GeocoderServiceError
 from geopy.exc import GeocoderUnavailable
 
+
 class StarMap:
 
     # Define la ruta absoluta del directorio donde se encuentra la carpeta
