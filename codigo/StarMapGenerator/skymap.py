@@ -266,6 +266,7 @@ def generar_mapa(
                s=marker_size, color='white', marker='.', linewidths=0,
                zorder=2)
 
+    # Diccionario con los colores para cada planeta.
     dic_colores_planetas = {
             'mercury': 'moccasin',
             'venus': 'khaki',
@@ -275,6 +276,7 @@ def generar_mapa(
             'uranus': 'lightblue',
             'neptune': 'royalblue',
             'pluto': 'rosybrown'}
+    # Variable que guarda el color del planeta
     color_planeta = dic_colores_planetas.get(planeta)
 
     # Si se especificó el planeta, agregarlo al gráfico
