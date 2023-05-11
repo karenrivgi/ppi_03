@@ -1,5 +1,6 @@
 import tkinter as tk
 import os
+import urllib.request
 from GuestMenu import GuestMenu
 from CreateAccount import CreateAccount
 from MemberMenu import MemberMenu
@@ -77,7 +78,14 @@ class AccessMenu:
         # print(user.historial_reddit)
 
         # Instacia una ventana de la clase MemberMenu.
-        MemberMenu(master=self.master, user=user)
+        try:
+            urllib.request.urlopen('http://google.com')
+            MemberMenu(master=self.master, user=user)
+        except:
+
+            messagebox.showwarning(
+                "Warning", "No internet connection, please connect to use this app.")
+        
 
     def create_account(self):
         """
@@ -106,8 +114,14 @@ class AccessMenu:
         Parámetro:
         - self
         """
+        try:
+            urllib.request.urlopen('http://google.com')
+            GuestMenu(master=self.master)
+        except:
 
-        GuestMenu(master=self.master)
+            messagebox.showwarning(
+                "Warning", "No internet connection, please connect to use this app.")
+        
 
     def __init__(self, master: tk.Tk) -> None:
         '''
