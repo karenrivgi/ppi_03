@@ -40,6 +40,11 @@ def when_above_horizon(place, date, object):
                 "GeocoderUnavailable",
                 "The servers that help us to position your location are not working at the moment, but we can show you the time in our default location: Colombia, Antioquia, Medellin.")
         lat, long = 6.2443382, -75.573553
+    except BaseException:
+        messagebox.showerror(
+        "Location Error",
+        "The requested location is invalid, please enter a valid one.")
+        return
 
     # Convertimos el string dado por el usuario en un objeto tipo datetime
     dt = datetime.strptime(when, '%Y-%m-%d')
