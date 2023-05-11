@@ -13,25 +13,67 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 
 ## **Descripción completa de la aplicación**:
 - La aplicación de escritorio presentará una interfaz amigable para la exploración sencilla de la astronomía por medio de la inmersión a mapas estelares. 
+    
+    - **Interfaz principal para usuarios registrados:**
+    ![image](./aux_images/member_main_menu.png)
+    - **Interfaz principal para invitados:**
+    ![image](./aux_images/guest_main_menu.png)
+
 - Los usuarios del aplicativo tendrán la opción de registrarse con un nombre de usuario y contraseña que les permitirá acceder a funcionalidades adicionales y guardar ciertos datos.
+
+    - **Ventana de inicio:**
+    ![image](./aux_images/ventana_inicial.png)
+    - **Ventana creación de usuarios:**
+    ![image](./aux_images/create_account.png)
+    - **Ventana recuperacion de contraseñas:**
+    ![image](./aux_images/recover_password.png)
+
 - Funcionalidades para usuarios registrados:
     - Generación de un mapa estelar personalizado; dicha personalización se basa en la selección de constelación visibles por cultura, fecha específica de la visualización, lugar geográfico de observación, variación de cantidad de estrellas visibles, y la posibilidad de habilitar y deshabilitar los nombres de las estrellas más importantes.
     - Visualizar un planeta del sistema solar (si es que está visible para la ubicación y fecha proporcionadas) sobre el mapa estelar.
+
+        ![image](./aux_images/starmap.png)
+
     - Disponibilidad de información relevante acerca de las estrellas más importantes mostradas en el mapa generado, proveniente de páginas web que contienen datos sobre dichos astros.
-    - Acceso a una sección cultural, donde el usuario podrá visualizar las tendencias en subreddits relacionadas con astronomía y ciencia.
     - Acceso a información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
+
+        ![image](./aux_images/map_infos.png)
+
+    - Acceso a una sección cultural, donde el usuario podrá visualizar las tendencias en subreddits relacionadas con astronomía y ciencia.
+
+        ![image](./aux_images/newsfeed.png)
+
     - Posibilidad de publicar su mapa del cielo en Reddit, en el subreddit exclusivo de la aplicación.
+
+        ![image](./aux_images/publicacion_reddit.png)
+
     - Posibilidad de descargar el mapa generado como un archivo local.
+
+        ![image](./aux_images/descargar_starmap.png)
+
     - Guardado de los últimos mapas generados.
-    - Guardado del historial de las últimas estrellas consultadas en los mapas estelares generados por el mismo.
     - Guardado del historial de publicaciones hechas en el subreddit compartiendo mapas de estrellas personalizados.
+
+        ![image](./aux_images/historial.png)
+
+    - Guardado del historial de los últimos astros consultados y agregadas a favoritos.
+
+        ![image](./aux_images/object_search.png)
+        ![image](./aux_images/my_stars.png)
+
     - Posibilidad de consulta sobre cuál es la fase de la luna correspondiente a una fecha ingresada y mostrarla con una imagen representativa.
+
+        ![image](./aux_images/moon_phase.png)
+
     - Consultar cuándo será visible en el horizonte un objeto celeste seleccionado, en base a fecha(y ubicación).
 
 - Funcionalidades para usuarios no registrados:
     - Generar un mapa estelar con las opciones predeterminadas por la aplicación en base a la ubicación ingresada por el usuario.
-    - Mostrar información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
     - Permitir la visualización de los planetas que estén en el mapa generado.
+
+        ![image](./aux_images/guest_starmap.png)
+
+    - Mostrar información sobre la cultura que dió origen a las constelaciones que se muestran en el mapa.
    
 ## **Tecnologías utilizadas**:
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
