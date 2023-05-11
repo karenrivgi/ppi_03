@@ -69,7 +69,7 @@ class ObjectInHorizon:
         self.horizonFrame.grid(
             row=0,
             column=0,
-            padx=130,
+            padx=45,
             pady=10,
             sticky="NSEW",
         )
