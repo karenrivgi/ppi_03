@@ -15,7 +15,7 @@ class MapInfo:
     def destroy(self):
         self.starMap.destroy()
 
-    def __init__(self, master: tk.Tk, estrellas=None, planeta=None,
+    def __init__(self, master: tk.Canvas, estrellas=None, planeta=None,
                  constelacion=None, user=None) -> None:
 
         self.user = user

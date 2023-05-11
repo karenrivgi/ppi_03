@@ -8,7 +8,7 @@ class MyAstros:
 
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
-    def __init__(self, master: tk.Tk, user: Usuario) -> None:
+    def __init__(self, master: tk.Canvas, user: Usuario) -> None:
 
         self.user = user
 

@@ -26,7 +26,7 @@ class MoonPhase:
 
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
-    def __init__(self, master: tk.Tk, user=None):
+    def __init__(self, master: tk.Canvas, user=None):
         """ Constructor de la clase MoonPhase.
 
         Args:

@@ -14,8 +14,6 @@ from Widgets.MapInfo import MapInfo
 from geopy.exc import GeocoderTimedOut
 from geopy.exc import GeocoderServiceError
 from geopy.exc import GeocoderUnavailable
-# from api_reddit import make_posts_reddit
-
 
 class StarMap:
 
@@ -44,7 +42,7 @@ class StarMap:
         MapInfo(master=self.starMap, estrellas=self.nombres_estrellas,
                 planeta=self.planet, constelacion=self.culture, user=self.user)
 
-    def __init__(self, master: tk.Tk, user=None) -> None:
+    def __init__(self, master: tk.Canvas, user=None) -> None:
 
         # Para llevar control de si tenemos un usuario registrado o no
         self.user = user

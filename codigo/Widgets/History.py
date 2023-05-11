@@ -27,7 +27,7 @@ class History:
     - destroy(): destruir el widget contenedor.
     """
 
-    def __init__(self, master: tk.Tk, user: Usuario) -> None:
+    def __init__(self, master: tk.Canvas, user: Usuario) -> None:
 
         self.user = user
         master.pack_propagate(False)

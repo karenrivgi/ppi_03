@@ -28,7 +28,7 @@ class ObjectInHorizon:
     # Referencia al directorio con los recursos graficos.
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 
-    def __init__(self, master: tk.Tk, user=None):
+    def __init__(self, master: tk.Canvas, user=None):
         """ Constructor de la clase ObjectInHorizon.
 
         Args:
