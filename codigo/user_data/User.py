@@ -1,8 +1,27 @@
 import pickle
 import os
 
-
 class Usuario:
+    """Clase encargada de dar la estructura necesaria para la 
+    representación de un Usuario.
+
+    Atributos:
+    - nickname (str): nombre del usuario
+    - email (str): correo electronico del usuario
+    - contrasena (str): constraseña del usuario
+    - historial (list): historial de mapas y publicaciones del usuario
+    - historial_astros (list): historial de astros favoritos del usuario
+
+    Metodos:
+    - registrar_usuario(nickname, email, contrasena): Metodo que permite
+    registrar un nuevo usuario en el sistema.
+    - login(nickname, contrasena): Metodo que permite logear al 
+    usuario si este está en el sistema.
+    - leer_usuarios(): Metodo de clase que lee los objetos Usuario del 
+    archivo pickle y los devuelve como un diccionario.
+    - guardar_historial(): Método para guardar el historial de búsqueda 
+    y publicaciones del usuario.
+    """
 
     # Define la ruta absoluta del directorio donde se encuentra el archivo de
     # datos.
@@ -17,6 +36,7 @@ class Usuario:
             historial=None,
             historial_reddit=None,
             historial_astros=None):
+
         # Inicializa los atributos nickname, contrasena y historial del objeto.
         self.nickname = nickname
         self.email = email
@@ -88,6 +108,7 @@ class Usuario:
         - usuarios: Un diccionario que contiene los objetos Usuario leídos del archivo pickle.
                     Si el archivo no existe, devuelve un diccionario vacío.
         """
+
         try:
             # Abre el archivo pickle en modo lectura binaria
             with open(os.path.join(Usuario.DATA_PATH, "usuarios.pickle"), "rb") as f:
@@ -108,13 +129,15 @@ class Usuario:
         return usuarios
 
     def guardar_historial(self, datos, tipo='input'):
-        """ Método para guardar el historial de búsqueda del usuario.
+        """ Método para guardar el historial de búsqueda del usuario y 
+        publicaciones.
 
         Parámetros:
         - datos: datos a agregar al historial.
         - tipo: tipo de búsqueda, por defecto es 'input'. También puede ser 'reddit' o 'astros'.
 
         """
+
         # Carga los objetos del archivo pickle y actualiza el historial del
         # usuario
         usuarios = Usuario.leer_usuarios()

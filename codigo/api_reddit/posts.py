@@ -10,7 +10,7 @@ class Post:
             - subreddit (str): nombre del subreddit del cual se recuperó el post
     """
 
-    def __init__(self, header, body, author, score, subreddit, image_path = None):
+    def __init__(self, header, body, author, score, subreddit, image_path=None):
         self.header = header
         self.body = body
         self.image_path = image_path

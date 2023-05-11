@@ -1,11 +1,13 @@
-import requests
-from bs4 import BeautifulSoup
 import os
-from os.path import abspath, dirname, join
+import tkinter as tk
+
+import requests
 import pandas as pd
 import html2text
-import tkinter as tk
+
+from os.path import abspath, dirname, join
 from tkhtmlview import HTMLLabel
+from bs4 import BeautifulSoup
 
 
 def object_search(astro_type, astro):

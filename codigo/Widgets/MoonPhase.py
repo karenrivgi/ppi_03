@@ -9,6 +9,20 @@ from StarMapGenerator import MoonPhaseSearch
 
 
 class MoonPhase:
+    """Clase encargada de crear la instancia del widget encargado de 
+    proveer la funcionalidad de fase lunar.
+
+    Atributos:
+    - moonCanvas (tk.Canvas): canvas base, encargado de agrupar los 
+    demas widgets.
+    
+    Metodos:
+    - create_widgets(): Crea los widgets de la interfaz de usuario 
+    de la aplicacion, sobre el canvas base.
+    - get_moon_phase(): Metodo que obtiene la fase lunar y la muestra 
+    en la interfaz gráfica de usuario.
+    - destroy(): Metodo encargado de destruir el canvas base.
+    """
 
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
 

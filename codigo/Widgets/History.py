@@ -7,6 +7,25 @@ from user_data.User import Usuario
 
 
 class History:
+    """Clase encargada de crear el widget correspondiente al historial
+    del usuario
+
+    Atributos:
+    - user (User): Instancia del usuario que está usando el sistema.
+    - history (tk.Frame): Frame contenedor encargado de agrupar todos
+    los widgets necesarios.
+    - tree (tk.Treeview): Tabla usada para mostrar la informacion.
+
+    Metodos:
+    - populate_treeview(): funcion encargada de darle estilo a la tabla, 
+    y de insertar los datos del historial del usuario.
+    - open_url(): función que abre una URL especificada en el navegador 
+    web
+    - selected_entry(): uncion encargada de comprobar si hay un link 
+    asociado a la publicacion en el historial para posteriormente 
+    llamar la funcion que se encarga de abrir el navegador.
+    - destroy(): destruir el widget contenedor.
+    """
 
     def __init__(self, master: tk.Tk, user: Usuario) -> None:
 
@@ -51,7 +70,7 @@ class History:
         self.tree.bind("<Double-1>", self.selected_entry)
 
     def populate_treeview(self):
-        """funcion encargada de fdarle estilo a la tabla, y de insertar los datos del historial del usuario"""
+        """funcion encargada de darle estilo a la tabla, y de insertar los datos del historial del usuario"""
 
         # para agregarle estilos al tree
         style = ttk.Style()
@@ -102,14 +121,23 @@ class History:
             pass
 
     def open_url(self, url):
-        """función que abrirá la URL especificada en el navegador web"""
+        """función que abrirá la URL especificada en el navegador web
+
+        argumentos:
+        - url (str): direccion URL de la publicacion.
+        """
 
         # Abre la url especificada en el navegador web
         webbrowser.open_new(url)
 
     def selected_entry(self, ev):
         """funcion encargada de comprobar si hay un link asociado a la publicacion en el historial
-        para posteriormente llamar la funcion que se encarga de abrir el navegador"""
+        para posteriormente llamar la funcion que se encarga de abrir el navegador
+
+        argumentos: 
+        - ev (Event): Evento asociado a la hora de presionar sobre una 
+        entrada de la tabla 
+        """
 
         selected = self.tree.focus()
         url = self.tree.item(selected, "values")[2]

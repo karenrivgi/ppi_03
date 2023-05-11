@@ -8,6 +8,22 @@ from StarMapGenerator import planetHorizon
 
 
 class ObjectInHorizon:
+    """Clase encargada de crear el widget encargado del manejo de la
+    funcionalidad de consulta de objeto en el horizonte
+
+    Atributos:
+    - horizonCanvas (tk.Canvas): Canvas base encargado de contener los
+    demas widgets graficos.
+
+    Metodos:
+    - destroy(): Metodo encargado de destruir el canvas base.
+    - create_widgets(): Crea los widgets de la interfaz de usuario 
+    de la aplicacion, sobre el canvas base.
+    - get_times_horizon(): Obtiene los tiempos en que el objeto celeste 
+    se eleva y se pone por encima del horizonte para una ubicación y 
+    fecha dadas y los muestra por pantalla.
+    - save_data(): Guarda los datos pasados por el usuario.
+    """
 
     # Referencia al directorio con los recursos graficos.
     recursos_path = join(dirname(dirname(abspath(__file__))), "Recursos")
