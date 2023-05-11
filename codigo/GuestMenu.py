@@ -126,7 +126,7 @@ class GuestMenu:
 
         # Asigna la imagen "StarMapButtonG.png" a la variable "img2".
         self.img2 = tk.PhotoImage(file=os.path.join(
-            GuestMenu.recursos_path, "StarMapButtonG.png"))
+            GuestMenu.recursos_path, "StarMapButton.png"))
         self.starMapButton = tk.Button(
             master=self.mainMenu,
             image=self.img2,
@@ -137,7 +137,7 @@ class GuestMenu:
             relief="flat")  # Creación del botón que llama a la funcion "instance_widget()" que tiene como argumento la clase "StarMap".
         self.starMapButton.place(
             x=25, y=80,
-            width=150,
+            width=184,
             height=30)  # Posicionamiento del Botón en el contenedor principal.
 
         # --------------------------------------------------
@@ -156,6 +156,6 @@ class GuestMenu:
             background="black",
             relief="flat")  # Creación del botón que llama a la funcion "close_session()".
         self.closeSessionButton.place(
-            x=25, y=659,
+            x=25, y=700,
             width=196,
             height=42)  # Posicionamiento del Botón en el contenedor principal.
