@@ -1,4 +1,3 @@
-import datetime
 from skyfield.api import load
 from skyfield.framelib import ecliptic_frame
 

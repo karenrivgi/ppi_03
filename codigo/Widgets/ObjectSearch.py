@@ -1,18 +1,10 @@
-import os
 import datetime
 import tkinter as tk
-
 import polars as pl
-import matplotlib.pyplot as plt
-
+import Widgets.Helpers.WebScrapping as ws
 from tkhtmlview import HTMLLabel
-from PIL import Image
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from tkinter import messagebox
-from tkinter import filedialog
 from os.path import abspath, dirname, join
 
-import Widgets.Helpers.WebScrapping as ws
 
 class ObjectSearch:
     """Clase encargada de representar el widget encargado de manejar
