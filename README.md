@@ -1,7 +1,7 @@
 # _Py Man 's Sky_
 
 ## **Descripción**: 
-Py Man's Sky es un proyecto que tiene como objetivo crear un mapa del cielo, en base a ubiación y fechas ingresadas por el usuario, además de ser una app que busca la divulgación científica sobre la astronomía.
+Py Man's Sky es un proyecto que tiene como objetivo crear un mapa del cielo, en base a la ubicación y fechas ingresadas por el usuario, además de ser una app que busca la divulgación científica sobre la astronomía.
 
 ## **¿Por qué el proyecto es útil?**: 
 La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como científico; didactico en que puedes generar un mapa del cielo personalizado y, cientifico ya que fomenta conocer más sobre la astronomía gracias al contenido sobre astros que presenta la aplicación, dentro del mapa, en su descripción y en la sección cultural dentro de esta. Esta sección cultural se enfoca en conocimiento sobre eventos científicos y culturales sobre la astronomía.
@@ -95,6 +95,13 @@ pip install -r requirements.txt
 ```
 
 Una vez se tengan todos los archivos solicitados, comenzar la ejecución del programa desde el archivo AccessMenu.py
+
+### Uso de la aplicación
+Si desea ejecutar la aplicación sin necesidad de descargar el repositorio, puede descargar la siguiente carpeta:
+[PyMansKyApp](https://drive.google.com/drive/folders/196WfVYhthJgTyb_48nRnMlTSXpzWqDb1)
+
+De este link podrá descargar la carpeta que contiene todos los elementos necesarios para 
+el funcionamiento de la aplicación. Descomprima el archivo en una carpeta y en su interior encontrará el archivo AccessMenu.exe, que al clickear abrirá la aplicación (esto solo funcional para equipos con sistema operativo Windows. La resolución del dispositivo debe ser mayor a 1024x768 para una mejor visualización y navegación de la aplicación).	
 
 ## Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
