@@ -8,8 +8,9 @@ praw
 stdiomask
 html2text
 tkhtmlview
-bs4
+beautifulsoup4
 validate_email
 opencv-python
 polars
 pytz
+requests
