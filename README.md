@@ -100,7 +100,7 @@ Una vez se tengan todos los archivos solicitados, comenzar la ejecución del pro
 
 ### Archivo ejecutable
 
-Si por el contrario desea descargar el ejecutable de la aplicación para no tener que lidiar con el manejo de python, puede seguir los siguientes pasos desde un computador windows:
+Si por el contrario desea descargar el ejecutable de la aplicación, puede seguir los siguientes pasos desde un computador Windows (*La resolución del dispositivo debe ser mayor a 1024x768 para una mejor visualización y navegación de la aplicación):
 
 - Acceder al siguiente link de drive y descargar el archivo: https://drive.google.com/drive/u/1/folders/1M0emamschkuB3WuaSUO6hlyisjoULbnx
 
