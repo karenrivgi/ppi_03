@@ -83,9 +83,11 @@ La utilidad de este proyecto se enfoca en ser un contenido tanto didáctico como
 - Lenguaje de programación Python y librerias externas como: Skyfield, Matplotlib, Geopy, Datetime, Numpy, Pandas, PRAW, requests, entre otros.
 - Figma para el diseño de las interfaces y Tkinter para codificarlas.
 
-### Guia de Instalación
+## **Guia de Instalación**
 
-Para poder ejecutar la aplicación en su etapa de desarrollo, se deben seguir los siguientes pasos:
+### Repositorio
+
+Para poder ejecutar la aplicación desde el acceso a los archivos con extensión ".py", se deben seguir los siguientes pasos:
 
 Descargar los archivos requeridos, ubicados en la carpeta "codigo" de este repositorio, e instalar las librerias requeridas para la correcta ejecucion de la aplicación.
 
@@ -95,6 +97,38 @@ pip install -r requirements.txt
 ```
 
 Una vez se tengan todos los archivos solicitados, comenzar la ejecución del programa desde el archivo AccessMenu.py
+
+### Archivo ejecutable
+
+Si por el contrario desea descargar el ejecutable de la aplicación para no tener que lidiar con el manejo de python, puede seguir los siguientes pasos desde un computador windows:
+
+- Acceder al siguiente link de drive y descargar el archivo: https://drive.google.com/drive/u/1/folders/1M0emamschkuB3WuaSUO6hlyisjoULbnx
+
+- Descargar el archivo
+
+    ![image](/aux_images/archivo_drive.jpeg)
+
+    En caso de que drive genere un aviso de seguridad, continuar oprimiendo el botón "Descargar De Todos Modos"
+
+    ![image](/aux_images/aviso_drive.jpeg)
+
+- Abrir el archivo descargado:
+
+    ![image](/aux_images/captura_descarga.jpeg)
+    ![image](/aux_images/captura_archivo.jpeg.jpeg)
+
+    En caso de que windows genere posibles alertas de seguridad, continuar con tranquilidad
+
+    ![image](/aux_images/aviso_windows.jpeg)
+
+- Extraer el archivo
+
+    ![image](/aux_images/extracci%C3%B3n_archivo.jpeg)
+    ![image](/aux_images/resultado_extraccionjpeg)
+
+- Ingresar a la carpeta descargada y correr el archivo ejecutable
+
+    ![image](/aux_images/archivo_ejecutable.jpeg)
 
 ## Autores:
 - [@YamidCampo](https://github.com/YamidCampo): Yamid Andrés Campo Gallego.
