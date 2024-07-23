@@ -1,6 +1,4 @@
 # _Py Man 's Sky_
-
-## **Descripción**: 
 Py Man's Sky es un proyecto que tiene como objetivo crear un mapa del cielo, en base a la ubicación y fechas ingresadas por el usuario, además de ser una app que busca la divulgación científica sobre la astronomía.
 
 ## **¿Por qué el proyecto es útil?**: 
